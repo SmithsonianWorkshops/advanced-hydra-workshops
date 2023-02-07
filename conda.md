@@ -32,14 +32,44 @@ Discussion:
 - Web
 - `conda --help` and `conda create --create` command
 
-
 ## Using conda to install software
-[Maybe show in two parts, conda create, activate, then install]
+
+### Finding software packages
+
+- https://anaconda.org/
+- Developer's website
+
+### Channels
+
+- Defaults (controlled by the Anaconda company): `main`, `R`, ...
+- Community moderated channels: `conda-forge`, `bioconda`
+- Privately controlled channels: ...
+- ?? Maybe hands-on showing different verisons/sources that will be installed depending on channel list?
+- Best practice: specify the channels during install and `--overide-channels` (others?)
+
+### Installing
 
 - `conda create -n <name>`
+  - Where is it created?
 - `conda activate <name>`
-- `conda install...`
+- `conda install -c ... -c ...`
+  - Channels are really important...
 - combine in one step: `conda create -n <name> -c ... -c ... <package> <package>`
+
+## Using your conda environment in a job
+
+```
+module load tools/conda
+start-conda
+conda activate <name>
+```
+
+## Sharing your envionrment
+
+- Others can load your conda env (default is all can read on Hydra)
+- Export package list, they can import
+  - Some pipelines use this method (qiime2, phyluce)
+
 
 
 1. Packages
