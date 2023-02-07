@@ -1,3 +1,47 @@
+# `conda` hands-on
+
+## Accessing conda on Hydra
+We have conda pre-installed on Hydra. You can access Hydra with the module `tools/conda`.
+
+1. Load conda module
+
+Maybe run `python --version` before and after/
+
+```
+[user@hydra-login01 ~]$ module load tools/conda
+Loading tools/conda/3.8
+  Loading requirement: tools/python/3.8
+[user@hydra-login01 ~]$
+```
+
+1. Prepare conda for use with `start-conda`
+
+There are shell settings that need to be set before conda will be fully functional in your terminal setting.
+
+```
+[user@hydra-login01 ~]$ start-conda
+(base) [user@hydra-login01 ~]$
+```
+
+Discussion:
+- What does `(base)` mean?
+- In system-wide install, you don't have write access to `(base)`
+
+## Help with the conda command line [?]
+
+- Web
+- `conda --help` and `conda create --create` command
+
+
+## Using conda to install software
+[Maybe show in two parts, conda create, activate, then install]
+
+- `conda create -n <name>`
+- `conda activate <name>`
+- `conda install...`
+- combine in one step: `conda create -n <name> -c ... -c ... <package> <package>`
+
+
 1. Packages
 A conda package is the precompiled program and a link to all of the required packages that will also be downloaded and needed.
 A whole pipeline can be defined in a package: all the scripts and dependent software (e.g. qiime2 or phyluce)
