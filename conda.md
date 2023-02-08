@@ -123,10 +123,12 @@ Dissecting this output:
 
 ### Installing with `pip`
 
+[Probably best to find a different example, this one doesn't install correctly with pip and it's actually available via bioconda]
+
 AMAS "Alignment manipulation and summary statistics": https://github.com/marekborowiec/AMAS
 `Borowiec, M.L. 2016. AMAS: a fast tool for alignment manipulation and computing of summary statistics. PeerJ 4:e1660.` http://dx.doi.org/10.7717/peerj.1660
 
-- Not available on anacaonda.org
+- Not available on anacaonda.org [actually it is, whoops]
 - Instructions say:
   - `sudo apt-get install python3` and `pip install amas`
   - `sudo` on Hydra is a red flag, you don't have sudo rights!
