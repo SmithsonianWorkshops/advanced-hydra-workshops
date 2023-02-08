@@ -91,10 +91,15 @@ Dissecting this output:
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
   - That's a great place for it on Hydra because it's not scrubbed
   - You can specify a different location with `--prefix /full/path/to/environment`
+
+## Activate your new environment
 - `conda activate workshop`
   - Start using your new environment
+  - At this point the only additional program you have is `conda`!
 
-### Finding software packages
+[`which python` should now give the system-installed path, with the current conda module it doesn't!]
+
+### Installing software packages
 
 - https://anaconda.org/
 - Developer's website
@@ -115,6 +120,33 @@ Dissecting this output:
 - `conda install -c ... -c ...`
   - Channels are really important...
 - combine in one step: `conda create -n <name> -c ... -c ... <package> <package>`
+
+### Installing with `pip`
+
+AMAS "Alignment manipulation and summary statistics": https://github.com/marekborowiec/AMAS
+`Borowiec, M.L. 2016. AMAS: a fast tool for alignment manipulation and computing of summary statistics. PeerJ 4:e1660.` http://dx.doi.org/10.7717/peerj.1660
+
+- Not available on anacaonda.org
+- Instructions say:
+  - `sudo apt-get install python3` and `pip install amas`
+  - `sudo` on Hydra is a red flag, you don't have sudo rights!
+
+Our strategy: create a conda env with python3 and install amas into that env
+
+```
+$ conda create -n amas python=3
+```
+
+```
+$ conda activate amas
+```
+
+```
+$ pip install amas
+```
+
+Where did the executable go? /home/user/.conda/envs/amas-try2/lib/python3.11/site-packages/amas/AMAS.py
+Well, maybe this isn't the best example :(
 
 ## Using your conda environment in a job
 
