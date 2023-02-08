@@ -53,8 +53,46 @@ Discussion:
 - Environments can be 'disposable,'... [re-create when needed]
 
 ```
-(base) $ conda create -n <name>
+(base) $ conda create --name workshop
+Collecting package metadata (current_repodata.json): done
+Solving environment: done
+
+==> WARNING: A newer version of conda exists. <==
+  current version: 4.10.3
+  latest version: 23.1.0
+
+Please update conda by running
+
+    $ conda update -n base -c defaults conda
+
+## Package Plan ##
+
+  environment location: /home/user/.conda/envs/workshop
+
+Proceed ([y]/n)? y
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate workshop
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
 ```
+
+Dissecting this output:
+- ...
+- ...
+- `environment location: /home/user/.conda/envs/workshop`
+  - Conda will create the environment in your home directory in a hidden directory named `.conda`
+  - That's a great place for it on Hydra because it's not scrubbed
+  - You can specify a different location with `--prefix /full/path/to/environment`
+- `conda activate workshop`
+  - Start using your new environment
 
 ### Finding software packages
 
