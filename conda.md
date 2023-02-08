@@ -3,24 +3,33 @@
 ## Accessing conda on Hydra
 We have conda pre-installed on Hydra. You can access Hydra with the module `tools/conda`.
 
-1. Load conda module
-
-Maybe run `python --version` before and after/
-
+*Before:*
 ```
-[user@hydra-login01 ~]$ module load tools/conda
+$ which python
+/usr/bin/python
+$ python --version
+Python 2.7.5
+````
+
+*Load module*
+```
+$ module load tools/conda
 Loading tools/conda/3.8
   Loading requirement: tools/python/3.8
-[user@hydra-login01 ~]$
 ```
 
-1. Prepare conda for use with `start-conda`
-
-There are shell settings that need to be set before conda will be fully functional in your terminal setting.
-
+*Prepare conda for use with `start-conda`*
 ```
-[user@hydra-login01 ~]$ start-conda
-(base) [user@hydra-login01 ~]$
+$ start-conda
+(base) $
+```
+
+*After:*
+```
+$ which python
+/share/apps/tools/python/3.8/bin/python
+$ python --version
+Python 3.8.8
 ```
 
 Discussion:
@@ -33,6 +42,19 @@ Discussion:
 - `conda --help` and `conda create --create` command
 
 ## Using conda to install software
+
+### Create an enviornment
+
+- You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
+- Best-practice is to create a separate environment for each pipeline [best word?]
+  - This will be a set of programs that need to run in your analysis steps
+- By having separate environments, dependency conflicts will less likely
+- You can also create environments for specific programs.
+- Environments can be 'disposable,'... [re-create when needed]
+
+```
+(base) $ conda create -n <name>
+```
 
 ### Finding software packages
 
