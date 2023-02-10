@@ -5,6 +5,7 @@ conda jargon:
 - channel
 - environment
 - recipe
+- dependency
 
 # `conda` hands-on
 
@@ -60,7 +61,25 @@ Discussion:
   - For a specific command: `conda create --help`
   - Info on the Hydra conda module: `conda help tools/conda`
 
+## Configuring conda
+
+Do we want to give instructions on specifying channels or is it better to specify with each command?
+Also, what about `conda config --set channel_priority strict`
+
 ## Using conda to install software
+
+Different approaches:
+- Package already exists: install package(s) and all dependencies with conda
+- Packge not available
+  - install dependencies and then setup program
+  - Use `pip` to install
+
+We'll start with installing programs when there are already packages.
+
+### Finding packages
+- anaconda.org
+  - What channel?
+  - What version?
 
 ### Create an enviornment
 
@@ -118,18 +137,16 @@ Dissecting this output:
 
 [`which python` should now give the system-installed path, with the current conda module it doesn't!]
 
-### Installing software packages
-
-- https://anaconda.org/
-- Developer's website
-
 ### Channels
 
-- Defaults (controlled by the Anaconda company): `main`, `R`, ...
+- Defaults (controlled by the Anaconda company): `main` and `R`
 - Community moderated channels: `conda-forge`, `bioconda`
-- Privately controlled channels: ...
+- Privately controlled channels. These can be publicly available or hidden : `dunnlab`, `faircloth-lab`, ...
+  - These are not community curated, so they are more likely to be orphaned (no no longer updated) or configured specifically for the needs of an individual or lab group.
+
+
 - ?? Maybe hands-on showing different verisons/sources that will be installed depending on channel list?
-- Best practice: specify the channels during install and `--overide-channels` (others?)
+- Best practice?: specify the channels during install and `--overide-channels` (others?)
 
 ### Installing
 
