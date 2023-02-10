@@ -9,7 +9,9 @@ conda jargon:
 # `conda` hands-on
 
 ## Accessing conda on Hydra
-We have conda pre-installed on Hydra. You can access Hydra with the module `tools/conda`.
+ Conda is pre-installed on Hydra. You can access Hydra with the module `tools/conda`.
+
+NOTE: this needs revision. Loading conda shouldn't change python, `start-conda` should do that.
 
 *Before:*
 ```
@@ -43,11 +45,20 @@ Python 3.8.8
 Discussion:
 - What does `(base)` mean?
 - In system-wide install, you don't have write access to `(base)`
+- Advanced: use `echo $PATH` to see how the `PATH` variable changes as you peform the above steps.
 
-## Help with the conda command line [?]
+## Help with the conda command line [keep here?]
 
-- Web
-- `conda --help` and `conda create --create` command
+- Web:
+  - Command reference: https://docs.conda.io/projects/conda/en/stable/commands.html
+  - Managing packages: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
+  - Working with environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+  - And of course, using a search enging. Try: `conda activate` or `conda find package` or `conda install blast` 
+- 'Official' cheat sheet: https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html
+- From the terminal:
+  - `conda --help` 
+  - For a specific command: `conda create --help`
+  - Info on the Hydra conda module: `conda help tools/conda`
 
 ## Using conda to install software
 
