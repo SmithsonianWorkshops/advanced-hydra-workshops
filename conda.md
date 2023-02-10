@@ -1,3 +1,11 @@
+# Lecture topics (partial)
+
+conda jargon:
+- package
+- channel
+- environment
+- recipe
+
 # `conda` hands-on
 
 ## Accessing conda on Hydra
