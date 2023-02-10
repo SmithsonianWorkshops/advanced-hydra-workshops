@@ -87,9 +87,10 @@ We'll start with installing programs when there are already packages.
 - Best-practice is to create a separate environment for each pipeline [best word?]
   - This will be a set of programs that need to run in your analysis steps
   - Sometimes pipeline componenets can have conflicting dependencies, you might have to create separate dependencies for these components.
-- By having separate environments, dependency conflicts will less likely
+- By having separate environments, dependency conflicts will be less likely
 - You can also create environments for specific programs.
 - Environments can be 'disposable,'... [re-create when needed]
+- Environments allow users to have a different version of Python installed than what is installed in `base`
 
 ```
 (base) $ conda create --name workshop
@@ -171,6 +172,7 @@ AMAS "Alignment manipulation and summary statistics": https://github.com/marekbo
 - Instructions say:
   - `sudo apt-get install python3` and `pip install amas`
   - `sudo` on Hydra is a red flag, you don't have sudo rights!
+  - `apt-get` assumes you are running the Ubuntu flavor of Linux, which Hydra is not!
 
 Our strategy: create a conda env with python3 and install amas into that env
 
