@@ -86,6 +86,7 @@ We'll start with installing programs when there are already packages.
 - You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
 - Best-practice is to create a separate environment for each pipeline [best word?]
   - This will be a set of programs that need to run in your analysis steps
+  - Sometimes pipeline componenets can have conflicting dependencies, you might have to create separate dependencies for these components.
 - By having separate environments, dependency conflicts will less likely
 - You can also create environments for specific programs.
 - Environments can be 'disposable,'... [re-create when needed]
@@ -150,6 +151,8 @@ Dissecting this output:
 
 ### Installing
 
+[Maybe demo with something that has many dependencies? blobtoools? That one is interesting because https://github.com/DRL/blobtools gives instructions for installing the dependencies via conda, but there's also a bioconda package`]
+
 - `conda create -n <name>`
   - Where is it created?
 - `conda activate <name>`
@@ -159,7 +162,7 @@ Dissecting this output:
 
 ### Installing with `pip`
 
-[Probably best to find a different example, this one doesn't install correctly with pip and it's actually available via bioconda]
+[Probably best to find a different example, this one doesn't install correctly with pip and it's actually available via bioconda. Maybe use Mike's tool that calculates assembly stats?]
 
 AMAS "Alignment manipulation and summary statistics": https://github.com/marekborowiec/AMAS
 `Borowiec, M.L. 2016. AMAS: a fast tool for alignment manipulation and computing of summary statistics. PeerJ 4:e1660.` http://dx.doi.org/10.7717/peerj.1660
