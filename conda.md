@@ -203,6 +203,12 @@ conda activate <name>
 - Export package list, they can import
   - Some pipelines use this method (qiime2, phyluce)
 
+## Common issues with `conda`
+
+- SLOW: mamba as an alternative
+- Errors you get if there are conflicting dependencies and package can't be installed?
+- You install multiple packages, but you end up with an old version of packge (because of conflicting dependencies)
+- The version of an available package is not the most recent the developer has released.
 
 
 1. Packages
