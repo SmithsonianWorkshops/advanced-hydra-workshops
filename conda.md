@@ -83,7 +83,7 @@ We'll start with installing programs when there's already a conda package availa
   - What version?
 - Searching using the conda program
 
-### Create an enviornment
+### Create an environment
 
 - You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
 - Best-practice is to create a separate environment for each pipeline
@@ -129,7 +129,7 @@ The output:
   - You can specify a different location with `--prefix /full/path/to/environment`
 - `To activate this environment, use $ conda activate workshop`: You'll next activate our new environment to start installing programs.
 - `To deactivate an active environment, use $ conda deactivate`: When You're done with the enviornment, you can deactivate it, or you can close the terminal session.
-- Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` envionrment. The Hydra admins will occasionally install new versions of conda.
+- Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` environment. The Hydra admins will occasionally install new versions of conda.
 
 ## Activate your new environment
 - `conda activate workshop`
@@ -143,16 +143,23 @@ $ python --version
 Python 2.7.5
 ```
 
-## Installing a specific version of python
-
-
-
 ### Channels
 
 - Defaults (controlled by the Anaconda company): `main` and `R`
-- Community moderated channels: `conda-forge`, `bioconda`
+- Community moderated channels: e.g. `conda-forge`, `bioconda`
 - Privately controlled channels. These can be publicly available or hidden : `dunnlab`, `faircloth-lab`, ...
   - These are not community curated, so they are more likely to be orphaned (no no longer updated) or configured specifically for the needs of an individual or lab group.
+
+When you use conda to install a package, the configured channel(s) are checked for packages and dependencies.
+
+You can specify multiple channels to search for the program you want to install and its dependencies.
+
+If you are installing a package from:
+- `main` or `R` (Defaults), these should be configured as the highest priority for searching for packages.
+- `conda-forge` or `bioconda`, `conda-forge` should be the highest priority with `bioconda` next, followed by Defaults. 
+
+:warning::warning::warning:
+If you don't have the channel priority set correctly, you can be installing dependencies that are not compatible with the package you want.
 
 
 - ?? Maybe hands-on showing different verisons/sources that will be installed depending on channel list?
@@ -207,7 +214,7 @@ start-conda
 conda activate <name>
 ```
 
-## Sharing your envionrment
+## Sharing your environment
 
 - Others can load your conda env (default is all can read on Hydra)
 - Export package list, they can import
