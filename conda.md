@@ -1,4 +1,4 @@
-# Lecture topics (partial)
+# Conda jargon
 
 conda jargon:
 - package
@@ -65,6 +65,12 @@ Discussion:
 
 Do we want to give instructions on specifying channels or is it better to specify with each command?
 Also, what about `conda config --set channel_priority strict`
+
+`conda config --show channels`
+
+Multiple channels: what if the smae package is available from multiple channels?
+By default the newest version is chosen regardless of channel. This can cause problems because channels like conda-forge and bioconda expect packages to come from conda-forge regardless of what versions other channels have... 
+`channel_priority`: 
 
 ## Using conda to install software
 
