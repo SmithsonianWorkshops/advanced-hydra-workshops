@@ -10,11 +10,9 @@ conda jargon:
 # `conda` hands-on
 
 ## Accessing conda on Hydra
- Conda is pre-installed on Hydra. You can access Hydra with the module `tools/conda`.
+ Conda is pre-installed on Hydra. You can access it with this module `tools/conda/23.1.0`.
 
-NOTE: this needs revision. Loading conda shouldn't change python, `start-conda` should do that.
-
-*Before:*
+*Before*
 ```
 $ which python
 /usr/bin/python
@@ -22,33 +20,28 @@ $ python --version
 Python 2.7.5
 ````
 
-*Load module*
+*Load module and prepare enviornment*
 ```
-$ module load tools/conda
-Loading tools/conda/3.8
-  Loading requirement: tools/python/3.8
-```
-
-*Prepare conda for use with `start-conda`*
-```
+$ module load tools/conda/23.1.0
+Miniconda3 v23.1.0 loaded, to start conda, type start-conda
 $ start-conda
 (base) $
 ```
+:warning: **You must enter the Hydra-specific command `start-conda` for conda to work!**
 
 *After:*
 ```
 $ which python
-/share/apps/tools/python/3.8/bin/python
+/share/apps/tools/conda/23.1.0/bin/python
 $ python --version
-Python 3.8.8
+Python 3.10.9
 ```
 
 Discussion:
 - What does `(base)` mean?
-- In system-wide install, you don't have write access to `(base)`
 - Advanced: use `echo $PATH` to see how the `PATH` variable changes as you peform the above steps.
 
-## Help with the conda command line [keep here?]
+## Help with the conda command line
 
 - Web:
   - Command reference: https://docs.conda.io/projects/conda/en/stable/commands.html
@@ -59,9 +52,11 @@ Discussion:
 - From the terminal:
   - `conda --help` 
   - For a specific command: `conda create --help`
-  - Info on the Hydra conda module: `conda help tools/conda`
+  - Info on the Hydra conda module: `conda help tools/conda/23.1.0`
 
 ## Configuring conda
+
+[this section needs more thought]
 
 Do we want to give instructions on specifying channels or is it better to specify with each command?
 Also, what about `conda config --set channel_priority strict`
@@ -75,22 +70,23 @@ By default the newest version is chosen regardless of channel. This can cause pr
 ## Using conda to install software
 
 Different approaches:
-- Package already exists: install package(s) and all dependencies with conda
+- Conda package already exists: install package(s) and all dependencies with conda
 - Packge not available
-  - install dependencies and then setup program
-  - Use `pip` to install
+  - Install dependencies and then setup/compile program
+  - If it's a Python program, use `pip` to install
 
-We'll start with installing programs when there are already packages.
+We'll start with installing programs when there's already a conda package available.
 
 ### Finding packages
 - anaconda.org
   - What channel?
   - What version?
+- Searching using the conda program
 
 ### Create an enviornment
 
 - You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
-- Best-practice is to create a separate environment for each pipeline [best word?]
+- Best-practice is to create a separate environment for each pipeline
   - This will be a set of programs that need to run in your analysis steps
   - Sometimes pipeline componenets can have conflicting dependencies, you might have to create separate dependencies for these components.
 - By having separate environments, dependency conflicts will be less likely
@@ -102,10 +98,6 @@ We'll start with installing programs when there are already packages.
 (base) $ conda create --name workshop
 Collecting package metadata (current_repodata.json): done
 Solving environment: done
-
-==> WARNING: A newer version of conda exists. <==
-  current version: 4.10.3
-  latest version: 23.1.0
 
 Please update conda by running
 
@@ -130,20 +122,30 @@ Executing transaction: done
 #     $ conda deactivate
 ```
 
-Dissecting this output:
-- ...
-- ...
+The output:
 - `environment location: /home/user/.conda/envs/workshop`
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
   - That's a great place for it on Hydra because it's not scrubbed
   - You can specify a different location with `--prefix /full/path/to/environment`
+- `To activate this environment, use $ conda activate workshop`: You'll next activate our new environment to start installing programs.
+- `To deactivate an active environment, use $ conda deactivate`: When You're done with the enviornment, you can deactivate it, or you can close the terminal session.
+- Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` envionrment. The Hydra admins will occasionally install new versions of conda.
 
 ## Activate your new environment
 - `conda activate workshop`
   - Start using your new environment
-  - At this point the only additional program you have is `conda`!
+  - At this point the only additional program you have is `conda`! The programs installed in `base` are *not* accessible.
 
-[`which python` should now give the system-installed path, with the current conda module it doesn't!]
+```
+$ which python
+/usr/bin/python
+$ python --version
+Python 2.7.5
+```
+
+## Installing a specific version of python
+
+
 
 ### Channels
 
