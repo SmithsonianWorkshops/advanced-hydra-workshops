@@ -83,7 +83,7 @@ We'll start with installing programs when there's already a conda package availa
 - Environments allow users to have a different version of Python installed than what is installed in `base`
 
 ```
-(base) $ conda create --name workshop
+(base) $ conda create --name blobtools
 Collecting package metadata (current_repodata.json): done
 Solving environment: done
 
@@ -93,7 +93,7 @@ Please update conda by running
 
 ## Package Plan ##
 
-  environment location: /home/user/.conda/envs/workshop
+  environment location: /home/user/.conda/envs/blobtools
 
 Proceed ([y]/n)? y
 
@@ -103,7 +103,7 @@ Executing transaction: done
 #
 # To activate this environment, use
 #
-#     $ conda activate workshop
+#     $ conda activate blobtools
 #
 # To deactivate an active environment, use
 #
@@ -111,16 +111,16 @@ Executing transaction: done
 ```
 
 The output:
-- `environment location: /home/user/.conda/envs/workshop`
+- `environment location: /home/user/.conda/envs/workblobtoolsshop`
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
   - That's a great place for it on Hydra because it's not scrubbed
   - You can specify a different location with `--prefix /full/path/to/environment`
-- `To activate this environment, use $ conda activate workshop`: You'll next activate our new environment to start installing programs.
+- `To activate this environment, use $ conda activate blobtools`: You'll next activate our new environment to start installing programs.
 - `To deactivate an active environment, use $ conda deactivate`: When You're done with the enviornment, you can deactivate it, or you can close the terminal session.
 - Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` environment. The Hydra admins will occasionally install new versions of conda.
 
 ## Activate your new environment
-- `conda activate workshop`
+- `conda activate blobtools`
   - Start using your new environment
   - At this point the only additional program you have is `conda`! The programs installed in `base` are *not* accessible.
 
@@ -157,7 +157,6 @@ If you don't have the channel priority set correctly, you can be installing depe
 ### Our reccomendations for settings
 
 `conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program.
-[Note: this really slows down conda install]
 
 Add channels in this order. `defaults` will be lowest and `conda-forge` highest. 
 ```
@@ -174,14 +173,51 @@ channels:
   - defaults
 ```
 
+And you can view of your settings in the file `~/.condarc` 
+
+```
+$ cat ~/.condara
+channel_priority: strict
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+```
+
 ### Installing
 
 ```
 $ conda install blobtools
+
+Collecting package metadata (current_repodata.json): done
+Solving environment: failed with initial frozen solve. Retrying with flexible solve.
+Solving environment: failed with repodata from current_repodata.json, will retry with next repodata source.
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /home/user/.conda/envs/blobtools
+
+  added / updated specs:
+    - blobtools
+
+...
+
+Proceed ([y]/n)? y
+
+
+Downloading and Extracting Packages
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+
 ```
 
+🕒 This will take about five minutes in the "Solving enviornment" stage.
 
-[Maybe demo with something that has many dependencies? blobtoools? That one is interesting because https://github.com/DRL/blobtools gives instructions for installing the dependencies via conda, but there's also a bioconda package`]
+### Create environment and install packages in one step
 
 - `conda create -n <name>`
   - Where is it created?
