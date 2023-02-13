@@ -157,6 +157,7 @@ If you don't have the channel priority set correctly, you can be installing depe
 ### Our reccomendations for settings
 
 `conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program.
+[Note: this really slows down conda install]
 
 Add channels in this order. `defaults` will be lowest and `conda-forge` highest. 
 ```
@@ -174,6 +175,11 @@ channels:
 ```
 
 ### Installing
+
+```
+$ conda install blobtools
+```
+
 
 [Maybe demo with something that has many dependencies? blobtoools? That one is interesting because https://github.com/DRL/blobtools gives instructions for installing the dependencies via conda, but there's also a bioconda package`]
 
