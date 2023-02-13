@@ -217,14 +217,28 @@ Executing transaction: done
 
 🕒 This will take about five minutes in the "Solving enviornment" stage.
 
-### Create environment and install packages in one step
 
-- `conda create -n <name>`
-  - Where is it created?
-- `conda activate <name>`
-- `conda install -c ... -c ...`
-  - Channels are really important...
-- combine in one step: `conda create -n <name> -c ... -c ... <package> <package>`
+### Add additional package
+
+We've decided we also need to run NCBI's blast with this pipeline. We can install blast in the blobtools environment.
+
+```
+$ conda install blast
+```
+
+### Create environment and install package(s) in one step
+
+Make sure you're back in `base`, if not deactivate you current environment
+
+```
+(blobtools)$ conda deactivate
+(base)$
+```
+
+```
+$ conda create --name blobtools_with_blast blobtools blast
+...
+```
 
 ### Installing with `pip`
 
