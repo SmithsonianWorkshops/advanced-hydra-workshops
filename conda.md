@@ -54,18 +54,6 @@ Discussion:
   - For a specific command: `conda create --help`
   - Info on the Hydra conda module: `conda help tools/conda/23.1.0`
 
-## Configuring conda
-
-[this section needs more thought]
-
-Do we want to give instructions on specifying channels or is it better to specify with each command?
-Also, what about `conda config --set channel_priority strict`
-
-`conda config --show channels`
-
-Multiple channels: what if the smae package is available from multiple channels?
-By default the newest version is chosen regardless of channel. This can cause problems because channels like conda-forge and bioconda expect packages to come from conda-forge regardless of what versions other channels have... 
-`channel_priority`: 
 
 ## Using conda to install software
 
@@ -156,14 +144,34 @@ You can specify multiple channels to search for the program you want to install 
 
 If you are installing a package from:
 - `main` or `R` (Defaults), these should be configured as the highest priority for searching for packages.
-- `conda-forge` or `bioconda`, `conda-forge` should be the highest priority with `bioconda` next, followed by Defaults. 
+- `conda-forge` or `bioconda`, `conda-forge` should be the highest priority with `bioconda` next, followed by Defaults.
+- Discussion: What about the privately maintained community repos? 
 
 :warning::warning::warning:
 If you don't have the channel priority set correctly, you can be installing dependencies that are not compatible with the package you want.
 
-
 - ?? Maybe hands-on showing different verisons/sources that will be installed depending on channel list?
 - Best practice?: specify the channels during install and `--overide-channels` (others?)
+
+
+### Our reccomendations for settings
+
+`conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program.
+
+Add channels in this order. `defaults` will be lowest and `conda-forge` highest. 
+```
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+```
+
+```
+$ conda config --show channels
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+```
 
 ### Installing
 
