@@ -61,7 +61,7 @@ Discussion:
   - Managing packages: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
   - Working with environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
   - And of course, using a search enging. Try: `conda activate` or `conda find package` or `conda install blast` 
-- 'Official' cheat sheet: https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html
+- 'Official' cheat sheet (USEFUL!): https://docs.conda.io/projects/conda/en/latest/_downloads/a35958a2a7fa1e927e7dfb61ebcd69a9/conda-4.14.pdf
 - Carprentries conda lesson (in development): https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/
 - From the terminal:
   - `conda --help` 
@@ -79,10 +79,34 @@ Different approaches:
 We'll start with installing programs when there's already a conda package available.
 
 ### Finding packages
-- anaconda.org
-  - What channel?
-  - What version?
-- Searching using the conda program
+
+There are several ways to find available packages.
+- Web-based: https://anaconda.org
+- Using `conda`: `conda search <name>`
+- Developer's documentation
+
+We'll explore the site https://anaconda.org which has listings of all the packages available through conda.
+
+Go to that site now.
+
+Use the "SEARCH PACKAGES" box.
+
+Search for: blobtools
+
+Channel: Bioconda
+Package: blobtools
+Latest version: 1.1.1
+Platforms: Linux and "noarch"
+
+You can see all the packages for a channel: https://anaconda.org/bioconda
+However, you can't search within a channel in this interface
+
+Channels we'll talk about:
+Main and R: controlled by Anaconda company
+conda-forge, bioconda: community controlled
+
+What other versions are available?
+Check in https://anaconda.org/bioconda/blobtools
 
 ### Create an environment
 
