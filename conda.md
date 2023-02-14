@@ -273,16 +273,70 @@ Well, maybe this isn't the best example :(
 ## Using your conda environment in a job
 
 ```
-module load tools/conda
+module load tools/conda/23.1.0
 start-conda
 conda activate <name>
 ```
 
-## Sharing your environment
+## Exporting and sharing your environment
+
+You can create an export file that has a listing of all the packages and chanels used in your environment.
+This can be used with colleagues to create their own environment.
+These exports are platform specific, so an environment created on Hydra will work on other Linux system, but might not work on Macs or Windows.
+
+```
+(blobtools)$ conda env export --name blobtools > blobtools.yml
+$ head blobtools.yml
+
+name: blobtools
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - alsa-lib=1.2.8=h166bdaf_0
+  - attr=2.5.1=h166bdaf_1
+```
 
 - Others can load your conda env (default is all can read on Hydra)
 - Export package list, they can import
   - Some pipelines use this method (qiime2, phyluce)
+
+
+## Other topics
+
+### Q: How do I use an enviornment that I created in my personal `conda` install?
+If you were using conda on Hydra before this workshop, you can still use your previous conda installs.
+The `conda activate` commnad will take a full path of an envionrment
+
+```
+$ conda activate ~/miniconda3/envs/amas
+(amas) $
+```
+
+### Q: What's the best place to store my conda environments?
+The default location in your home directory, `~/.conda/envs`, is fine. The envirnoments don't use much space
+(typically 100M - 1GB, depending on the packages). The home directory is not scrubbed, which is essential
+for software install directories.
+
+:warning: The path to a conda environment shouldn't change after the envionrment is created. Some files
+in the environment will have the path hard-coded into them. You can export and then import an 
+environment to move it.
+
+### Q. Can others use my conda environment
+Yes. With the standard Hydra permissions, all-users will have read-only access to your environment.
+They can use `conda activate /path/to/env` to activate your environment and use the installed software.
+
+If they have permission issues, make sure the files are readable by all and executables+directories are executable by all.
+
+One way to set those permissions is:
+
+```
+$ chmod -R a+r /path/to/env
+$ find /path/to/env -executable -exec chmod a+x {} \;
+```
 
 ## Common issues with `conda`
 

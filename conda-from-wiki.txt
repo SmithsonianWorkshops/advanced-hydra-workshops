@@ -1,4 +1,3 @@
-
 1. Packages
 A conda package is the precompiled program and a link to all of the required packages that will also be downloaded and needed.
 A whole pipeline can be defined in a package: all the scripts and dependent software (e.g. qiime2 or phyluce)
