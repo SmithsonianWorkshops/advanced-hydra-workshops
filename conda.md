@@ -1,16 +1,21 @@
-# Conda jargon
-
-conda jargon:
-- package
-- channel
-- environment
-- recipe
-- dependency
-
 # `conda` hands-on
 
+In the hands-on portion of the workshop you will learn how to use a version of conda pre-installed on Hydra to install software. At the end of the hands-on portion you'll learn:
+- Where to get help with conda
+- How to find software to install
+- How to install software using best-practices
+- How to run the software you installed with conda in submitted jobs on the Hydra
+- How to configure your Hydra account to make conda available when you log on (optional)
+- How to share your installations with others on Hydra and those using other systems
+
 ## Accessing conda on Hydra
- Conda is pre-installed on Hydra. You can access it with this module `tools/conda/23.1.0`.
+
+In this workshop we'll be using `conda` that is pre-installed on Hydra and accessible via the module `tools/conda/23.1.0`.
+Loading this module and then running `start-conda` will configure your current environment to use the conda.
+
+To see what changes are made, we'll look at the location and version of python in your current session.
+
+:alert: If you have previously configured to load automatically, and you have `(base)` in your command prompt when you log in, please see ____.
 
 *Before*
 ```
@@ -20,26 +25,34 @@ $ python --version
 Python 2.7.5
 ````
 
-*Load module and prepare enviornment*
+*Load module*
 ```
 $ module load tools/conda/23.1.0
 Miniconda3 v23.1.0 loaded, to start conda, type start-conda
-$ start-conda
-(base) $
-```
-:warning: **You must enter the Hydra-specific command `start-conda` for conda to work!**
-
-*After:*
-```
 $ which python
-/share/apps/tools/conda/23.1.0/bin/python
+/usr/bin/python
 $ python --version
+Python 2.7.5
+```
+
+Unlike many modules, loading doesn't change your environment, other than creating the alias `start-conda`
+
+Running the hydra-specific command `start-conda`, your current environment is modified to use conda. It not only changes your `PATH`, but other settings.
+`(base)` in your command prompt indicates it is configured.
+
+```
+$ start-conda
+(base)$ which python
+/share/apps/tools/conda/23.1.0/bin/python
+(base)$ python --version
 Python 3.10.9
 ```
+:warning: **You must enter the Hydra-specific command `start-conda` for conda to work!**
 
 Discussion:
 - What does `(base)` mean?
 - Advanced: use `echo $PATH` to see how the `PATH` variable changes as you peform the above steps.
+- This is an admin installed conda, how can I use it to install my own software!
 
 ## Help with the conda command line
 
@@ -54,7 +67,6 @@ Discussion:
   - `conda --help` 
   - For a specific command: `conda create --help`
   - Info on the Hydra conda module: `conda help tools/conda/23.1.0`
-
 
 ## Using conda to install software
 
@@ -357,3 +369,12 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 - Errors you get if there are conflicting dependencies and package can't be installed?
 - You install multiple packages, but you end up with an old version of packge (because of conflicting dependencies)
 - The version of an available package is not the most recent the developer has released.
+
+
+# Conda glossary
+
+- package
+- channel
+- environment
+- recipe
+- dependency
