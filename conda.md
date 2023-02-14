@@ -49,6 +49,7 @@ Discussion:
   - Working with environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
   - And of course, using a search enging. Try: `conda activate` or `conda find package` or `conda install blast` 
 - 'Official' cheat sheet: https://docs.conda.io/projects/conda/en/latest/user-guide/cheatsheet.html
+- Carprentries conda lesson (in development): https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/
 - From the terminal:
   - `conda --help` 
   - For a specific command: `conda create --help`
@@ -280,6 +281,10 @@ conda activate <name>
 
 ## Exporting and sharing your environment
 
+- Others can load your conda env (default is all can read on Hydra)
+- Export package list, they can import
+  - Some pipelines use this method (qiime2, phyluce)
+
 You can create an export file that has a listing of all the packages and chanels used in your environment.
 This can be used with colleagues to create their own environment.
 These exports are platform specific, so an environment created on Hydra will work on other Linux system, but might not work on Macs or Windows.
@@ -300,10 +305,18 @@ dependencies:
   - attr=2.5.1=h166bdaf_1
 ```
 
-- Others can load your conda env (default is all can read on Hydra)
-- Export package list, they can import
-  - Some pipelines use this method (qiime2, phyluce)
+:alert: The list of channels is the current list from your settings, NOT what was used to do the actual installation.
 
+You can then send that file to a collegue and they would create the environment with:
+
+```
+$ conda env create -f blobtools.yml --name blobtools-imported
+```
+
+If you don't specify `--name`, the orginally name of the exported environment will be used.
+
+The channels specified in the `.yml` will be used, regardless of what the user has configured in their settings (`.condarc`).
+:shipit: This needs to be confirmed
 
 ## Other topics
 
