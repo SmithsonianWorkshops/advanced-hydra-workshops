@@ -36,7 +36,7 @@ The Anaconda "distribution" of Python is an installation of the Python "interpre
 
 **Pre-compiled binaries**
 
-If possible, we recommend that Hydra users install software by compiling the source code using the built-in compilers on Hydra
+If possible, we recommend that Hydra users install software by compiling the source code using the built-in compilers on Hydra.
 
 However, sometimes this can be tricky. 
 
@@ -152,10 +152,10 @@ Advanced bash and csh users are welcome to run `conda shell.bash hook` and `cond
 
 There are different approaches to using conda to install software:
 - If a conda package already exists for the software package: 
-  - Install package(s) and all dependencies with conda, often with a single command
+  - Install package(s) and all dependencies with conda, often with a single command.
 - If the software is does not have a conda package (yet):
-  - Install dependencies with conda and then setup/compile program while your conda environment is activated
-  - If it's a Python program without a conda package, use `pip` to install
+  - Install dependencies with conda and then setup/compile program while your conda environment is activated.
+  - If it's a Python program without a conda package, use `pip` to install.
 
 We'll start with installing programs when there's already a conda package available.
 
@@ -198,7 +198,7 @@ You have one environment active at a time with those programs available for use.
 - Best-practice is to create a separate environment for each pipeline.
 - There is no environment "too small": even if the software does not have dependencies, it is often a good idea to install it in a separate environment.
 - Environments can be thought of as 'disposable.' Recreate them as needed.
-- Environments allow users to have different versions of Python installed than what is installed in `base`
+- Environments allow users to have different versions of Python installed than what is installed in `base`.
 
 ```
 (base) $ conda create --name blobtools
@@ -232,14 +232,14 @@ The output:
 - `environment location: /home/user/.conda/envs/blobtools`
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
   - That's a great place for it on Hydra because it's not scrubbed.
-  - You can specify a different location with `--prefix /full/path/to/environment`
+  - You can specify a different location with `--prefix /full/path/to/environment`.
 - `To activate this environment, use $ conda activate blobtools`: You'll need to activate your new environment to start installing programs.
 - `To deactivate an active environment, use $ conda deactivate`: When you're done with the enviornment, you can deactivate it, or you can close the terminal session.
 - Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` environment. The Hydra admin team will occasionally install new versions of conda.
 
 ## Activate your new environment
 - `conda activate blobtools`
-  - Start using your new environment
+  - Start using your new environment.
   - At this point the only additional program you have is `conda`! The programs installed in `base` are *not* accessible.
 
 ```
@@ -253,7 +253,7 @@ Python 2.7.5
 If you have been using conda on Hydra prior to this workshop, you likely have existing environments you still want to use.
 You can do this with the `tools/conda` module.
 
-Specify the path (full or relative) to the conda environment in `conda activate`
+Specify the path (full or relative) to the conda environment in `conda activate`.
 
 ```
 $ conda activate ~/miniconda3/envs/twobit
@@ -279,9 +279,9 @@ If you are installing a package from:
 
 ### Our reccomendations for settings
 
-- `conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program. (default is `flexible`)
+- `conda config --set channel_priority strict` (lower priority channels are not searched to find a compatible version of a program; default is `flexible`).
 
-Add channels in this order. `defaults` will be lowest and `conda-forge` highest. 
+Add channels in this order: `defaults` will be lowest priority and `conda-forge` highest priority. 
 ```
 conda config --add channels defaults
 conda config --add channels bioconda
@@ -299,7 +299,7 @@ channels:
 And you can view of your settings in the file `~/.condarc` 
 
 ```
-$ cat ~/.condara
+$ cat ~/.condarc
 channel_priority: strict
 channels:
   - conda-forge
@@ -307,7 +307,7 @@ channels:
   - defaults
 ```
 
-`~/.condarc` can be manually edited or if you want to reset to default settings, it can be removed 
+`~/.condarc` can be manually edited or if you want to reset to default settings, it can be removed. 
 
 ### Installing
 
