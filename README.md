@@ -1,7 +1,7 @@
 # advanced-hydra-workshops
 
 ## Conda on Hydra (2023-02-15)
-- Slides
+- [conda_intro_slides.pdf](Slides)
 - [Hands on material](conda.md)
 
 Other useful links:
