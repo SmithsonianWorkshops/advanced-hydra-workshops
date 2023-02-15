@@ -243,9 +243,9 @@ The output:
   - At this point the only additional program you have is `conda`! The programs installed in `base` are *not* accessible.
 
 ```
-$ which python
+(blobtools)$ which python
 /usr/bin/python
-$ python --version
+(blobtools)$ python --version
 Python 2.7.5
 ```
 
@@ -256,7 +256,8 @@ You can do this with the `tools/conda` module.
 Specify the path (full or relative) to the conda environment in `conda activate`.
 
 ```
-$ conda activate ~/miniconda3/envs/twobit
+(base)$ conda activate ~/miniconda3/envs/twobit
+(twobit)$ 
 ```
 
 ### Channels
@@ -289,7 +290,7 @@ conda config --add channels conda-forge
 ```
 
 ```
-$ conda config --show channels
+(blobtools)$ conda config --show channels
 channels:
   - conda-forge
   - bioconda
@@ -299,7 +300,7 @@ channels:
 And you can view of your settings in the file `~/.condarc` 
 
 ```
-$ cat ~/.condarc
+(blobtools)$ cat ~/.condarc
 channel_priority: strict
 channels:
   - conda-forge
@@ -312,7 +313,7 @@ channels:
 ### Installing
 
 ```
-$ conda install blobtools
+(blobtools)$ conda install blobtools
 
 Collecting package metadata (current_repodata.json): done
 Solving environment: failed with initial frozen solve. Retrying with flexible solve.
@@ -348,7 +349,7 @@ Executing transaction: done
 We've decided we also need to run NCBI's blast with this pipeline. We can install blast in the blobtools environment if it's still activated.
 
 ```
-$ conda install blast
+(blobtools)$ conda install blast
 ```
 
 ### Create environment and install package(s) in one step
@@ -399,7 +400,7 @@ These exports are platform specific, so an environment created on Hydra will wor
 
 ```
 (blobtools)$ conda env export --name blobtools > blobtools.yml
-$ head blobtools.yml
+(blobtools)$ head blobtools.yml
 
 name: blobtools
 channels:
@@ -424,15 +425,6 @@ $ conda env create -f blobtools.yml --name blobtools-imported
 If you don't specify `--name`, the orginal name of the exported environment will be used.
 
 ## Other topics
-
-### Q: How do I use an enviornment that I created in my personal `conda` install?
-If you were using conda on Hydra before this workshop, you can still use your previous conda installs.
-The `conda activate` commnad will take a full path of an environment.
-
-```
-$ conda activate ~/miniconda3/envs/amas
-(amas) $
-```
 
 ### Q: What's the best place to store my conda environments?
 The default location in your home directory, `~/.conda/envs`, is fine. The envirnoments don't use much space
