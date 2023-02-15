@@ -292,7 +292,7 @@ Executing transaction: done
 
 ```
 
-🕒 This will take about five minutes in the "Solving enviornment" stage. (Good time for a break or talk about `mamba` :smile:)
+:clock1: This will take about five minutes in the "Solving enviornment" stage. (Good time for a break or talk about `mamba` :smile:)
 
 
 ### Add additional package
