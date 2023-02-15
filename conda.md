@@ -1,43 +1,65 @@
 # `conda` hands-on
 
-In the hands-on portion of the workshop you will learn how to use a version of conda pre-installed on Hydra to install software. At the end of the hands-on portion you'll learn:
+In the hands-on portion of the workshop you will learn how to use a version of conda pre-installed on Hydra. You'll learn:
 - Where to get help with conda
 - How to find software to install
 - How to install software using best-practices
-- How to run the software you installed with conda in submitted jobs on the Hydra
+- How to run the software you installed in submitted jobs on Hydra
 - How to configure your Hydra account to make conda available when you log on (optional)
-- How to share your installations with others on Hydra and those using other systems
+- How to share your installations with others on Hydra and elsewhere
 
 ## Accessing conda on Hydra
 
-In this workshop we'll be using `conda` that is pre-installed on Hydra and accessible via the module `tools/conda/23.1.0`.
-Loading this module and then running `start-conda` will configure your current environment to use the conda.
+We'll be using `conda` that is pre-installed on Hydra and accessible via the module `tools/conda`.
+Loading this module and then running `start-conda` will configure your current environment to use conda.
 
-To see what changes are made, we'll look at the location and version of python in your current session.
+### Cleaning up previous configuration
 
-:alert: If you have previously configured to load automatically, and you have `(base)` in your command prompt when you log in, please see ____.
+If you've previously setup conda on Hydra, we'll ask you to disable that previous install. This will **NOT** remove your previous conda installation and software you've installed, it will only disable it from loading when you log in to Hydra.
 
-*Before*
+Do you have a conda enabled in your current Hydra session? If either of these are true, you probably do.
+
+Does your command prompt have `(base)`?
+
 ```
-$ which python
-/usr/bin/python
-$ python --version
-Python 2.7.5
-````
+(base) [user@hydra-login01 ~]$
+```
+
+Does entering the `conda` command give you a usage message?
+
+```
+$ conda
+usage: conda [-h] [-V] command ...
+
+conda is a tool for managing and deploying applications, environments and packages.
+```
+
+If either of these are true run these commands to disable you current install (for BASH users):
+
+```
+$ cp -vi ~/.bashrc ~/.bashrc.bak 
+$ conda init --reverse
+```
+
+Now, log out and back into Hydra. Is `(base)` removed from your command prompt? Does entering type `conda` command give `conda: command not found`? If so, you're ready to continue with the workshop. If not, please ask for help.
+
+### The `tools/conda` module
+
+We're going to load the `tools/conda` module from the login node.
 
 *Load module*
+
 ```
-$ module load tools/conda/23.1.0
+$ module load tools/conda
 Miniconda3 v23.1.0 loaded, to start conda, type start-conda
-$ which python
-/usr/bin/python
-$ python --version
-Python 2.7.5
+$ conda
+-bash: conda: command not found
 ```
 
-Unlike many modules, loading doesn't change your environment, other than creating the alias `start-conda`
+Unlike many modules, loading doesn't change your environment, other than creating the alias `start-conda`.
 
-Running the hydra-specific command `start-conda`, your current environment is modified to use conda. It not only changes your `PATH`, but other settings.
+Running the hydra-specific command `start-conda` modifies your current environment to use conda. It not only changes your `PATH`, but other settings.
+
 `(base)` in your command prompt indicates it is configured.
 
 ```
@@ -47,6 +69,7 @@ $ start-conda
 (base)$ python --version
 Python 3.10.9
 ```
+
 :warning: **You must enter the Hydra-specific command `start-conda` for conda to work!**
 
 Discussion:
@@ -56,17 +79,17 @@ Discussion:
 
 ## Help with the conda command line
 
+- 'Official' cheat sheet (USEFUL!): https://docs.conda.io/projects/conda/en/latest/_downloads/a35958a2a7fa1e927e7dfb61ebcd69a9/conda-4.14.pdf
 - Web:
   - Command reference: https://docs.conda.io/projects/conda/en/stable/commands.html
   - Managing packages: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
   - Working with environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
   - And of course, using a search enging. Try: `conda activate` or `conda find package` or `conda install blast` 
-- 'Official' cheat sheet (USEFUL!): https://docs.conda.io/projects/conda/en/latest/_downloads/a35958a2a7fa1e927e7dfb61ebcd69a9/conda-4.14.pdf
 - Carprentries conda lesson (in development): https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/
 - From the terminal:
   - `conda --help` 
   - For a specific command: `conda create --help`
-  - Info on the Hydra conda module: `conda help tools/conda/23.1.0`
+  - Info on the Hydra conda module: `conda help tools/conda`
 
 ## Using conda to install software
 
