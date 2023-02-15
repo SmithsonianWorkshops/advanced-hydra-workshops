@@ -182,8 +182,8 @@ Platforms: Linux and "noarch"
 What other versions are available?
 Check in https://anaconda.org/bioconda/blobtools
 
-You can see all the packages for a channel: https://anaconda.org/bioconda or https://anaconda.org/conda-forge
-However, you can't search within a channel in this interface (at least on anaconda.org)
+You can see all the packages for a channel: https://anaconda.org/bioconda or https://anaconda.org/conda-forge.
+However, you can't search within a channel in this interface (at least on anaconda.org).
 The popular community moderated channels conda-forge and bioconda have there own websites where you can search within the channel:
 - conda-forge packages: https://conda-forge.org/feedstock-outputs/
 - bioconda packages: https://bioconda.github.io/conda-package_index.html
@@ -194,11 +194,11 @@ A conda environment is an **isolated** set of install directories that contain a
 By being isolated from other environments, the dependencies of the programs in one environment won't interfere with other environments.
 You have one environment active at a time with those programs available for use.
 
-- You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
-- Best-practice is to create a separate environment for each pipeline
-- You can also create environments for specific programs.
+- You'll have full write-access to the environemnts you create (unlike `base` on Hydra).
+- Best-practice is to create a separate environment for each pipeline.
+- There is no environment "too small": even if the software does not have dependencies, it is often a good idea to install it in a separate environment.
 - Environments can be thought of as 'disposable.' Recreate them as needed.
-- Environments allow users to have a different versions of Python installed than what is installed in `base`
+- Environments allow users to have different versions of Python installed than what is installed in `base`
 
 ```
 (base) $ conda create --name blobtools
@@ -231,11 +231,11 @@ Executing transaction: done
 The output:
 - `environment location: /home/user/.conda/envs/blobtools`
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
-  - That's a great place for it on Hydra because it's not scrubbed
+  - That's a great place for it on Hydra because it's not scrubbed.
   - You can specify a different location with `--prefix /full/path/to/environment`
-- `To activate this environment, use $ conda activate blobtools`: You'll next activate our new environment to start installing programs.
-- `To deactivate an active environment, use $ conda deactivate`: When You're done with the enviornment, you can deactivate it, or you can close the terminal session.
-- Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` environment. The Hydra admins will occasionally install new versions of conda.
+- `To activate this environment, use $ conda activate blobtools`: You'll need to activate your new environment to start installing programs.
+- `To deactivate an active environment, use $ conda deactivate`: When you're done with the enviornment, you can deactivate it, or you can close the terminal session.
+- Note, you may recieve an alert that a newer version of conda is available. You won't be able to update on your own because you don't have write access to the `base` environment. The Hydra admin team will occasionally install new versions of conda.
 
 ## Activate your new environment
 - `conda activate blobtools`
