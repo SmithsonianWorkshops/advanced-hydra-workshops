@@ -41,6 +41,7 @@ If either of these are true run these commands to disable you current install (f
 $ cp -vi ~/.bashrc ~/.bashrc.bak 
 $ conda init --reverse
 ```
+The first command backs up your current ~/.bashrc file in case you want to go back to it later and the second command removes the conda initialization code. 
 
 (An alternative is to edit your ~/.bashrc or ~/.cshrc (for csh users) and remove the lines between `# >>> conda initialize >>>` and `# <<< conda initialize <<<` )
 
