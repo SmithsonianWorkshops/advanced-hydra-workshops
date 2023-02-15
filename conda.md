@@ -95,7 +95,7 @@ Advanced bash and csh users are welcome to run `conda shell.bash hook` and `cond
   - Command reference: https://docs.conda.io/projects/conda/en/stable/commands.html
   - Managing packages: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html
   - Working with environments: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
-  - And of course, using a search enging. Try: `conda activate` or `conda find package` or `conda install blast` 
+  - And of course, using a search engine. Try: `conda activate` or `conda find package` or `conda install blast` 
 - Carprentries conda lesson (in development): https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/
 - From the terminal:
   - `conda --help` 
@@ -104,11 +104,12 @@ Advanced bash and csh users are welcome to run `conda shell.bash hook` and `cond
 
 ## Using conda to install software
 
-Different approaches:
-- Conda package already exists: install package(s) and all dependencies with conda
-- Packge not available
-  - Install dependencies and then setup/compile program
-  - If it's a Python program, use `pip` to install
+There are different approaches to using conda to install software:
+- If a conda package already exists for the software package: 
+  - Install package(s) and all dependencies with conda, often with a single command
+- If the software is does not have a conda package (yet):
+  - Install dependencies with conda and then setup/compile program while your conda environment is activated
+  - If it's a Python program without a conda package, use `pip` to install
 
 We'll start with installing programs when there's already a conda package available.
 
