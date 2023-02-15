@@ -1,3 +1,49 @@
+# `conda` Intro (slides)
+
+In the intro portion of the workshop you will learn:
+
+* What is conda?
+* What is conda not?
+* Why is conda useful on the HPC?
+
+---
+
+## What is conda?
+
+Conda is an open source package management system and environment management system.
+
+Conda was originally created by a company called Continuum Analytics.
+
+---
+
+## What is conda not?
+
+**Python**
+
+Python is an interpreted programming language, like R
+
+**Pip**
+
+Pip is the built-in package manager for Python packages. It handles versions and dependencies that a given Python package might rely upon.
+
+**Anaconda**
+
+The Anaconda "distribution" of Python is an installation of the Python "interpreter", along with a lot of popular data science packages that can be notoriously hard to install. These packages often rely on compiling external libraries, so the conda package manager was created as an alternative to Pip.
+
+---
+
+## Why is conda useful on Hydra?
+
+**Pre-compiled binaries**
+
+If possible, we recommend that Hydra users install software by compiling the source code using the built-in compilers on Hydra
+
+However, sometimes this can be tricky. 
+
+**Environments**
+
+If you are using or building a multi-step pipeline that depends on specific versions of different tools, it's useful to have a self-contained "environment" with those versions. So that way you can have multiple installations of the same tool, and they don't interfere with each other.
+
 # `conda` hands-on
 
 In the hands-on portion of the workshop you will learn how to use a version of conda pre-installed on Hydra. You'll learn:
