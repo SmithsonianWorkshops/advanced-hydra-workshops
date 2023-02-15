@@ -481,6 +481,7 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 ## Using your conda environment in a job
 
 - Here is an example of a job file using your conda environment to run blast:
+  - First check which version of blast was installed into your environment with `blastn -v`. If it is not BLAST 2.13.0+, you should upgrade it: `conda install blast=2.13`. We have noticed that sometimes, depending on how channel priority is set, that an earlier version is installed. Once you have 2.13, you can use the below file.
 
 ```
 # /bin/sh
