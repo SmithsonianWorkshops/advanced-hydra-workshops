@@ -345,7 +345,7 @@ Executing transaction: done
 
 ### Add additional package
 
-We've decided we also need to run NCBI's blast with this pipeline. We can install blast in the blobtools environment.
+We've decided we also need to run NCBI's blast with this pipeline. We can install blast in the blobtools environment if it's still activated.
 
 ```
 $ conda install blast
@@ -353,28 +353,27 @@ $ conda install blast
 
 ### Create environment and install package(s) in one step
 
-Make sure you're back in `base`. If not, deactivate you current environment.
+You can create an environment, as we did before, AND add the programs that should be installed in one line.
+
+First, make sure you're back in `base`. If not, deactivate you current environment.
 
 ```
 (blobtools)$ conda deactivate
 (base)$
 ```
 
-You can create an environment, as we did before, AND add the programs that should be installed in one line.
-
-The second thing we've added here for reproducability in this command is specify the channels that should be used.
-- The order of the `-c` (for channel) options defines the priority, with the one listed first as highest priority.
-- `--override-channels` tells conda to ignore the defaults you previously defined.
-
-This is the version that is best to send to colleagues or document.
+Now the one-liner to create an environment and install packages:
 
 ```
 $ conda create --name blobtools_with_blast -c conda-forge -c bioconda -c defaults --override-channels blobtools blast
 ...
 ```
 
-### Installing with `pip`
+The second thing we've added here for reproducability in this command is specifying the channels that should be used.
+- The order of the `-c` (for channel) options defines the priority, with the one listed first as highest priority.
+- `--override-channels` tells conda to ignore the defaults you previously defined.
 
+This is the version of the command that is best to send to colleagues or document.
 
 ## Using your conda environment in a job
 
@@ -435,7 +434,7 @@ If you don't specify `--name`, the orginal name of the exported environment will
 
 ### Q: How do I use an enviornment that I created in my personal `conda` install?
 If you were using conda on Hydra before this workshop, you can still use your previous conda installs.
-The `conda activate` commnad will take a full path of an envionrment
+The `conda activate` commnad will take a full path of an environment.
 
 ```
 $ conda activate ~/miniconda3/envs/amas
@@ -468,7 +467,7 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 
 - SLOW: mamba as an alternative
 - Errors you get if there are conflicting dependencies and package can't be installed?
-- You install multiple packages, but you end up with an old version of packge (because of conflicting dependencies)
+- You install multiple packages, but you end up with an old version of packge (because of conflicting dependencies).
 - The version of an available package is not the most recent the developer has released.
 
 
