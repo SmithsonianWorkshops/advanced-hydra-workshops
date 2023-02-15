@@ -191,6 +191,16 @@ $ python --version
 Python 2.7.5
 ```
 
+### Activating your exiting conda environments
+If you have been using conda on Hydra prior to this workshop, you likely have existing environments you still want to use.
+You can do this with the `tools/conda` module.
+
+Specify the path (full or relative) to the conda environment in `conda activate`
+
+```
+$ conda activate ~/miniconda3/envs/twobit
+```
+
 ### Channels
 
 - Defaults (controlled by the Anaconda company): `main` and `R`
@@ -292,40 +302,21 @@ Make sure you're back in `base`, if not deactivate you current environment
 (base)$
 ```
 
+You can create an environment, as we did before, AND add the programs that should be installed.
+
+The second thing we've added here for reproducability is specify the channels that should be used.
+- The order of the `-c` (for channel) options defines the priority, with the one listed first as highest priority.
+- `--override-channels` tells conda to ignore the defaults you previously defined.
+
+This is the version that is best to send to colleagues or document.
+
 ```
-$ conda create --name blobtools_with_blast blobtools blast
+$ conda create --name blobtools_with_blast -c conda-forge -c bioconda -c defaults --override-channels blobtools blast
 ...
 ```
 
 ### Installing with `pip`
 
-[Probably best to find a different example, this one doesn't install correctly with pip and it's actually available via bioconda. Maybe use Mike's tool that calculates assembly stats?]
-
-AMAS "Alignment manipulation and summary statistics": https://github.com/marekborowiec/AMAS
-`Borowiec, M.L. 2016. AMAS: a fast tool for alignment manipulation and computing of summary statistics. PeerJ 4:e1660.` http://dx.doi.org/10.7717/peerj.1660
-
-- Not available on anacaonda.org [actually it is, whoops]
-- Instructions say:
-  - `sudo apt-get install python3` and `pip install amas`
-  - `sudo` on Hydra is a red flag, you don't have sudo rights!
-  - `apt-get` assumes you are running the Ubuntu flavor of Linux, which Hydra is not!
-
-Our strategy: create a conda env with python3 and install amas into that env
-
-```
-$ conda create -n amas python=3
-```
-
-```
-$ conda activate amas
-```
-
-```
-$ pip install amas
-```
-
-Where did the executable go? /home/user/.conda/envs/amas-try2/lib/python3.11/site-packages/amas/AMAS.py
-Well, maybe this isn't the best example :(
 
 ## Using your conda environment in a job
 
@@ -334,6 +325,17 @@ module load tools/conda/23.1.0
 start-conda
 conda activate <name>
 ```
+
+## Configuring conda to be active when you log into Hydra (optional)
+
+Add to your `~/.bashrc` (bash users) or `~/.cshrc` (csh users):
+
+```
+module load tools/conda
+start-conda
+```
+
+This is an alternative to using the `conda init` command.
 
 ## Exporting and sharing your environment
 
@@ -369,10 +371,7 @@ You can then send that file to a collegue and they would create the environment 
 $ conda env create -f blobtools.yml --name blobtools-imported
 ```
 
-If you don't specify `--name`, the orginally name of the exported environment will be used.
-
-The channels specified in the `.yml` will be used, regardless of what the user has configured in their settings (`.condarc`).
-:shipit: This needs to be confirmed
+If you don't specify `--name`, the orginal name of the exported environment will be used.
 
 ## Other topics
 
