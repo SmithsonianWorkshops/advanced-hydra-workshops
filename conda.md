@@ -331,7 +331,7 @@ $ conda create --name blobtools_with_blast -c conda-forge -c bioconda -c default
 ## Using your conda environment in a job
 
 ```
-module load tools/conda/23.1.0
+module load tools/conda
 start-conda
 conda activate <name>
 ```
