@@ -54,6 +54,10 @@ In the hands-on portion of the workshop you will learn how to use a version of c
 - How to configure your Hydra account to make conda available when you log on (optional)
 - How to share your installations with others on Hydra and elsewhere
 
+## Log in to Hydra
+
+If you need a reminder about how to log into Hydra and how to change your password, check out our Intro to Hydra tutorial: https://github.com/SmithsonianWorkshops/Hydra-introduction/blob/master/hydra_intro.md
+
 ## Accessing conda on Hydra
 
 We'll be using `conda` that is pre-installed on Hydra and accessible via the module `tools/conda`.
@@ -476,9 +480,16 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 
 ## Using your conda environment in a job
 
+- Here is an example of where to put the conda information in job file:
 ```
+...
+#
+# ----------------Modules------------------------- #
 module load tools/conda
 start-conda
 conda activate <name>
-```
+#
+# ----------------Your Commands------------------- #
+...
 
+```
