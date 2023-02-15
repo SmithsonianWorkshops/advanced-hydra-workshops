@@ -121,26 +121,26 @@ Package: blobtools
 Latest version: 1.1.1
 Platforms: Linux and "noarch"
 
-You can see all the packages for a channel: https://anaconda.org/bioconda
-However, you can't search within a channel in this interface
-
-Channels we'll talk about:
-Main and R: controlled by Anaconda company
-conda-forge, bioconda: community controlled
-
 What other versions are available?
 Check in https://anaconda.org/bioconda/blobtools
 
+You can see all the packages for a channel: https://anaconda.org/bioconda or https://anaconda.org/conda-forge
+However, you can't search within a channel in this interface (at least on anaconda.org)
+The popular community moderated channels conda-forge and bioconda have there own websites where you can search within the channel:
+- conda-forge packages: https://conda-forge.org/feedstock-outputs/
+- bioconda packages: https://bioconda.github.io/conda-package_index.html
+
 ### Create an environment
+
+A conda environment is an **isolated** set of install directories that contain all the files needed for a set of programs.
+By being isolated from other environments, the dependencies of the programs in one environment won't interfere with other environments.
+You have one environment active at a time with those programs available for use.
 
 - You'll have full write-access to the environemnts you create (unlike `base` on Hydra)
 - Best-practice is to create a separate environment for each pipeline
-  - This will be a set of programs that need to run in your analysis steps
-  - Sometimes pipeline componenets can have conflicting dependencies, you might have to create separate dependencies for these components.
-- By having separate environments, dependency conflicts will be less likely
 - You can also create environments for specific programs.
-- Environments can be 'disposable,'... [re-create when needed]
-- Environments allow users to have a different version of Python installed than what is installed in `base`
+- Environments can be thought of as 'disposable.' Recreate them as needed.
+- Environments allow users to have a different versions of Python installed than what is installed in `base`
 
 ```
 (base) $ conda create --name blobtools
@@ -171,7 +171,7 @@ Executing transaction: done
 ```
 
 The output:
-- `environment location: /home/user/.conda/envs/workblobtoolsshop`
+- `environment location: /home/user/.conda/envs/blobtools`
   - Conda will create the environment in your home directory in a hidden directory named `.conda`
   - That's a great place for it on Hydra because it's not scrubbed
   - You can specify a different location with `--prefix /full/path/to/environment`
@@ -196,7 +196,7 @@ Python 2.7.5
 - Defaults (controlled by the Anaconda company): `main` and `R`
 - Community moderated channels: e.g. `conda-forge`, `bioconda`
 - Privately controlled channels. These can be publicly available or hidden : `dunnlab`, `faircloth-lab`, ...
-  - These are not community curated, so they are more likely to be orphaned (no no longer updated) or configured specifically for the needs of an individual or lab group.
+  - These are not community curated, so they are more likely to be orphaned (no longer updated) or configured specifically for the needs of an individual or lab group.
 
 When you use conda to install a package, the configured channel(s) are checked for packages and dependencies.
 
@@ -207,16 +207,11 @@ If you are installing a package from:
 - `conda-forge` or `bioconda`, `conda-forge` should be the highest priority with `bioconda` next, followed by Defaults.
 - Discussion: What about the privately maintained community repos? 
 
-:warning::warning::warning:
-If you don't have the channel priority set correctly, you can be installing dependencies that are not compatible with the package you want.
-
-- ?? Maybe hands-on showing different verisons/sources that will be installed depending on channel list?
-- Best practice?: specify the channels during install and `--overide-channels` (others?)
-
+:warning: If you don't have the channel priority set correctly, you can be installing dependencies that are not compatible with the package you want.
 
 ### Our reccomendations for settings
 
-`conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program.
+- `conda config --set channel_priority strict` Lower priority channels are not searched to find a compatible version of a program. (default is `flexible`)
 
 Add channels in this order. `defaults` will be lowest and `conda-forge` highest. 
 ```
@@ -243,6 +238,8 @@ channels:
   - bioconda
   - defaults
 ```
+
+`~/.condarc` can be manually edited or if you want to reset to default settings, it can be removed 
 
 ### Installing
 
@@ -275,7 +272,7 @@ Executing transaction: done
 
 ```
 
-🕒 This will take about five minutes in the "Solving enviornment" stage.
+🕒 This will take about five minutes in the "Solving enviornment" stage. (Good time for a break or talk about `mamba` :smile:)
 
 
 ### Add additional package
