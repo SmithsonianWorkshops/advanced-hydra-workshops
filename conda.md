@@ -253,7 +253,7 @@ The output:
 Python 2.7.5
 ```
 
-### Activating your exiting conda environments
+### Activating your existing conda environments
 If you have been using conda on Hydra prior to this workshop, you likely have existing environments you still want to use.
 You can do this with the `tools/conda` module.
 
@@ -480,16 +480,33 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 
 ## Using your conda environment in a job
 
-- Here is an example of where to put the conda information in job file:
+- Here is an example of a job file using your conda environment to run blast:
+
 ```
-...
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -l mres=8G,h_data=8G,h_vmem=8G
+#$ -cwd
+#$ -j y
+#$ -N blast_bold
+#$ -o blast_bold.log
 #
 # ----------------Modules------------------------- #
 module load tools/conda
 start-conda
-conda activate <name>
+conda activate blobtools
 #
 # ----------------Your Commands------------------- #
-...
-
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+#
+blastn -db /scratch/dbs/blast/bold/bold_blast_2023_01_20 \
+       -query /data/genomics/workshops/conda/random_barcode.fasta \
+       -max_target_seqs 20 \
+       -outfmt "6 qseqid sseqid pident length qcovs evalue" \
+       -out blast_bold_results.tsv
+#
+echo = `date` job $JOB_NAME done
 ```
