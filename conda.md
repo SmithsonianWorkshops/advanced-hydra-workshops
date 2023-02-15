@@ -32,6 +32,7 @@ $ conda
 usage: conda [-h] [-V] command ...
 
 conda is a tool for managing and deploying applications, environments and packages.
+...
 ```
 
 If either of these are true run these commands to disable you current install (for BASH users):
@@ -40,6 +41,8 @@ If either of these are true run these commands to disable you current install (f
 $ cp -vi ~/.bashrc ~/.bashrc.bak 
 $ conda init --reverse
 ```
+
+(An alternative is to edit your ~/.bashrc or ~/.cshrc (for csh users) and remove the lines between `# >>> conda initialize >>>` and `# <<< conda initialize <<<` )
 
 Now, log out and back into Hydra. Is `(base)` removed from your command prompt? Does entering type `conda` command give `conda: command not found`? If so, you're ready to continue with the workshop. If not, please ask for help.
 
@@ -60,6 +63,7 @@ Unlike many modules, loading doesn't change your environment, other than creatin
 
 Running the hydra-specific command `start-conda` modifies your current environment to use conda. It not only changes your `PATH`, but other settings.
 
+
 `(base)` in your command prompt indicates it is configured.
 
 ```
@@ -76,6 +80,12 @@ Discussion:
 - What does `(base)` mean?
 - Advanced: use `echo $PATH` to see how the `PATH` variable changes as you peform the above steps.
 - This is an admin installed conda, how can I use it to install my own software!
+
+### Advanced: what `start-conda` does
+
+What does `start-conda` do? It sources the code produced by `conda shell.bash hook` (bash users) or `conda shell.tcsh hook`. This replicates what happens when you've configured conda to modify your environment at started using `conda init`.
+
+Advanced bash and csh users are welcome to run `conda shell.bash hook` and `conda shell.tcsh hook` to see the script that is sourced.
 
 ## Help with the conda command line
 
