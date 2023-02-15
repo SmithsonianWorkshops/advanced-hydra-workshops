@@ -353,16 +353,16 @@ $ conda install blast
 
 ### Create environment and install package(s) in one step
 
-Make sure you're back in `base`, if not deactivate you current environment
+Make sure you're back in `base`. If not, deactivate you current environment.
 
 ```
 (blobtools)$ conda deactivate
 (base)$
 ```
 
-You can create an environment, as we did before, AND add the programs that should be installed.
+You can create an environment, as we did before, AND add the programs that should be installed in one line.
 
-The second thing we've added here for reproducability is specify the channels that should be used.
+The second thing we've added here for reproducability in this command is specify the channels that should be used.
 - The order of the `-c` (for channel) options defines the priority, with the one listed first as highest priority.
 - `--override-channels` tells conda to ignore the defaults you previously defined.
 
