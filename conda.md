@@ -375,13 +375,6 @@ The second thing we've added here for reproducability in this command is specify
 
 This is the version of the command that is best to send to colleagues or document.
 
-## Using your conda environment in a job
-
-```
-module load tools/conda
-start-conda
-conda activate <name>
-```
 
 ## Configuring conda to be active when you log into Hydra (optional)
 
@@ -473,8 +466,27 @@ $ find /path/to/env -executable -exec chmod a+x {} \;
 
 # Conda glossary
 
-- package
-- channel
-- environment
-- recipe
-- dependency
+*Package:* A program and its installation instructions that are downloaded and executed by the `conda install` command. Packages are typicially modular, containing the executables, list of dependencies, and installation commands for one program. Multiple packages can be installed to provide access to different programs. 
+
+*Channel:* A set of conda packages managed by an individual or organization. The conda script uses the list of conda channels that you specify when compiling the list of packages to install. 
+
+*Channel priority:* The order that channels are checked for packages. The higher priority channels are checked before lower priority channels. This order is essential in determining what versions of programs are installed. 
+
+*Environment:* A conda environment is a distinct set of packages and their dependencies that can be activated and used by a set of commands. By being distinct from other environments, the packages and the required versions installed in one environment won’t interfere with another. 
+
+*Recipe:* part of a package that has the instructions for installing the program. It can include a list of dependencies (other required programs), and special instructions for the installation of the software. 
+
+*Dependency:* A conda package that is required by another package. When installing a package, a list of dependencies is included. It will be installed if it's not already in your environment. Dependencies can have other dependencies which can make the determination of all the required programs by `conda install` time consuming. 
+
+*Mamba:* An open source, community generated, alternative to the conda script. It is known for being faster than conda in creating the list of packages to install (‘solving the environment’).  
+
+*Solving the environment:* During the installation process, when the conda script determines all the packages, their versions and channels, to be installed to satisfy all the programs and dependencies in the current environment. This step can fail if there are incompatible requirements for a program or there can be a downgrade of an already installed program to meet a requirement. 
+
+## Using your conda environment in a job
+
+```
+module load tools/conda
+start-conda
+conda activate <name>
+```
+
