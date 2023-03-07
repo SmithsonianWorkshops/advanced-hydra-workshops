@@ -2,13 +2,13 @@
 
 In the intro portion of the workshop you will learn:
 
-* How to download code
-* How to compile code
-* How to install a package
+* About downloading code
+* About compiling code
+* How to build a package from source code
   - configure
   - build
   - install
-* How to writing modules
+* How to write modules
   - simple, elaborate and complex examples (`tcl` aka _tickle_)
   - `.version` file
 * What are `yum`, `rpm`, `get-apt`, etc
@@ -44,26 +44,32 @@ a know vulnerability. So be vigilent and responsible.
 
 ---
 
+## Compiling code
+
+---
+
 ## Building from Source Code
 
 If you download source code you will need to build the code. This is
 usually done in 3 steps
 
 1. **Configure**
-  - Most packages come with a configuration script, a list of pre-requisites
-    (aka dependencies) and instructions.
-  - Some packages allow to build the code without some features in case you
-    cannot satisfy some of the pre-requisites.
-  - You most likely need to load the right module to use the
-    appropriate compiler
+    - Most packages come with a configuration script, a list of pre-requisites
+      (aka dependencies) and instructions.
+    - Some packages allow to build the code without some features in case you
+      cannot satisfy some of the pre-requisites.
+    - You most likely need to load the right module to use the
+      appropriate compiler
+
 1. **Build**
-  - need to make sure you have loaded the right modules to use the
-    right compiler
-  - run `make` to compile and link (aka build) the code
+    - need to make sure you have loaded the right modules to use the
+      right compiler
+    - run `make` to compile and link (aka build) the code
+
 1. **Install**
-  - copy the executable to the right place (usually defined by the
-    configuration)
-  - best practice is to separate build from install locations
+    - copy the executable to the right place (usually defined by the
+      configuration)
+    - best practice is to separate build from install locations
                
 - This will be illustrated in the hands on section.
 
@@ -204,7 +210,13 @@ more bio/trinity/2.9.1
 ~/modulefiles/crunch/1.0
 ~/modulefiles/crunch/1.2
 ~/modulefiles/crunch/2.1
+~/modulefiles/crunch/.version
 ~/modulefiles/viewit
+```
+  - the `.version` file
+```
+#%Module1.0
+set ModulesVersion "1.2"
 ```
 
   - tell `module` where to find your module file with
@@ -216,7 +228,7 @@ module use --append /home/sylvain/modulefiles
   1. better yet in a `~/.modulerc` file (shell independant), but you need it
   to look like this:
 ```
-#%Module1.0#
+#%Module1.0
 # adding my private module files
 module use --append /home/sylvain/modulefiles
 ```
