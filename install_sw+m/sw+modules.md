@@ -1,20 +1,16 @@
-[//]: # use https://markdownlivepreview.com/ to preview
-
 # Installing software and writing modules Intro (slides)
 
 In the intro portion of the workshop you will learn:
 
 * How to download code
 * How to compile code
-  - simple example(s)
 * How to install a package
- - configure
- - build
- - install
+  - configure
+  - build
+  - install
 * How to writing modules
- - simple examples
- - `.version` file
- - complex examples: `tcl` (_tickle_)
+  - simple, elaborate and complex examples (`tcl` aka _tickle_)
+  - `.version` file
 * What are `yum`, `rpm`, `get-apt`, etc
  - how to use `yum` and `rpm`
  - what about `sudo`?
@@ -38,13 +34,13 @@ but
 
 ### Notes 
 
-Since user do not have elevated privileges (root access) you are very unlikely
+- Since user do not have elevated privileges (root access) you are very unlikely
 to damage the cluster, but malicious software can still damage your files.
 
-In rare cases it may try to install a _trojan horse_ that would try to exploit
+- In rare cases it may try to install a _trojan horse_ that would try to exploit
 a know vulnerability. So be vigilent and responsible.
 
-In case of doubt, never hesitate to contact us.
+- In case of doubt, never hesitate to contact us.
 
 ---
 
@@ -54,38 +50,38 @@ If you download source code you will need to build the code. This is
 usually done in 3 steps
 
 1. **Configure**
- - Most packages come with a configuration script, a list of pre-requisites
-   (aka dependencies) and instructions.
- - Some packages allow to build the code without some features in case you
-   cannot satisfy some of the pre-requisites.
- - You most likely need to load the right module to use the
-   appropriate compiler
+  - Most packages come with a configuration script, a list of pre-requisites
+    (aka dependencies) and instructions.
+  - Some packages allow to build the code without some features in case you
+    cannot satisfy some of the pre-requisites.
+  - You most likely need to load the right module to use the
+    appropriate compiler
 1. **Build**
- - need to make sure you have loaded the right modules to use the
-   right compiler
- - run `make` to compile and link (aka build) the code
+  - need to make sure you have loaded the right modules to use the
+    right compiler
+  - run `make` to compile and link (aka build) the code
 1. **Install**
- - copy the executable to the right place (usually defined by the
-   configuration)
- - best practice is to separate build from install locations
+  - copy the executable to the right place (usually defined by the
+    configuration)
+  - best practice is to separate build from install locations
                
-This will be illustrated in the hands on section.
+- This will be illustrated in the hands on section.
+
 ---
 
 ## Module and module files
 
 ### The `module` command and module files
 
-- The command `module` is a convenient mechanism to configure your Unix/Linux
-  environment.
-
-- The command `module` reads a file, aka the "module file", that holds a set
+- The command `module` 
+  - is a convenient mechanism to configure your Unix/Linux environment.
+  - reads a file, aka the "module file", that holds a set
   of simple or complex instructions.
 
  - This is a shell syntax independent way to configure your environment:
- - you use the _same_ module file whether you use the `[ba]sh` or `[t]csh` shell.
+   - you use the _same_ module file whether you use the `[ba]sh` or `[t]csh` shell.
  - We provide a slew of module files, but users can augment this by writing their own.
- - You are welcome to look at all the module files we wrote, most of them are
+   - you are welcome to look at all the module files we wrote, most of them are
    under `/share/apps/modulefiles/`.
 
 ---
@@ -181,7 +177,7 @@ https://rclone.org/
 
 ---
 
-## Examples of a complex module files
+## Examples of complex module files
 
 ```
 cd /share/apps/modulefiles
