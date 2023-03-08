@@ -134,6 +134,7 @@ man module
 ```
 
 ---
+
 ## Example of a simple module file
 
 ```
@@ -194,6 +195,7 @@ more bio/trinity/2.9.1
 ```
 
 ---
+
 ## Organization and Customization
 
 - You can keep your module files in a central location (recommmended), using a
@@ -235,7 +237,7 @@ module use --append /home/sylvain/modulefiles
 
 ---
 
-## The yum, rpm, get-apt and sudo soup
+## The `yum`, `rpm`, `get-apt` and `sudo` soup
 
 ---
 
