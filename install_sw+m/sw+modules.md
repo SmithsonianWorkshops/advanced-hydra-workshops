@@ -208,14 +208,14 @@ more bio/trinity/2.9.1
 ## Organization and Customization
 
 - You can keep your module files in a central location using a
-  tree stucture (![:thumbsup:](small-thumbsup.png "thumbsup")), or 
+  tree stucture (:thumbsup:), or 
   - if you prefer where you need them.
 
 - You can load a module file using the module file full path, 
 ```
 module load /path/to/my/module/crunch
 ```
-  - or tell `module` where to look for your central location (![:thumbsup:](small-thumbsup.png "thumbsup")).
+  - or tell `module` where to look for your central location (:thumbsup:).
 
 - The recommended approach:
   - use a central location under you home directory `~/modulefiles`
