@@ -1,4 +1,6 @@
-# Installing software and writing modules Intro (slides)
+# Installing software and writing modules 
+
+## Intro
 
 In the intro portion of the workshop you will learn:
 
