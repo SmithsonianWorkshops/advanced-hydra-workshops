@@ -21,159 +21,152 @@ In the intro portion of the workshop you will learn:
 
 ## Downloading Code
 
-In most cases you are better off downloading the source and building the code
-(aka the executable) yourself.
+In most cases you are better off downloading the source and building the code (aka the executable) yourself.
+
 
 ### Donwloading Executables
 There are instances when available executables will run flawlessly on Hydra,
 but
 
  1. make sure you trust the origin of the code
- 1. make sure you get a version compatible with Hydra, _i.e._, that will run
-  on CentOS 7.x for Intel/AMD CPUs
- 1. Hydra configuration is specific, hence pre-built code may need other
-  stuff (dependencies) that are not installed on Hydra
+ 1. make sure you get a version compatible with Hydra, 
+    * _i.e._, that will run
+  on CentOS 7.x for Intel/AMD CPUs (`x86_64`)
+ 1. Hydra configuration is specific: 
+    * pre-built may code need _stuff_ (dependencies) not on Hydra/
 
 ---
 
-### Notes on downloading executables
+### Notes on Downloading Executables
 
 - Since users on Hydra do not have elevated privileges (root access) you are very unlikely to damage the cluster, but malicious software can still damage your files.
 
-- In rare cases it may try to install a _trojan horse_ that would try to exploit a know vulnerability. So be vigilent and responsible.
+- In rare cases it may install a _trojan horse_ that could exploit a know vulnerability.
+  - Be vigilent and responsible.
 
-- In case of doubt, never hesitate to contact us.
+  - In case of doubt, never hesitate to contact us.
 
 ---
 
 ## Compiling code
 
   - Creating executable from source code is typically done as follows:
-  1. compile the source file(s) to produce object file(s) (`.o`),
+  1. compile the source file(s) to produce object file(s),
   1. link the object file(s) and libraries into an executable. 
   
       - This is often aided by a `makefile`,
       - "Configuring" is creating such `makefile` or an equivalent.
 
-- This will be illustrated in the hands on section.
+> This will be illustrated in the hands on section.
 
 ---
 
 ## Building from Source
 
 If you download source code you will need to build the code. 
-Typically:
 
 1. **Configure**
-    - Most packages come with a configuration script, a list of pre-requisites
-      (aka dependencies) and instructions.
+    - Most packages come with a configuration script, a list of pre-requisites (dependencies) and instructions,
     - Some packages allow to build the code without some features in case you
-      cannot satisfy some of the pre-requisites.
-    - You most likely need to load the right module to use the
-      appropriate compiler
+      cannot satisfy some of the pre-requisites,
+    - You most likely need to load the right module(s) to use the
+      appropriate compiler.
 
 1. **Build**
-    - need to make sure you have loaded the right modules to use the
-      right compiler
-    - run `make` to compile and link (aka build) the code
+    - make sure you have loaded the right modules,
+    - run `make` to compile and link (aka build) the code.
 
 1. **Install**
-    - copy the executable(s) to the right place(s) (usually defined by the
-      configuration)
+    - copy the executable(s) to the right place(s)
+      - usually defined by the configuration
       - best practice is to separate build from install locations
                
-- This will be illustrated in the hands on section.
+> This will be illustrated in the hands on section.
 
 ---
 
-## Setting up your Environment to Run the Code
+## Setting up Your Environment to Run Your Code
 
 You likely will need to adjust your _environment_ to run some code:
 
-  1. the location of the code, aka `path` or `PATH`
-  1. the location of the libraries needed, aka `LD_LIBRARY_PATH`
-  1. you ay need to also set some environment variables
+  1. the location of the code: `path` or `PATH`,
+  1. the location of the libraries:  `LD_LIBRARY_PATH`,
+  1. you ay need to also set some environment variables, etc.
 
-This is where using a module makes things easy: compact and works with any shell.
+This is where using a module makes things easy: 
+
+  - compact and works with any shell.
 
 ---
 
 ## Module and Module Files
 
 - The command `module` 
-  - is a convenient mechanism to configure your Unix/Linux environment.
-  - reads a file, aka the _module file_, that holds a set
-  of simple or complex instructions.
+  - convenient mechanism to configure your _environment_,
+  - reads a file, the _module file_, that holds instructions.
 
- - This is a shell syntax independent way to configure your environment:
-   - you use the _same_ module file whether you use `sh/bash` or `csh/tcsh`.
- - We provide a set of module files, but users can augment this by writing their own.
-   - you are welcome to look at all the module files we wrote, most of them are
-   under `/share/apps/modulefiles/`.
+ - This is a shell independent way to configure your environment:
+   - _same_ module file whether `sh/bash` or `csh/tcsh`.
+ - We provide module files, users can write their own.
+   - look at all the module files we wrote:
+```
+/share/apps/modulefiles/
+```
 
 ---
 
-### Module File Syntax and Concepts
+## Module File Syntax and Concepts
 
-- Module files can be complex, written following the `tcl` scripting language,
-  _although_ you **do not** need to know that language to write simple module files.  
-- The `tcl` syntax is augmented by commands specific to help configure your environment:
+- Instructions specific to configure your environment:
 ```
 prepend-path PATH /location/of/the/code
 setenv       BASE /scratch/demo
 set-alias    crunch "crunch --with-that-option \*"
 ```
-- For example a simple module file can just hold a list of modules that must
-  be loaded to to run a given tool.
-- You can write complex module files and leverage the `tcl` syntax.
+- Module files can be complex, using `tcl` language
+  - you **do not** need to know `tcl` to write simple module files.  
+
+- A simple module file can just list the modules that must
+  be loaded to to run asome analysis.
+  - you can write complex module files and leverage `tcl`.
 
 ---
 
-## Example of `module` commands
+## Example of `module` Commands
 
-- Informational
-```
-module avail
-module whatis
-module whatis <name>
-```
-
-- Configure your environment
-```
-module load   <name>
-module unload <name>
-module swap   <name>
+|          | Info            | Config   | Details       |
+|----------|-----------------|----------|---------------|
+| `module` | `avail`         | `load`   | `list`        |
+| `module` | `whatis`        | `unload` | `help <name>` |
+| `module` | `whatis <name>` | `swap`   | `show <name>` |
 ```
 
-- Specific info
 ```
-module list
-module help <name>
-module show <name>
-```
+- More help:
 
-- More help
 ```
 man module
 ```
 
 ---
 
-## Example of a simple module file
+## Example of a Simple Module File
 
 ```
+
+
 #%Module1.0
 #
 # load two modules and set the HEASOFT env variable
 module load gcc/10.1.10
 module load python/3.8
 setenv HEASOFT /home/sylvain/heasoft/6.3.1
+
 ```
 
 ---
 
-## Example of a more elaborate module file: `rclone`
-
+## Example of a More Elaborate Module File: `rclone`
 
 ```
 #%Module1.0
@@ -186,40 +179,50 @@ set base    /scratch/hpc/haw/examples
 module-whatis "System paths to run rclone $ver"
 #
 # configure the PATH and the MANPATH
-prepend-path PATH $base/rclone/$ver
+prepend-path PATH    $base/rclone/$ver
 prepend-path MANPATH $base/rclone/$ver/man
 ```
 
 ---
 
-## Examples of complex module files
+## Examples of Complex Module Files
 
 ```
+
+
+
 cd /share/apps/modulefiles
 
 more intel/2022.2
 more idl/8.8
 more bio/blast2go/1.5.1
 more bio/trinity/2.9.1
+
 ```
 
 ---
 
-## Organization and Customization
+## Module Files Organization
 
-- You can keep your module files in a central location using a
-  tree stucture (:thumbsup:), or 
-  - if you prefer where you need them.
+- Keep your module files:
+  - in a central location using a tree stucture, or 
+  - where you need them.
 
-- You can load a module file using the module file full path, 
+- You can load a module file using the module file full path: 
 ```
 module load /path/to/my/module/crunch
 ```
-  - or tell `module` where to look for your central location (:thumbsup:).
+  - or tell `module` where to look for your central location.
 
 - The recommended approach:
-  - use a central location under you home directory `~/modulefiles`
-  - use a tree structure and use version numbers if/when applicable
+  - use a central location under you home directory `~/modulefiles`,
+  - use a tree structure and use version numbers if/when applicable.
+
+---
+
+## Organization (cont'd) and Customization
+
+- Example:
 ```
    ~/modulefiles/crunch/
    ~/modulefiles/crunch/1.0
@@ -228,20 +231,24 @@ module load /path/to/my/module/crunch
    ~/modulefiles/crunch/.version
    ~/modulefiles/viewit
 ```
-  - The `.version` file defines a default version
+- the file `.version` file defines a default version:
 ```
 #%Module1.0
 set ModulesVersion "1.2"
 ```
 
-  - You can tell `module` where to find your module files with
-```
+----
+
+## Customization (cont'd)
+
+
+  - to tell `module` where to find your module files:
+  ```
 module use --append /home/sylvain/modulefiles
 ```
-  - that instruction can be either
+  - that instruction can be either:
   1. in your initialization file `~/.bashrc` or `~/.cshrc`
-  1. better yet in a `~/.modulerc` file (shell independant), but you need it
-  to look like this:
+  1. better yet in a `~/.modulerc` file (shell independent):
 ```
 #%Module1.0
 # adding my private module files
@@ -251,6 +258,17 @@ module use --append /home/sylvain/modulefiles
 ---
 
 ## The `yum`, `rpm`, `get-apt` and `sudo` soup
+
+- `yum` (Yellowdog Updater, Modifier) is a package-management utility
+  - reserved for admin, handle dependencies, _but..._
+- `rpm` (Red-hat Package Manager) pre-built software package
+  - reserved for admin, _but..._
+- `get-apt` Debian's version of `yum`: does not work with CentOS
+- `sudo` allows to run a command as 'root': you can't..
+
+Intructions that refer to `yum`, `rpm`, `apt-get` or `sudo` will not work for you on Hydra.
+
+> In a lot of cases there is an other way to do the same.
 
 ---
 
