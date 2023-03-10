@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In the intro portion of the workshop you will learn:
+### In the intro portion of the workshop you will learn:
 
 * About downloading code
 * About compiling code
@@ -22,14 +22,14 @@ In the intro portion of the workshop you will learn:
 
 - In most cases you are better off downloading the source and building the code (aka the executable) yourself.
 
-- Downloading executable is easier but is more likley not to work
+- Downloading executable is easier but is likely not to work.
 
-### Donwloading Executables
+### Downloading Executables
 
 There are instances when available executables will run flawlessly on Hydra, but make sure that:
 
  1. you can trust the origin,
- 1. sure you get a version compatible with Hydra, 
+ 1. you get a version compatible with Hydra, 
     * _i.e._, CentOS 7.x for Intel/AMD CPUs (`x86_64`)
 
 ### Remember 
@@ -45,9 +45,9 @@ There are instances when available executables will run flawlessly on Hydra, but
 
 - Since users on Hydra do not have elevated privileges (root access) you are very unlikely to damage the cluster, but malicious software can still damage your files.
 
-- In rare cases it may install a _trojan horse_ that could exploit a known vulnerability.
+- In rare cases it may install a _Trojan horse_ that could exploit a known vulnerability.
 
-  - Be vigilent and responsible.
+  - Be vigilant and responsible.
 
   - In case of doubt, never hesitate to contact us.
 
@@ -109,7 +109,7 @@ You likely will need to adjust your _environment_ to run some code:
 
   1. the location of the code: `path` or `PATH`,
   1. the location of the libraries:  `LD_LIBRARY_PATH`,
-  1. you may need to also set some environment variables, etc.
+  1. you may also need to set some environment variables, etc.
 
 ### Easier Way: modules
 
@@ -155,7 +155,7 @@ set-alias    crunch "crunch --with-that-option \*"
 ### Syntax
 
 - Module files can be complex, using `tcl` language
-  - you **do not** need to know `tcl` to write simple module files.  
+  - you **do not** need to know `tcl` to write module files.  
 
 ### Simple or Complex
 
@@ -181,7 +181,7 @@ set-alias    crunch "crunch --with-that-option \*"
 ### More help
 
 ```
-man module
+  man module
 ```
 
 ---
@@ -204,7 +204,7 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Example of a More Elaborate Module File
 
-### `rclone`
+## `rclone`
 ```
 #%Module1.0
 #
@@ -243,7 +243,7 @@ more bio/trinity/2.9.1
 
 ### Where to Keep your Module Files
 
-- in a central location using a tree stucture, or 
+- in a central location using a tree structure, or 
 
 - where you need them.
 
@@ -254,7 +254,7 @@ more bio/trinity/2.9.1
 module load /path/to/my/module/crunch
 ```
 
-### Recomended Approach
+### Recommended Approach
 
   - use a central location under you home directory `~/modulefiles`,
 
@@ -339,7 +339,7 @@ module use --append ~/modulefiles
 
 ### BTW
 
-- Intructions that mention `yum`, `rpm`, `apt-get` or `sudo` 
+- Instructions that mention `yum`, `rpm`, `apt-get` or `sudo` 
 
   - **will not work** on Hydra,
 
@@ -356,7 +356,7 @@ module use --append ~/modulefiles
 - Build and install software using best-practices,
   - trivial case,
   - simple/didactic example,
-  - somehwat complex examples.
+  - somewhat complex examples.
 
 - Write simple and more elaborate module files.
 
