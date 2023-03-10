@@ -204,7 +204,8 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Example of a More Elaborate Module File
 
-## `rclone`
+### `rclone`
+
 ```
 #%Module1.0
 #
