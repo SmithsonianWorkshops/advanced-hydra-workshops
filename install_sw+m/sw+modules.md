@@ -10,9 +10,9 @@
   - configure
   - build
   - install
+* What are `yum`, `rpm`, `get-apt`, & `sudo`
 * How to write modules
 
-* What are `yum`, `rpm`, `get-apt`, & `sudo`
 
 ---
 
@@ -22,7 +22,7 @@
 
 - In most cases you are better off downloading the source and building the code (aka the executable) yourself.
 
-- Downloading executable is easier but is likely not to work.
+- Downloading an executable is easier but is likely not to work.
 
 ### Downloading Executables
 
@@ -79,9 +79,9 @@ There are instances when available executables will run flawlessly on Hydra, but
 
 ### Configure
 
-- Most packages come with a configuration script, a list of pre-requisites (dependencies) and instructions,
+- Most packages come with a configuration script, a list of prerequisites (dependencies) and instructions,
 
-- Some packages allow to build the code without some features in case you cannot satisfy some of the pre-requisites,
+- Some packages allow you to build the code without some features in case you cannot satisfy some of the prerequisites,
 
 - You most likely need to load the right module(s) to use the appropriate compiler.
 
@@ -119,6 +119,104 @@ This is where using a module makes things easy:
 
 - works with any shell.
 
+---
+
+## The `yum`, `rpm`, `get-apt` and `sudo` Soup
+
+### Definitions
+
+- `yum`: is a package-management utility for CentOS
+
+- `rpm`: pre-built software package
+  - _both_ are for sys-admin, 
+  - help handle dependencies,
+  - _yet_ ...
+- `get-apt`: Debian's version of `yum`, _does not work_ on CentOS.
+
+### Also 
+
+- `sudo`: allows to run a command as 'root': **you can't!**
+
+### BTW
+
+- Instructions that mention `yum`, `rpm`, `apt-get` or `sudo` 
+
+  - **will not work** on Hydra,
+
+  - **yet** in most cases there is another way.
+
+---
+
+## How about Hydra
+
+### Using `yum`
+
+  - While you **cannot** install packages with `yum`,
+  - you can check if we've installed a prerequisite package
+
+### In practice
+
+  - if the instructions say
+```
+sudo yum -y install <package>
+```
+  - you can run 
+  ```
+yum info <package>
+  ``` 
+
+---
+
+## Using `yum info`
+
+### Example
+
+```
+yum info libXt-devel
+... stuff and may be slow the first time ...
+Installed Packages
+Name        : libXt-devel
+Arch        : x86_64
+Version     : 1.1.5
+...
+Description : X.Org X11 libXt development package
+...
+```
+
+&nbsp;
+
+> You want the `Arch: x86_64` to be listed as "Installed" not _just_ "Available".
+
+---
+
+## How to avoid `sudo`
+
+### `sudo make install`
+
+  - if the instructions says
+```
+sudo make install
+```
+  - instead, set the installation directory to be under your control,
+  - in most cases at the configuration step
+```
+./configure --prefix=/home/username/big-package/3.5
+```
+  - and use
+```
+make install
+```
+---
+
+## Final Notes
+
+### Remember
+
+  - there is a way to use `yum` as a non privileged user 
+    - not recommended, unless you're an **expert**!
+  - you can always ask about a missing prerequisite,
+  - most of those can be build from source since Linux is an open source OS.
+  
 ---
 
 ## Module and Module Files
@@ -160,7 +258,7 @@ set-alias    crunch "crunch --with-that-option \*"
 ### Simple or Complex
 
 - A simple module file can just list the modules that must
-  be loaded to to run some analysis.
+  be loaded to run some analysis.
 - Can write complex module files and leverage `tcl`.
 
 ---
@@ -186,10 +284,9 @@ set-alias    crunch "crunch --with-that-option \*"
 
 ---
 
-## Example of a Simple Module File
+## A Simple Module File
 
-&nbsp;
-
+### Example 
 
 ```
 #%Module1.0
@@ -200,60 +297,15 @@ module load python/3.8
 setenv HEASOFT /home/username/heasoft/6.3.1
 ```
 
----
 
-## Example of a More Elaborate Module File
+## Example of More Elaborate and Complex Module Files
 
-### `rclone`
-
-```
-#%Module1.0
-#
-# set some internal variables
-set ver     1.53.1
-set base    /scratch/hpc/haw/examples
-#
-# what to show for 'module whatis'
-module-whatis "System paths to run rclone $ver"
-#
-# configure the PATH and the MANPATH
-prepend-path PATH    $base/rclone/$ver
-prepend-path MANPATH $base/rclone/$ver/man
-```
-
----
-
-## Examples of Complex Module Files
-
-### Plenty of Examples
-
-&nbsp;
-
-```
-cd /share/apps/modulefiles
-
-more intel/2022.2
-more idl/8.8
-more bio/blast2go/1.5.1
-more bio/trinity/2.9.1
-```
+> Will be illustrated in the hands on section.
 
 ---
 
 ## Module Files Organization
 
-### Where to Keep your Module Files
-
-- in a central location using a tree structure, or 
-
-- where you need them.
-
-### For Example
-
-- You can load a module using the file full path: 
-```
-module load /path/to/my/module/crunch
-```
 
 ### Recommended Approach
 
@@ -267,9 +319,9 @@ module load /path/to/my/module/crunch
 
 ---
 
-## Organization (cont'd) and Customization
+## Customization/Examples
 
-### For Example
+### Tree structure
 ```
    ~/modulefiles/crunch/
    ~/modulefiles/crunch/1.0
@@ -278,13 +330,11 @@ module load /path/to/my/module/crunch
    ~/modulefiles/crunch/.version
    ~/modulefiles/viewit
 ```
+### Define a Default Version  
 
-### Default Version  
-
-The file `.version` defines the default version:
+An optional file `.version` can be used to set the default version:
 
 ```
-
   #%Module1.0
   set ModulesVersion "1.2"
 ```
@@ -310,7 +360,7 @@ module use --append ~/modulefiles
 ### Either
 
   1. in your initialization file `~/.bashrc` or `~/.cshrc`
-  1. better yet in a `~/.modulerc` file
+  1. or better yet in a `~/.modulerc` file
 
 &nbsp;
 
@@ -319,32 +369,6 @@ module use --append ~/modulefiles
   # adding my own module files
   module use --append /home/username/modulefiles
 ```
-
----
-
-## The `yum`, `rpm`, `get-apt` and `sudo` Soup
-
-### Definitions
-
-- `yum`: is a package-management utility for CentOS
-
-- `rpm`: pre-built software package
-  - _both_ are for sys-admin, 
-  - help handle dependencies,
-  - _yet_ ...
-- `get-apt`: Debian's version of `yum`, _does not work_ on CentOS.
-
-### Also 
-
-- `sudo`: allows to run a command as 'root': **you can't!**
-
-### BTW
-
-- Instructions that mention `yum`, `rpm`, `apt-get` or `sudo` 
-
-  - **will not work** on Hydra,
-
-  - **yet** in most cases there is another way.
 
 ---
 
