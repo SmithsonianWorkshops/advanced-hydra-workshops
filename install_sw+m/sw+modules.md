@@ -1,5 +1,5 @@
 
-[//]: # <- Last updated: Tue Mar 14 17:36:52 2023 -> SGK
+[//]: (# <- Last updated: Tue Mar 14 18:18:43 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -346,7 +346,7 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Customization/Examples
 
-[//]: # use ASCII art for the tree?
+[//]: (# use ASCII art for the tree?)
 
 ### Tree structure
 ```
@@ -428,6 +428,8 @@ https://github.com/SmithsonianWorkshops
     > hydra_intro.md
 ```
 
+:tea: Let's pause here for 5-10 minutes :coffee:
+
 ---
 
 ## <a name="here"></a>Switch to `github` for the Hands-on
@@ -442,24 +444,28 @@ https://github.com/SmithsonianWorkshops
   - you type what is **after** the prompt
   - no prompt: result from previous command.
 
+- I where you see `<genomics|sao>`, you need to use either `genomics` or `sao`
+
 ---
 
 ## But First
 
 ### Create a location where to run things
-- For SAO (CfA) ppl 
+
+- For biologists+ (non SAO)
+```
+$ cd /pool/genomics/$USER
+$ mkdir -p advanced-workshop/sw+m/hands-on
+$ cd advanced-workshop/sw+m/hands-on
+```
+
+- For SAO (CfA)
 ```
 % cd /pool/sao/$USER
 % mkdir -p advanced-workshop/sw+m
 % cd advanced-workshop/sw+m
 ```
-- For others (biologists+)
-```
-% cd /pool/genomics/$USER
-% mkdir -p advanced-workshop/sw+m/hands-on
-% cd advanced-workshop/sw+m/hands-on
 
-```
 - `$USER` will be replaced by your user name,
   - feel free to put this elsewhere.
 
@@ -496,7 +502,7 @@ Archive:  rclone-current-linux-amd64.zip
   inflating: rclone-v1.62.0-linux-amd64/README.html
   inflating: rclone-v1.62.0-linux-amd64/rclone.1
 ```
-  - if the `wget` fails:
+  - If the `wget` fails:
 ```
 cp -pi /pool/sao/hpc/haw/sw+m/ex01/rclone-current-linux-amd64.zip ./
 ```
@@ -520,22 +526,24 @@ rclone v1.62.0
 - go/tags: none
 
 % man -M $cwd/man rclone
-                                                                        rclone(1)
+                                            rclone(1)
 
 Rclone syncs your files to cloud storage
        o About rclone
 ...
 press 'q' to quit
 ```
-- we will later write a module to use that version
 
-### Note
-- :warning: these steps are different from the instructions on the web page and in the `README.txt` file:
+- we will later write a module to use that version.
+
+### Note how these steps are different from the instructions
+
+- :warning: do not follow verbatim the instructions on the web page and in the `README.txt` file:
   - nothing copied under `/usr/bin/`,
   - no `chown root`, and
   - no `sudo`
 
-> Yet you have installed `rclone`
+> Yet you have installed `rclone`.
 
 ---
 
@@ -590,8 +598,8 @@ Easy peasy ;-P
 
 ## Excercise 3
 
-- Similar simple code
-  - but let's use a `makefile` and 
+- Similar simple code but let's use
+  - a `makefile` file, and 
   - a different compiler by loading a `module`
 
 1. create a directory and copy the source and makefile files
@@ -659,15 +667,22 @@ Easy peasy ;-P
 
 ## Write a More Elaborate Module File
 
-### The `rclone/1.62.0` module file for your private version
+### An `rclone` Module File for Your Private Version
 
-- create a file with the following content:
+- Where? Under the `ex01/` directory
+
+```
+% cd /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01
+% mkdir modulefiles/rclone
+% cd modulefiles/rclone
+```
+- With your favorite editor (`nano`, `vi`, `emacs`, etc) create the file `1.62.0` with the following content:
 ```
 #%Module1.0
 #
 # set some internal variables
 set ver     1.62.0
-set base    /pool/<genomics|sao>/username>/advanced-workshop/sw+m/ex01
+set base    /pool/<genomics|sao>/<username>/advanced-workshop/sw+m/ex01
 #
 # what to show for 'module whatis'
 module-whatis "System paths to run rclone $ver"
@@ -676,29 +691,25 @@ module-whatis "System paths to run rclone $ver"
 prepend-path PATH    $base/rclone/$ver/bin
 prepend-path MANPATH $base/rclone/$ver/man
 ```
-
-- where?
-
-1. under the `ex01/` directory
-
-```
-% cd /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01
-% mkdir modulefiles/rclone
-% cd modulefiles/rclone
-```
-and with your favorite editor (`nano`, `vi`, `emacs`, etc) create the file `1.62.0`
-
-or (cheat)
+- or (cheat)
 ```
 % cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 ./
+% emacs 1.62.0
+$ nano 1.62.0
 ```
+and fix `<genomics|sao>/<username>` to be what you need.
 
-## How to use it:
+## How to use it?
+
+### Load it using the full path
 
 ```
 % module load /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
 % which rclone
 /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/bin/rclone
+```
+
+### Unload it and use the one we installed
 
 % module unload /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
 % module load tools/rclone
@@ -710,12 +721,17 @@ or (cheat)
 
 ## Using Instead a Central Location
 
+### Create the `~/modulefiles` hierarchy
 ```
 % cd ~
 % mkdir modulefiles
 % mkdir modulefiles/rclone
 % cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 modulefiles/rclone/
 % cd -
+```
+
+### Tell `module` to use it
+
 % module use --append ~/modulefiles
 % module load rclone/1.62.0
 % which rclone
@@ -726,15 +742,17 @@ or (cheat)
 % module unload tools/rclone
 ```
 
-## Make it permanent
+### To make it permanent
 
 ```
 % cat <<EOF ~/.modulerc
 #%Module1.0
 # adding my own module files
-module use --append /home/username/modulefiles
+module use --append /home/<username>/modulefiles
 EOF
 ```
+- remember to substitute `<username> by your username.
+
 
 ## Check this out
 
