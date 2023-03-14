@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 19:14:11 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 19:16:59 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -735,13 +735,17 @@ and fix `<genomics|sao>/<username>` to be what you need.
 
 ### Tell `module` to use it
 
+```
 % module use --append ~/modulefiles
 % module load rclone/1.62.0
 % which rclone
+[guess]
 % module unload rclone
 
 % module load tools/rclone
 % which rclone
+[guess]
+
 % module unload tools/rclone
 ```
 
