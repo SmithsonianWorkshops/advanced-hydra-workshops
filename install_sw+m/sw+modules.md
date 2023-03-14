@@ -1,5 +1,5 @@
 
-[//]: # <- Last updated: Tue Mar 14 11:44:31 2023 -> SGK
+[//]: # <- Last updated: Tue Mar 14 16:12:02 2023 -> SGK
 
 # Installing Software and Writing Modules 
 
@@ -432,5 +432,221 @@ https://github.com/SmithsonianWorkshops
 
 ## <a name="here"></a>Switch to `github`
 
-[Best to switch to github](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
+### In practice
+- best to switch to [github](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
 
+### Create a location where to run things
+- For SAO (CfA) ppl 
+```
+% cd /pool/sao/$USER
+% mkdir -p advanced-workshop/sw+m
+```
+- For others (biologists+)
+```
+% cd /pool/genomics/$USER
+% mkdir -p advanced-workshop/sw+m
+```
+- `$USER` will be replaced by your user name,
+- feel free to put this elsewhere.
+
+### Convention
+
+- I use `% ` as prompt
+  - your prompt might be different, like `$ `
+  - you type what is **after** the prompt
+  - when there is no prompt: result from previous command.
+
+---
+
+## Exercise 1
+
+### Install a simple prebuilt executable: `rclone`
+
+1. Create a directory
+```
+% mkdir ex01
+% cd ex01
+```
+2. Get `rclone`
+- Google "download rclone linux" --> https://rclone.org/install/
+```
+% wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
+--2023-03-14 14:20:17--  https://downloads.rclone.org/rclone-current-linux-amd64.zip
+Resolving downloads.rclone.org (downloads.rclone.org)... 95.217.6.16
+Connecting to downloads.rclone.org (downloads.rclone.org)|95.217.6.16|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 17790831 (17M) [application/zip]
+Saving to: 'rclone-current-linux-amd64.zip'
+100%[================================================>] 17,790,831  5.54MB/s   in 3.1s
+2023-03-14 14:20:21 (5.54 MB/s) - 'rclone-current-linux-amd64.zip' saved [17790831/17790831]
+% unzip rclone-current-linux-amd64.zip
+Archive:  rclone-current-linux-amd64.zip
+   creating: rclone-v1.62.0-linux-amd64/
+  inflating: rclone-v1.62.0-linux-amd64/README.txt
+  inflating: rclone-v1.62.0-linux-amd64/rclone
+  inflating: rclone-v1.62.0-linux-amd64/git-log.txt
+  inflating: rclone-v1.62.0-linux-amd64/README.html
+  inflating: rclone-v1.62.0-linux-amd64/rclone.1
+```
+  - if the `wget` fails:
+```
+cp -pi /pool/sao/hpc/aw/ex01/rclone-current-linux-amd64.zip ./
+```
+3. Install `rclone`
+```
+% mkdir -p bin man/man1
+% cp -pi rclone-v1.62.0-linux-amd64/rclone bin/
+% cp -pi rclone-v1.62.0-linux-amd64/rclone.1 man/man1/
+```
+
+4. Use it
+```
+% $cwd/bin/rclone version
+rclone v1.62.0
+- os/version: centos 7.9.2009 (64 bit)
+- os/kernel: 3.10.0-1160.81.1.el7.x86_64 (x86_64)
+- os/type: linux
+- os/arch: amd64
+- go/version: go1.20.2
+- go/linking: static
+- go/tags: none
+
+% man -M $cwd/man rclone
+                                                                        rclone(1)
+
+Rclone syncs your files to cloud storage
+       o About rclone
+...
+press 'q' to quit
+```
+- we will later write a module to use that version
+
+### Note
+- :warning: the steps are different from the instructions on the web page and in the `README.txt` file
+  - not copied under `/usr/bin/`,
+  - no `chown root`, and
+  - no `sudo`
+
+---
+
+## Exercise 2
+
+### Compiling a trivial program
+
+- lets build from source a very very simple code
+
+1. create a directory and copy the source file
+```
+% mkdir ex02
+% cd ex02
+% cp -pi /pool/sao/hpc/aw/ex02/hello.c ./
+```
+2. look at it
+```
+% cat hello.c
+#include <stdio.h>
+#include <stdlib.h>
+/* simple hello world demo code in C */
+int main () {
+  printf ("hello world!\nEasy peasy ;-P\n");
+  exit(0);
+}
+```
+3. compile it: source to object
+```
+% make hello.o
+cc    -c -o hello.o hello.c
+```
+4. link it: object to executable
+```
+% make hello
+cc   hello.o   -o hello
+```
+5. run it
+```
+% ./hello
+hello world!
+Easy peasy ;-P
+```
+
+> Congrats, you've build a code from source.
+
+---
+
+## Excercise 3
+
+- similar but let's use a `makefile` and a different compiler with `module`
+
+1. create a directory and copy the source file
+```
+% cd ..
+% mkdir ex03
+% cd ex03
+% cp -pi /pool/sao/hpc/aw/ex03/hello.c ./
+% cp -pi /pool/sao/hpc/aw/ex03/makefile ./
+```
+2. look at the files
+```
+% more hello.c makefile
+```
+3. load the Intel compiler, build and run it
+```
+% module load intel
+Loading compiler version 2021.4.0
+Loading tbb version 2021.4.0
+Loading compiler-rt version 2021.4.0
+Loading debugger version 10.2.4
+Loading dpl version 2021.5.0
+Loading oclfpga version 2021.4.0
+Loading init_opencl version 2021.4.0
+Loading mkl version 2021.4.0
+Note: use $MKL_ROOT not $MKLROOT to access Intel's MKL location
+
+Loading intel/2021
+  Loading requirement: tbb/latest compiler-rt/latest debugger/latest dpl/latest init_opencl/latest oclfpga/latest compiler/latest
+    mkl/latest
+
+% make hello
+icc    -c -o hello.o hello.c
+icc -o hello hello.o
+
+% ./hello
+hello world!
+```
+4. Build it differently
+```
+% make clean
+rm hello hello.o
+
+% make CFLAGS=-DEASY hello
+icc -DEASY   -c -o hello.o hello.c
+icc -o hello hello.o
+
+% ./hello
+hello world!
+Easy peasy ;-P
+```
+
+> Simplistic illustration how "configuration" affects code building
+
+---
+
+## Build a Bio code
+
+---
+
+## Build an Astro code
+
+---
+
+## Write a module file for `rclone`
+
+---
+
+## Write Elaborate module files
+
+---
+
+## Look at Complex module files 
+
+---
