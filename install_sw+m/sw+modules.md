@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 19:16:59 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 19:18:12 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -758,7 +758,7 @@ and fix `<genomics|sao>/<username>` to be what you need.
 module use --append /home/<username>/modulefiles
 EOF
 ```
-- remember to substitute `<username> by your username.
+- remember to substitute `<username>` by your username.
 
 
 ## Check this out
