@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 18:18:43 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 18:24:04 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -444,7 +444,9 @@ https://github.com/SmithsonianWorkshops
   - you type what is **after** the prompt
   - no prompt: result from previous command.
 
-- I where you see `<genomics|sao>`, you need to use either `genomics` or `sao`
+- I where you see `<genomics|sao>`, you need to use either `genomics` or `sao`,
+
+- I where you see `<username>`, you need to substitute your username.
 
 ---
 
@@ -452,7 +454,7 @@ https://github.com/SmithsonianWorkshops
 
 ### Create a location where to run things
 
-- For biologists+ (non SAO)
+- For biologists (non SAO)
 ```
 $ cd /pool/genomics/$USER
 $ mkdir -p advanced-workshop/sw+m/hands-on
@@ -466,7 +468,7 @@ $ cd advanced-workshop/sw+m/hands-on
 % cd advanced-workshop/sw+m
 ```
 
-- `$USER` will be replaced by your user name,
+- `$USER` will be replaced by your username,
   - feel free to put this elsewhere.
 
 ---
