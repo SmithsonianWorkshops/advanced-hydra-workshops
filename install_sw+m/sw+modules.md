@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 18:24:04 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 18:31:23 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -594,7 +594,7 @@ hello world!
 Easy peasy ;-P
 ```
 
-> Congrats, you've build a code from source.
+> Congrats, you've built a code from source.
 
 ---
 
