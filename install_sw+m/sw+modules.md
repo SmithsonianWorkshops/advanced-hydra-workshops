@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 19:18:12 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 19:19:33 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -774,15 +774,13 @@ EOF
 
 ### Plenty of Examples
 
-&nbsp;
-
 ```
-cd /share/apps/modulefiles
+% cd /share/apps/modulefiles
 
-more intel/2022.2
-more idl/8.8
-more bio/blast2go/1.5.1
-more bio/trinity/2.9.1
+% more intel/2022.2
+% more idl/8.8
+% more bio/blast2go/1.5.1
+% more bio/trinity/2.9.1
 ```
 
 ---
