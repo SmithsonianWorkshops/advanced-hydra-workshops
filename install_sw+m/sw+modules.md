@@ -1,5 +1,5 @@
 
-[//]: (# <- Last updated: Tue Mar 14 18:31:23 2023 -> SGK)
+[//]: (# <- Last updated: Tue Mar 14 19:14:11 2023 -> SGK)
 
 # Installing Software and Writing Modules 
 
@@ -708,11 +708,12 @@ and fix `<genomics|sao>/<username>` to be what you need.
 ```
 % module load /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
 % which rclone
-/pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/bin/rclone
+/pool/<genomics|sao>/<username>/advanced-workshop/sw+m/ex01/bin/rclone
 ```
 
-### Unload it and use the one we installed
+### Unload it and use the one we've installed
 
+```
 % module unload /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
 % module load tools/rclone
 % which rclone
