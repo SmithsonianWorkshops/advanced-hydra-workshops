@@ -1,5 +1,5 @@
 
-[//]: # <- Last updated: Tue Mar 14 16:12:02 2023 -> SGK
+[//]: # <- Last updated: Tue Mar 14 17:36:52 2023 -> SGK
 
 # Installing Software and Writing Modules 
 
@@ -430,31 +430,38 @@ https://github.com/SmithsonianWorkshops
 
 ---
 
-## <a name="here"></a>Switch to `github`
+## <a name="here"></a>Switch to `github` for the Hands-on
 
-### In practice
-- best to switch to [github](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
-
-### Create a location where to run things
-- For SAO (CfA) ppl 
-```
-% cd /pool/sao/$USER
-% mkdir -p advanced-workshop/sw+m
-```
-- For others (biologists+)
-```
-% cd /pool/genomics/$USER
-% mkdir -p advanced-workshop/sw+m
-```
-- `$USER` will be replaced by your user name,
-- feel free to put this elsewhere.
+### Go to
+- [https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
 
 ### Convention
 
 - I use `% ` as prompt
   - your prompt might be different, like `$ `
   - you type what is **after** the prompt
-  - when there is no prompt: result from previous command.
+  - no prompt: result from previous command.
+
+---
+
+## But First
+
+### Create a location where to run things
+- For SAO (CfA) ppl 
+```
+% cd /pool/sao/$USER
+% mkdir -p advanced-workshop/sw+m
+% cd advanced-workshop/sw+m
+```
+- For others (biologists+)
+```
+% cd /pool/genomics/$USER
+% mkdir -p advanced-workshop/sw+m/hands-on
+% cd advanced-workshop/sw+m/hands-on
+
+```
+- `$USER` will be replaced by your user name,
+  - feel free to put this elsewhere.
 
 ---
 
@@ -479,6 +486,7 @@ Length: 17790831 (17M) [application/zip]
 Saving to: 'rclone-current-linux-amd64.zip'
 100%[================================================>] 17,790,831  5.54MB/s   in 3.1s
 2023-03-14 14:20:21 (5.54 MB/s) - 'rclone-current-linux-amd64.zip' saved [17790831/17790831]
+
 % unzip rclone-current-linux-amd64.zip
 Archive:  rclone-current-linux-amd64.zip
    creating: rclone-v1.62.0-linux-amd64/
@@ -490,7 +498,7 @@ Archive:  rclone-current-linux-amd64.zip
 ```
   - if the `wget` fails:
 ```
-cp -pi /pool/sao/hpc/aw/ex01/rclone-current-linux-amd64.zip ./
+cp -pi /pool/sao/hpc/haw/sw+m/ex01/rclone-current-linux-amd64.zip ./
 ```
 3. Install `rclone`
 ```
@@ -522,10 +530,12 @@ press 'q' to quit
 - we will later write a module to use that version
 
 ### Note
-- :warning: the steps are different from the instructions on the web page and in the `README.txt` file
-  - not copied under `/usr/bin/`,
+- :warning: these steps are different from the instructions on the web page and in the `README.txt` file:
+  - nothing copied under `/usr/bin/`,
   - no `chown root`, and
   - no `sudo`
+
+> Yet you have installed `rclone`
 
 ---
 
@@ -533,15 +543,16 @@ press 'q' to quit
 
 ### Compiling a trivial program
 
-- lets build from source a very very simple code
+- Let's build from source a _very very very_ simple code:
 
 1. create a directory and copy the source file
 ```
+% cd ..
 % mkdir ex02
 % cd ex02
 % cp -pi /pool/sao/hpc/aw/ex02/hello.c ./
 ```
-2. look at it
+2. look at the code
 ```
 % cat hello.c
 #include <stdio.h>
@@ -552,15 +563,19 @@ int main () {
   exit(0);
 }
 ```
-3. compile it: source to object
+3. compile it: source to object file
 ```
 % make hello.o
 cc    -c -o hello.o hello.c
+% file hello.o
+hello.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
 ```
 4. link it: object to executable
 ```
 % make hello
 cc   hello.o   -o hello
+% file hello
+hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked (uses shared libs) ...
 ```
 5. run it
 ```
@@ -575,9 +590,11 @@ Easy peasy ;-P
 
 ## Excercise 3
 
-- similar but let's use a `makefile` and a different compiler with `module`
+- Similar simple code
+  - but let's use a `makefile` and 
+  - a different compiler by loading a `module`
 
-1. create a directory and copy the source file
+1. create a directory and copy the source and makefile files
 ```
 % cd ..
 % mkdir ex03
@@ -588,6 +605,7 @@ Easy peasy ;-P
 2. look at the files
 ```
 % more hello.c makefile
+.... 
 ```
 3. load the Intel compiler, build and run it
 ```
@@ -613,7 +631,7 @@ icc -o hello hello.o
 % ./hello
 hello world!
 ```
-4. Build it differently
+4. Build it to behave differently
 ```
 % make clean
 rm hello hello.o
@@ -627,26 +645,124 @@ hello world!
 Easy peasy ;-P
 ```
 
-> Simplistic illustration how "configuration" affects code building
+> Simplistic illustration how "configuration" affects code building.
 
 ---
 
-## Build a Bio code
+## Build a Bio Package
 
 ---
 
-## Build an Astro code
+## Build an Astro Package
 
 ---
 
-## Write a module file for `rclone`
+## Write a More Elaborate Module File
+
+### The `rclone/1.62.0` module file for your private version
+
+- create a file with the following content:
+```
+#%Module1.0
+#
+# set some internal variables
+set ver     1.62.0
+set base    /pool/<genomics|sao>/username>/advanced-workshop/sw+m/ex01
+#
+# what to show for 'module whatis'
+module-whatis "System paths to run rclone $ver"
+#
+# configure the PATH and the MANPATH
+prepend-path PATH    $base/rclone/$ver/bin
+prepend-path MANPATH $base/rclone/$ver/man
+```
+
+- where?
+
+1. under the `ex01/` directory
+
+```
+% cd /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01
+% mkdir modulefiles/rclone
+% cd modulefiles/rclone
+```
+and with your favorite editor (`nano`, `vi`, `emacs`, etc) create the file `1.62.0`
+
+or (cheat)
+```
+% cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 ./
+```
+
+## How to use it:
+
+```
+% module load /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
+% which rclone
+/pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/bin/rclone
+
+% module unload /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
+% module load tools/rclone
+% which rclone
+/share/apps/bioinformatics/rclone/1.53.1/rclone
+
+% module unload tools/rclone
+```
+
+## Using Instead a Central Location
+
+```
+% cd ~
+% mkdir modulefiles
+% mkdir modulefiles/rclone
+% cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 modulefiles/rclone/
+% cd -
+% module use --append ~/modulefiles
+% module load rclone/1.62.0
+% which rclone
+% module unload rclone
+
+% module load tools/rclone
+% which rclone
+% module unload tools/rclone
+```
+
+## Make it permanent
+
+```
+% cat <<EOF ~/.modulerc
+#%Module1.0
+# adding my own module files
+module use --append /home/username/modulefiles
+EOF
+```
+
+## Check this out
+
+```
+% module whatis rclone
+% module whatis tools/rclone
+```
 
 ---
 
-## Write Elaborate module files
+## Examples of Complex Module Files
+
+### Plenty of Examples
+
+&nbsp;
+
+```
+cd /share/apps/modulefiles
+
+more intel/2022.2
+more idl/8.8
+more bio/blast2go/1.5.1
+more bio/trinity/2.9.1
+```
 
 ---
 
-## Look at Complex module files 
+## Questions? 
 
 ---
+
