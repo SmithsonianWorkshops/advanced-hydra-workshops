@@ -1,3 +1,6 @@
+
+[//]: # <- Last updated: Tue Mar 14 11:44:31 2023 -> SGK
+
 # Installing Software and Writing Modules 
 
 ## Introduction
@@ -22,9 +25,11 @@
 
 - In most cases you are better off downloading the source and building the code (aka the executable) yourself.
 
-- Downloading an executable is easier but is likely not to work.
+- Downloading an executable is easier but likely will not to work.
 
 ### Downloading Executables
+
+Some developers provide pre-built executables of their software.
 
 There are instances when available executables will run flawlessly on Hydra, but make sure that:
 
@@ -35,7 +40,7 @@ There are instances when available executables will run flawlessly on Hydra, but
 ### Remember 
 
  * Hydra configuration is specific: 
-    * pre-built may code need _stuff_ (dependencies) not on Hydra.
+    * pre-built code may need _stuff_ (dependencies) not on Hydra.
 
 ---
 
@@ -77,21 +82,41 @@ There are instances when available executables will run flawlessly on Hydra, but
 
 ## Building from Source
 
-### Configure
+### 1. Configure
 
-- Most packages come with a configuration script, a list of prerequisites (dependencies) and instructions,
+- Most packages come with a configuration script, a list of prerequisites (dependencies/libraries) and instructions,
 
 - Some packages allow you to build the code without some features in case you cannot satisfy some of the prerequisites,
 
-- You most likely need to load the right module(s) to use the appropriate compiler.
+- You most likely need to load the right module(s) to use the appropriate
+  tools (compilers).
 
-### Build
+- The configuration step will test if the code can be built:
+  - check dependencies, versions, etc.
+  - if this fails, the code cannot be built as is.
+
+### 1.b Makefile only
+
+- Other (simpler) packages come with a `makefile` that needs to be edited,
+  - check the instructions.
+
+---
+
+## Building from Source (cont'd)
+
+
+### 2. Build
 
 - make sure you have loaded the right modules,
 
 - run `make` to compile and link (aka build) the code.
 
-### Install
+### 2.b Test
+
+- some packages come with the optional step of testing the built before installing it,
+  using something like `make test`.
+
+### 3. Install
 
 - copy the executable(s) to the right place(s),
       
@@ -200,7 +225,7 @@ sudo make install
   - instead, set the installation directory to be under your control,
   - in most cases at the configuration step
 ```
-./configure --prefix=/home/username/big-package/3.5
+./configure -prefix=/home/username/big-package/3.5
 ```
   - and use
 ```
@@ -321,6 +346,8 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Customization/Examples
 
+[//]: # use ASCII art for the tree?
+
 ### Tree structure
 ```
    ~/modulefiles/crunch/
@@ -403,4 +430,7 @@ https://github.com/SmithsonianWorkshops
 
 ---
 
-## More to come ...
+## <a name="here"></a>Switch to `github`
+
+[Best to switch to github](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
+
