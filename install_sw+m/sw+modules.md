@@ -1,9 +1,20 @@
 
-[//]: (# <- Last updated: Tue Mar 14 19:19:33 2023 -> SGK)
+<!-- <- Last updated: Wed Mar 15 12:58:21 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
 ## Introduction
+
+### Model, CoC and URLs
+
+ - Carpentries model: hands-on portion, aka _live coding_
+
+   - [Carpentries Code of Conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html)
+
+ - [`https://github.com/SmithsonianWorkshops/`](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/)
+
+   - view [_slides_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.pdf)
+     or the [_markdown_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md) version
 
 ### In the intro portion of the workshop you will learn:
 
@@ -240,7 +251,7 @@ make install
   - there is a way to use `yum` as a non privileged user 
     - not recommended, unless you're an **expert**!
   - you can always ask about a missing prerequisite,
-  - most of those can be build from source since Linux is an open source OS.
+  - most of those can be built from source since Linux is an open source OS.
   
 ---
 
@@ -346,8 +357,6 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Customization/Examples
 
-[//]: (# use ASCII art for the tree?)
-
 ### Tree structure
 ```
    ~/modulefiles/crunch/
@@ -444,9 +453,9 @@ https://github.com/SmithsonianWorkshops
   - you type what is **after** the prompt
   - no prompt: result from previous command.
 
-- I where you see `<genomics|sao>`, you need to use either `genomics` or `sao`,
+- Where you see `<genomics|sao>`, you need to use either `genomics` or `sao`,
 
-- I where you see `<username>`, you need to substitute your username.
+- Where you see `<username>`, you need to substitute your username.
 
 ---
 
@@ -484,6 +493,7 @@ $ cd advanced-workshop/sw+m/hands-on
 ```
 2. Get `rclone`
 - Google "download rclone linux" --> https://rclone.org/install/
+- look at "[Linux Installation](https://rclone.org/install/#linux)"
 ```
 % wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
 --2023-03-14 14:20:17--  https://downloads.rclone.org/rclone-current-linux-amd64.zip
@@ -504,7 +514,7 @@ Archive:  rclone-current-linux-amd64.zip
   inflating: rclone-v1.62.0-linux-amd64/README.html
   inflating: rclone-v1.62.0-linux-amd64/rclone.1
 ```
-  - If the `wget` fails:
+  - If the `wget` fails, you can copy that `zip` file as follows:
 ```
 cp -pi /pool/sao/hpc/haw/sw+m/ex01/rclone-current-linux-amd64.zip ./
 ```
@@ -660,6 +670,53 @@ Easy peasy ;-P
 ---
 
 ## Build a Bio Package
+
+### Intro
+
+  - We will build two popular biology packages, 
+    [RAxML](https://github.com/stamatak/standard-RAxML) and 
+    [samtools](https://www.htslib.org).
+
+### Building `RAxML`
+
+  1. Create a directory and download the RAxML source files.
+
+```
+% cd ..
+% mkdir raxml
+% cd raxml
+% git clone https://github.com/stamatak/standard-RAxML.git
+
+```
+
+  2. You can choose to build a sequential version (no multithreading), a
+     multithreaded version (Pthreads) or a MPI version. A different makefile
+     is supplied for each version. Look at the different versions.
+
+```
+% ls standard-RAxML
+```
+
+  3. Load the `gcc` compiler, and build different versions of RAxML. 
+
+     - :warning: loading the right version of `gcc` is important
+
+```
+% module load gcc/7.3.0
+% cd standard-RAxML
+% make -f Makefile.SSE3.gcc
+% make -f Makefile.SSE3.PTHREADS.gcc
+% make -f Makefile.SSE3.MPI.gcc
+```
+
+ 4. Move the executables into a bin directory and run RAxML.
+
+```
+% mkdir bin
+% cp ……
+```
+
+### Building `samtools`
 
 ---
 
