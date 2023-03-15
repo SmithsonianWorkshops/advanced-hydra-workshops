@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Wed Mar 15 12:58:21 2023 -> SGK -->
+<!-- <- Last updated: Wed Mar 15 13:11:27 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -30,7 +30,7 @@
 
 ---
 
-## Downloading Code
+<## Downloading Code
 
 ### Source vs Executable
 
@@ -457,6 +457,9 @@ https://github.com/SmithsonianWorkshops
 
 - Where you see `<username>`, you need to substitute your username.
 
+- Where you see `$USER` or `$PWD`, the shell will do the substitution for you
+  (username or current/print working directory),
+
 ---
 
 ## But First
@@ -527,7 +530,7 @@ cp -pi /pool/sao/hpc/haw/sw+m/ex01/rclone-current-linux-amd64.zip ./
 
 4. Use it
 ```
-% $cwd/bin/rclone version
+% $PWD/bin/rclone version
 rclone v1.62.0
 - os/version: centos 7.9.2009 (64 bit)
 - os/kernel: 3.10.0-1160.81.1.el7.x86_64 (x86_64)
@@ -537,7 +540,7 @@ rclone v1.62.0
 - go/linking: static
 - go/tags: none
 
-% man -M $cwd/man rclone
+% man -M $PWD/man rclone
                                             rclone(1)
 
 Rclone syncs your files to cloud storage
