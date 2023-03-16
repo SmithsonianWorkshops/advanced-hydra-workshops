@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 12:43:00 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 13:13:19 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -782,16 +782,21 @@ Easy peasy ;-P
 
 ## Examples of Building Large "Astro" Package
 
-### Note
+### `HEASoft`
 
- - building the following packages would take too long, so we will just
-   illustrate how we did it.
+ - building the following package would take too long, so I will just
+   illustrate how I did it.
 
-### `FLASH`
+ - [`HEASoft` at https://heasarc.gsfc.nasa.gov/docs/software/heasoft/](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/)
 
-### `HEASOFT`
+   - Hydra is running CentOS 7.x, or a 'RPM-based' Linux (like RHEL, Fedora)
 
- - I wrote 3 "source" files:
+   - Instructions at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html)
+
+   - :warning: lots of `sudo` and `yum`, cannot follow these instructions verbatim on Hydra
+
+
+ - I wrote 3 _simple_ "source" files:
 
  1. Configuration
 
@@ -874,11 +879,10 @@ make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DI
 Finished make all
 ```
 
-Only if it did not fail, you can install it with
+If the make/build completed sucessfully, you can install it with
 ```
 source ../do-install.sou |& tee do-install.log
 [1] 8964
-
 ```
 
 and monitor the file `install.log`. This will take a littel time, but not as
@@ -887,6 +891,56 @@ long as the `make` and you should see:
 ```
 make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DIR'
 Finished make install
+```
+
+### What you can do
+
+```
+% cd ..
+% mkdir heasoft
+% cp /pool/sao/hpc/haw/sw+m/heasoft/configure
+% ./configure --help
+.... lots of stuff ....
+```
+
+instead do
+
+```
+% ./configure --help > config-help.txt
+% more config-help.txt
+`configure' configures this package to adapt to many kinds of systems.
+
+Usage: ./configure [OPTION]... [VAR=VALUE]...
+
+To assign environment variables (e.g., CC, CFLAGS...), specify them as
+VAR=VALUE.  See below for descriptions of some of the useful variables.
+
+Defaults for the options are specified in brackets.
+
+Configuration:
+  -h, --help              display this help and exit
+      --help=short        display options specific to this package
+      --help=recursive    display the short help of all the included packages
+  -V, --version           display version information and exit
+  -q, --quiet, --silent   do not print `checking ...' messages
+      --cache-file=FILE   cache test results in FILE [disabled]
+  -C, --config-cache      alias for `--cache-file=config.cache'
+  -n, --no-create         do not create output files
+      --srcdir=DIR        find the sources in DIR [configure dir or `..']
+
+Installation directories:
+  --prefix=PREFIX         install architecture-independent files in PREFIX
+                          [/usr/local]
+  --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX
+                          [PREFIX]
+
+By default, `make install' will install all the files in
+`/usr/local/bin', `/usr/local/lib' etc.  You can specify
+an installation prefix other than `/usr/local' using `--prefix',
+for instance `--prefix=$HOME'.
+
+For better control, use the options below.
+...
 ```
 
 ---
