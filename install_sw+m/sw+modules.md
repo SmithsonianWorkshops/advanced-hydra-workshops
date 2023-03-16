@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 13:13:19 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 13:19:17 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -780,7 +780,7 @@ Easy peasy ;-P
 
 ---
 
-## Examples of Building Large "Astro" Package
+## Examples of Building a Large "Astro" Package
 
 ### `HEASoft`
 
@@ -853,23 +853,23 @@ make install >& install.log &
  Used them as:
 
 ```
-cd BUILD_DIR
-source ../do-configure.sou |& tee do-configure.log
+% cd BUILD_DIR
+% source ../do-configure.sou |& tee do-configure.log
 .... lots of text ...
 
-source ../do-make.sou |& tee do-make.log
+% source ../do-make.sou |& tee do-make.log
 [1] 5962
 ```
 
 now you have to wait a while and you can monitor the `make.log` file with
 ```
-tail make.log
+% tail make.log
 ```
 
 or
 
 ``` 
-tail -f make.log
+% tail -f make.log
 ```
 
  and if all works well, you'll see
@@ -881,7 +881,7 @@ Finished make all
 
 If the make/build completed sucessfully, you can install it with
 ```
-source ../do-install.sou |& tee do-install.log
+% source ../do-install.sou |& tee do-install.log
 [1] 8964
 ```
 
@@ -903,7 +903,7 @@ Finished make install
 .... lots of stuff ....
 ```
 
-instead do
+ - a better way
 
 ```
 % ./configure --help > config-help.txt
