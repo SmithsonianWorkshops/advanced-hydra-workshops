@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 13:19:17 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 13:25:07 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -787,13 +787,14 @@ Easy peasy ;-P
  - building the following package would take too long, so I will just
    illustrate how I did it.
 
- - [`HEASoft` at https://heasarc.gsfc.nasa.gov/docs/software/heasoft/](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/)
+ - `HEASoft` at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/)
 
-   - Hydra is running CentOS 7.x, or a 'RPM-based' Linux (like RHEL, Fedora)
+   - Hydra is running CentOS 7.x, or a 'RPM-based' Linux (like RHEL, Fedora).
 
-   - Instructions at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html)
+   - Instructions at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html).
 
-   - :warning: lots of `sudo` and `yum`, cannot follow these instructions verbatim on Hydra
+   - :warning: lots of `sudo` and `yum`, cannot follow these instructions
+     verbatim on Hydra :confused:
 
 
  - I wrote 3 _simple_ "source" files:
@@ -893,7 +894,9 @@ make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DI
 Finished make install
 ```
 
-### What you can do
+### What we can do
+
+ - test the configuration step
 
 ```
 % cd ..
