@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 16:46:36 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 17:57:53 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -610,7 +610,7 @@ press 'q' to quit
 
 ### Note how these steps are different from the instructions
 
-- :warning: do not follow verbatim the instructions on the web page and in the `README.txt` file:
+- :warning: did not follow _verbatim_ the instructions on the web page and in the `README.txt` file:
   - nothing copied under `/usr/bin/`,
   - no `chown root`, and
   - no `sudo`
@@ -712,6 +712,11 @@ icc -o hello hello.o
 hello world!
 ```
 4. Build it to behave differently
+
+   - remove what was build 
+
+   - re-compile with a special flag
+
 ```
 % make clean
 rm hello hello.o
@@ -742,10 +747,10 @@ Easy peasy ;-P
   1. Create a directory and download the RAxML source files.
 
 ```
-% cd ..
-% mkdir raxml
-% cd raxml
-% git clone https://github.com/stamatak/standard-RAxML.git
+$ cd ..
+$ mkdir raxml
+$ cd raxml
+$ git clone https://github.com/stamatak/standard-RAxML.git
 
 ```
 
@@ -754,7 +759,7 @@ Easy peasy ;-P
      is supplied for each version. Look at the different versions.
 
 ```
-% ls standard-RAxML
+$ ls standard-RAxML
 ```
 
   3. Load the `gcc` compiler, and build different versions of RAxML. 
@@ -762,18 +767,18 @@ Easy peasy ;-P
      - :warning: loading the right version of `gcc` is important
 
 ```
-% module load gcc/7.3.0
-% cd standard-RAxML
-% make -f Makefile.SSE3.gcc
-% make -f Makefile.SSE3.PTHREADS.gcc
-% make -f Makefile.SSE3.MPI.gcc
+$ module load gcc/7.3.0
+$ cd standard-RAxML
+$ make -f Makefile.SSE3.gcc
+$ make -f Makefile.SSE3.PTHREADS.gcc
+$ make -f Makefile.SSE3.MPI.gcc
 ```
 
  4. Move the executables into a bin directory and run RAxML.
 
 ```
-% mkdir bin
-% cp ...
+$ mkdir bin
+$ cp ...
 ```
 
 ### Building `samtools`
@@ -818,7 +823,7 @@ setenv FC     gfortran
   --disable-openmp --enable-readline
 ```
 
-  2. Build (or make)
+  2. Build (make)
 ```
 ==> do-make.sou <==
 module load gcc/10.1.0
@@ -851,42 +856,54 @@ setenv FC     gfortran
 make install >& install.log &
 ```
 
- Used them as:
+---
+
+## How to use them
+
+### Configure
 
 ```
 % cd BUILD_DIR
 % source ../do-configure.sou |& tee do-configure.log
 .... lots of text ...
+```
 
+### Build (make)
+
+```
 % source ../do-make.sou |& tee do-make.log
 [1] 5962
 ```
 
-now you have to wait a while and you can monitor the `make.log` file with
+ - you have to wait a while and monitor the `make.log` file, like:
+
 ```
 % tail make.log
 ```
 
-or
+ or
 
 ``` 
 % tail -f make.log
 ```
 
- and if all works well, you'll see
+ - if all works well, you'll see:
 
 ```
 make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DIR'
 Finished make all
 ```
 
-If the make/build completed sucessfully, you can install it with
+### Install
+
+  - If the build/make completed sucessfully, you can install it with:
+
 ```
 % source ../do-install.sou |& tee do-install.log
 [1] 8964
 ```
 
-and monitor the file `install.log`. This will take a littel time, but not as
+ - monitor the file `install.log`. This will take a little time, but not as
 long as the `make` and you should see:
 
 ```
@@ -896,9 +913,13 @@ Finished make install
 
  - these `do-*.sou` files are in `/data/sao/hpc/ahw/sw+m/heasoft` on Hydra.
 
-### What we can do
+---
 
- - test the configuration step
+## What we can do
+
+### Test the configuration step
+
+ - Check the  configuration options
 
 ```
 % cd ..
@@ -946,6 +967,22 @@ for instance `--prefix=$HOME'.
 
 For better control, use the options below.
 ...
+```
+
+  - Often also need to consult the instructions.
+
+  - What the output of `source ../do-configure.sou` looks like:
+
+```
+% more /data/sao/hpc/advanced-workshops/sw+m/heasoft/do-configure.log
+Currently Loaded Modulefiles:
+ 1) uge/8.6.18   2) tools/local-user   3) tools/local-admin   4) idl/8.8(default)   5) gcc/10.1.0   6) tools/python/3.8(default)  
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+modified Linux system type is x86_64-pc-linux-gnu-libc2.17
+Found component heacore
+... a lot more ...
 ```
 
 ---
