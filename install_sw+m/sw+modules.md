@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 13:25:07 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 16:46:36 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -576,7 +576,7 @@ Archive:  rclone-current-linux-amd64.zip
 ```
   - If the `wget` fails, you can copy that `zip` file as follows:
 ```
-cp -pi /pool/sao/hpc/haw/sw+m/ex01/rclone-current-linux-amd64.zip ./
+% cp -pi /data/sao/hpc/ahw/sw+m/ex01/rclone-current-linux-amd64.zip ./
 ```
 3. Install `rclone`
 ```
@@ -630,7 +630,7 @@ press 'q' to quit
 % cd ..
 % mkdir ex02
 % cd ex02
-% cp -pi /pool/sao/hpc/aw/ex02/hello.c ./
+% cp -pi /data/sao/hpc/ahw/sw+m/ex02/hello.c ./
 ```
 2. look at the code
 ```
@@ -679,8 +679,8 @@ Easy peasy ;-P
 % cd ..
 % mkdir ex03
 % cd ex03
-% cp -pi /pool/sao/hpc/aw/ex03/hello.c ./
-% cp -pi /pool/sao/hpc/aw/ex03/makefile ./
+% cp -pi /data/sao/hpc/ahw/sw+m/ex03/hello.c ./
+% cp -pi /data/sao/hpc/ahw/sw+m/ex03/makefile ./
 ```
 2. look at the files
 ```
@@ -773,7 +773,7 @@ Easy peasy ;-P
 
 ```
 % mkdir bin
-% cp ……
+% cp ...
 ```
 
 ### Building `samtools`
@@ -894,6 +894,8 @@ make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DI
 Finished make install
 ```
 
+ - these `do-*.sou` files are in `/data/sao/hpc/ahw/sw+m/heasoft` on Hydra.
+
 ### What we can do
 
  - test the configuration step
@@ -901,7 +903,7 @@ Finished make install
 ```
 % cd ..
 % mkdir heasoft
-% cp /pool/sao/hpc/haw/sw+m/heasoft/configure
+% cp -pi /data/sao/hpc/ahw/sw+m/heasoft/BUILD_DIR/configure ./
 % ./configure --help
 .... lots of stuff ....
 ```
@@ -1010,7 +1012,7 @@ and fix `<genomics|sao>/<username>` to be what you need.
 % cd ~
 % mkdir modulefiles
 % mkdir modulefiles/rclone
-% cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 modulefiles/rclone/
+% cp -pi /pool/sao/hpc/ahw/sw+m/ex01/modulefiles/rclone/1.62.0 modulefiles/rclone/
 % cd -
 ```
 
