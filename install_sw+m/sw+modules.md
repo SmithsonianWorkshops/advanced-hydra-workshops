@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Wed Mar 15 13:11:27 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 11:45:23 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -16,6 +16,7 @@
    - view [_slides_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.pdf)
      or the [_markdown_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md) version
 
+
 ### In the intro portion of the workshop you will learn:
 
 * About downloading code
@@ -30,7 +31,7 @@
 
 ---
 
-<## Downloading Code
+## Downloading Code
 
 ### Source vs Executable
 
@@ -87,7 +88,7 @@ There are instances when available executables will run flawlessly on Hydra, but
 
 &nbsp;
 
-> This will be illustrated in the hands on section.
+> This will be illustrated in the hands-on section.
 
 ---
 
@@ -134,6 +135,63 @@ There are instances when available executables will run flawlessly on Hydra, but
   - usually defined by the configuration,
 
 - best practice is to separate build from install locations.
+
+
+---
+
+## Basics about `make` and `makefile`
+
+### The command `make`
+
+ - `make` is a utility to maintain groups of programs.
+
+ - Uses instructions in a `makefile` to build targets from sources by following rules.
+
+ - written to help build & maintain code, can be used
+   for a lot more (full Carpentries module).
+
+### Examples:
+
+ - build the first target listed in the `makefile`:
+
+```
+make
+```
+
+  - build the target "`this`" listed in the "`makefile`" file:
+
+```
+make this
+```
+
+  - build "`that`" using "`makefile.special`" and set "`VAR`" to "`val`":
+
+```
+make -f makefile.special VAR=val that
+```
+
+---
+
+## Basics about `make` and `makefile` (cont'd)
+
+### The `Makefile` or `makefile` files
+
+ - a file that defines targets and codifies rules and dependencies to build targets;
+
+   - dependency: has a source needed to build something changed?
+
+ - it can be very simple, but can also be quite complex.
+
+
+### Also
+
+ - `make` has implicit rules:
+
+   - can build targets w/out a `makefile` or w/out rules.
+
+&nbsp;
+
+> This will be illustrated in the hands-on part
 
 ---
 
@@ -336,7 +394,7 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 
 ## Example of More Elaborate and Complex Module Files
 
-> Will be illustrated in the hands on section.
+> Will be illustrated in the hands-on section.
 
 ---
 
@@ -356,6 +414,8 @@ setenv HEASOFT /home/username/heasoft/6.3.1
 ---
 
 ## Customization/Examples
+
+<!-- use ASCII art for the tree? -->
 
 ### Tree structure
 ```
@@ -453,14 +513,11 @@ https://github.com/SmithsonianWorkshops
   - you type what is **after** the prompt
   - no prompt: result from previous command.
 
-- Where you see `<genomics|sao>`, you need to use either `genomics` or `sao`,
+- I where you see `<genomics|sao>`, you need to use either `genomics` or `sao`,
 
-- Where you see `<username>`, you need to substitute your username.
+- I where you see `<username>`, you need to substitute your username.
 
-- Where you see `$USER` or `$PWD`, the shell will do the substitution for you
-  (username or current/print working directory),
-
----
+<!-- end of sw+modules-slides.md -->
 
 ## But First
 
