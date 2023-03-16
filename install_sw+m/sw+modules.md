@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 11:45:23 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 16 12:43:00 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -483,7 +483,7 @@ module use --append ~/modulefiles
 
 - Run the software you installed in jobs.
 
-### But first, log in to Hydra
+### First, log in to Hydra
 
 - If you need a reminder about how to log into Hydra and how to change your
 password, check the [_Intro to Hydra_](https://github.com/SmithsonianWorkshops/Hydra-introduction/blob/master/hydra_intro.md)
@@ -519,7 +519,7 @@ https://github.com/SmithsonianWorkshops
 
 <!-- end of sw+modules-slides.md -->
 
-## But First
+## First
 
 ### Create a location where to run things
 
@@ -729,7 +729,7 @@ Easy peasy ;-P
 
 ---
 
-## Build a Bio Package
+## Build some "Bio" Packages
 
 ### Intro
 
@@ -780,7 +780,114 @@ Easy peasy ;-P
 
 ---
 
-## Build an Astro Package
+## Examples of Building Large "Astro" Package
+
+### Note
+
+ - building the following packages would take too long, so we will just
+   illustrate how we did it.
+
+### `FLASH`
+
+### `HEASOFT`
+
+ - I wrote 3 "source" files:
+
+ 1. Configuration
+
+```
+==> do-configure.sou <==
+module load gcc/10.1.0
+module load tools/python/3.8
+module list
+#
+setenv PYTHON python3
+setenv PERL   perl
+setenv CC     gcc
+setenv CXX    g++
+setenv FC     gfortran
+#
+./configure --prefix=/scratch/sao/hpc/tests/xspec/6.31.1-no-openmp \
+  --without-lynx --disable-x \
+  --disable-openmp --enable-readline
+```
+
+  2. Build (or make)
+```
+==> do-make.sou <==
+module load gcc/10.1.0
+module load tools/python/3.8
+module list
+#
+setenv PYTHON python3
+setenv PERL   perl
+setenv CC     gcc
+setenv CXX    g++
+setenv FC     gfortran
+#
+# 
+make -j 8 >& make.log &
+```
+
+  3. Install
+```
+==> do-install.sou <==
+module load gcc/10.1.0
+module load tools/python/3.8
+module list
+#
+setenv PYTHON python3
+setenv PERL   perl
+setenv CC     gcc
+setenv CXX    g++
+setenv FC     gfortran
+#
+make install >& install.log &
+```
+
+ Used them as:
+
+```
+cd BUILD_DIR
+source ../do-configure.sou |& tee do-configure.log
+.... lots of text ...
+
+source ../do-make.sou |& tee do-make.log
+[1] 5962
+```
+
+now you have to wait a while and you can monitor the `make.log` file with
+```
+tail make.log
+```
+
+or
+
+``` 
+tail -f make.log
+```
+
+ and if all works well, you'll see
+
+```
+make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DIR'
+Finished make all
+```
+
+Only if it did not fail, you can install it with
+```
+source ../do-install.sou |& tee do-install.log
+[1] 8964
+
+```
+
+and monitor the file `install.log`. This will take a littel time, but not as
+long as the `make` and you should see:
+
+```
+make[1]: Leaving directory `/scratch/sao/hpc/tests/xspec/heasoft-6.31.1/BUILD_DIR'
+Finished make install
+```
 
 ---
 
