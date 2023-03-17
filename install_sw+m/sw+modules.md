@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Fri Mar 17 12:03:37 2023 -> SGK -->
+<!-- <- Last updated: Fri Mar 17 12:09:28 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -1107,7 +1107,7 @@ and fix `<genomics|sao>/<username>` to be what you need.
 ### To make it permanent
 
 ```
-% cat <<EOF ~/.modulerc
+% cat <<EOF > ~/.modulerc
 #%Module1.0
 # adding my own module files
 module use --append /home/<username>/modulefiles
