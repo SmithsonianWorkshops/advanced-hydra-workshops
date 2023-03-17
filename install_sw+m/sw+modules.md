@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Thu Mar 16 17:57:53 2023 -> SGK -->
+<!-- <- Last updated: Fri Mar 17 12:03:37 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -61,6 +61,8 @@ There are instances when available executables will run flawlessly on Hydra, but
 ### Risks
 
 - Since users on Hydra do not have elevated privileges (root access) you are very unlikely to damage the cluster, but malicious software can still damage your files.
+
+&nbsp;
 
 - In rare cases it may install a _Trojan horse_ that could exploit a known vulnerability.
 
@@ -183,6 +185,8 @@ make -f makefile.special VAR=val that
  - it can be very simple, but can also be quite complex.
 
 
+&nbsp;
+
 ### Also
 
  - `make` has implicit rules:
@@ -204,6 +208,8 @@ You likely will need to adjust your _environment_ to run some code:
   1. the location of the code: `path` or `PATH`,
   1. the location of the libraries:  `LD_LIBRARY_PATH`,
   1. you may also need to set some environment variables, etc.
+
+&nbsp;
 
 ### Easier Way: modules
 
@@ -248,6 +254,8 @@ This is where using a module makes things easy:
   - While you **cannot** install packages with `yum`,
   - you can check if we've installed a prerequisite package
 
+&nbsp;
+
 ### In practice
 
   - if the instructions say
@@ -277,9 +285,9 @@ Description : X.Org X11 libXt development package
 ...
 ```
 
-&nbsp;
+###
 
-> You want the `Arch: x86_64` to be listed as "Installed" not _just_ "Available".
+ You want the `Arch: x86_64` to be listed as "Installed" not _just_ "Available".
 
 ---
 
@@ -294,12 +302,18 @@ sudo make install
   - instead, set the installation directory to be under your control,
   - in most cases at the configuration step
 ```
-./configure -prefix=/home/username/big-package/3.5
+./configure -prefix=/home/<username>/big-package/3.5
 ```
+
   - and use
 ```
 make install
 ```
+
+### 
+
+ Replace `<username>` by your username.
+
 ---
 
 ## Final Notes
@@ -325,6 +339,8 @@ make install
 
    - _same_ module file whether `sh/bash` or `csh/tcsh`.
  
+&nbsp;
+
 ### Examples
 
  - We provide module files, users can write their own.
@@ -388,9 +404,12 @@ set-alias    crunch "crunch --with-that-option \*"
 # load two modules and set the HEASOFT env variable
 module load gcc/10.1.10
 module load python/3.8
-setenv HEASOFT /home/username/heasoft/6.3.1
+setenv HEASOFT /home/<username>/heasoft/6.3.1
 ```
 
+###
+
+ Replace `<username>` by your username.
 
 ## Example of More Elaborate and Complex Module Files
 
@@ -483,7 +502,7 @@ module use --append ~/modulefiles
 
 - Run the software you installed in jobs.
 
-### First, log in to Hydra
+### But first, log in to Hydra
 
 - If you need a reminder about how to log into Hydra and how to change your
 password, check the [_Intro to Hydra_](https://github.com/SmithsonianWorkshops/Hydra-introduction/blob/master/hydra_intro.md)
@@ -504,7 +523,7 @@ https://github.com/SmithsonianWorkshops
 ## <a name="here"></a>Switch to `github` for the Hands-on
 
 ### Go to
-- [https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
+ [https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md#here)
 
 ### Convention
 
@@ -517,7 +536,8 @@ https://github.com/SmithsonianWorkshops
 
 - I where you see `<username>`, you need to substitute your username.
 
-<!-- end of sw+modules-slides.md -->
+<!-- <- Last updated: Fri Mar 17 11:58:51 2023 -> SGK -->
+
 
 ## First
 
@@ -537,8 +557,11 @@ $ cd advanced-workshop/sw+m/hands-on
 % cd advanced-workshop/sw+m
 ```
 
-- `$USER` will be replaced by your username,
+
+- `$USER` will be replaced for you by your username,
   - feel free to put this elsewhere.
+
+:question: `-p`
 
 ---
 
@@ -553,7 +576,7 @@ $ cd advanced-workshop/sw+m/hands-on
 ```
 2. Get `rclone`
 - Google "download rclone linux" --> https://rclone.org/install/
-- look at "[Linux Installation](https://rclone.org/install/#linux)"
+- look under "[Linux Installation](https://rclone.org/install/#linux)"
 ```
 % wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
 --2023-03-14 14:20:17--  https://downloads.rclone.org/rclone-current-linux-amd64.zip
@@ -585,6 +608,10 @@ Archive:  rclone-current-linux-amd64.zip
 % cp -pi rclone-v1.62.0-linux-amd64/rclone.1 man/man1/
 ```
 
+:question: `-pi`
+
+:question: `man/man1`
+
 4. Use it
 ```
 % $PWD/bin/rclone version
@@ -610,7 +637,7 @@ press 'q' to quit
 
 ### Note how these steps are different from the instructions
 
-- :warning: did not follow _verbatim_ the instructions on the web page and in the `README.txt` file:
+- :warning: did not follow _verbatim_ the instructions on the web page (or `README.txt`):
   - nothing copied under `/usr/bin/`,
   - no `chown root`, and
   - no `sudo`
@@ -711,6 +738,9 @@ icc -o hello hello.o
 % ./hello
 hello world!
 ```
+
+:exclamation: `icc` not `cc`
+
 4. Build it to behave differently
 
    - remove what was build 
@@ -794,12 +824,12 @@ $ cp ...
 
  - `HEASoft` at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/)
 
-   - Hydra is running CentOS 7.x, or a 'RPM-based' Linux (like RHEL, Fedora).
+   - Hydra is running CentOS 7.x, or a 'RPM-based' Linux (like RHEL, Fedora :tophat:).
 
    - Instructions at [https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html](https://heasarc.gsfc.nasa.gov/docs/software/heasoft/fedora.html).
 
-   - :warning: lots of `sudo` and `yum`, cannot follow these instructions
-     verbatim on Hydra :confused:
+   - :warning: lots of `sudo` and `yum`, **cannot** follow these instructions
+     _verbatim_ on Hydra :confused:
 
 
  - I wrote 3 _simple_ "source" files:
@@ -867,6 +897,7 @@ make install >& install.log &
 % source ../do-configure.sou |& tee do-configure.log
 .... lots of text ...
 ```
+:question: `|& tee`
 
 ### Build (make)
 
@@ -969,7 +1000,9 @@ For better control, use the options below.
 ...
 ```
 
-  - Often also need to consult the instructions.
+  - _Still_ need to consult the instructions (optinal packages).
+
+  - Some failures can be helpfull and suggest options to disable.
 
   - What the output of `source ../do-configure.sou` looks like:
 
@@ -985,13 +1018,15 @@ Found component heacore
 ... a lot more ...
 ```
 
+```
+```
 ---
 
-## Write a More Elaborate Module File
+## Write a Module File
 
-### An `rclone` Module File for Your Private Version
+### An `rclone` Module File for your Private Version
 
-- Where? Under the `ex01/` directory
+- Where? under the `ex01/` directory
 
 ```
 % cd /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01
@@ -1078,8 +1113,9 @@ and fix `<genomics|sao>/<username>` to be what you need.
 module use --append /home/<username>/modulefiles
 EOF
 ```
-- remember to substitute `<username>` by your username.
+:question: the `<<EOF` construct
 
+- remember to substitute `<username>` by your username.
 
 ## Check this out
 
