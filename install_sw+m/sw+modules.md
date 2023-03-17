@@ -808,10 +808,37 @@ $ make -f Makefile.SSE3.MPI.gcc
 
 ```
 $ mkdir bin
-$ cp ...
+$ cp raxmlHPC-PTHREADS-SSE3 bin/
+$ cd bin
+$ ./raxmlHPC-PTHREADS-SSE3
+
 ```
 
 ### Building `samtools`
+1. Create a directory and download the samtools and ncurses source files. ncurses is a library that samtools needs to be compiled successfully. First, cd back into your workshop directory.
+```
+$ mkdir samtools
+$ cd samtools
+$ wget https://github.com/samtools/samtools/releases/download/1.17/samtools-1.17.tar.bz2
+$ tar xvf samtools-1.17.tar.bz2
+$ mv samtools-1.17 1.17
+$ wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
+$ tar xvf ncurses-6.4.tar.gz && cd ncurses-6.4
+```
+
+2. Build ncurses and samtools.
+```
+$ module load gcc/7.3.0
+$ ./configure --prefix=/pool/<genomics|sao>/<username>/samtools/1.17
+$ make && make install
+$ cd ../1.17
+$ CPPFLAGS="-I./include" LDFLAGS="-L./lib" ./configure --with-ncurses –prefix=/pool/<genomics|sao>/<username>/samtools/1.17
+$ make && make install
+$ mv bin bin-ncurses
+$ mkdir bin && cd bin
+$ cp ../samtools .
+$ ./samtools
+```
 
 ---
 
