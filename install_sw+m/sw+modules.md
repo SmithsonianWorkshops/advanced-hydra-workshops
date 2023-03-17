@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Fri Mar 17 12:09:28 2023 -> SGK -->
+<!-- <- Last updated: Fri Mar 17 16:11:16 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -13,7 +13,7 @@
 
  - [`https://github.com/SmithsonianWorkshops/`](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/)
 
-   - view [_slides_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.pdf)
+   - view [_slides_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules-all.pdf)
      or the [_markdown_](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/install_sw+m/sw+modules.md) version
 
 
