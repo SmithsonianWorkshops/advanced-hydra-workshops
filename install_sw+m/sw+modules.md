@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Fri Mar 17 16:11:16 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 15:37:02 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -546,15 +546,15 @@ https://github.com/SmithsonianWorkshops
 - For biologists (non SAO)
 ```
 $ cd /pool/genomics/$USER
-$ mkdir -p advanced-workshop/sw+m/hands-on
-$ cd advanced-workshop/sw+m/hands-on
+$ mkdir -p ahw/sw+m
+$ cd ahw/sw+m
 ```
 
 - For SAO (CfA)
 ```
 % cd /pool/sao/$USER
-% mkdir -p advanced-workshop/sw+m
-% cd advanced-workshop/sw+m
+% mkdir -p ahw/sw+m/hands-on
+% cd ahw/sw+m/hands-on
 ```
 
 
@@ -590,12 +590,12 @@ Saving to: 'rclone-current-linux-amd64.zip'
 
 % unzip rclone-current-linux-amd64.zip
 Archive:  rclone-current-linux-amd64.zip
-   creating: rclone-v1.62.0-linux-amd64/
-  inflating: rclone-v1.62.0-linux-amd64/README.txt
-  inflating: rclone-v1.62.0-linux-amd64/rclone
-  inflating: rclone-v1.62.0-linux-amd64/git-log.txt
-  inflating: rclone-v1.62.0-linux-amd64/README.html
-  inflating: rclone-v1.62.0-linux-amd64/rclone.1
+   creating: rclone-v1.62.2-linux-amd64/
+  inflating: rclone-v1.62.2-linux-amd64/README.txt
+  inflating: rclone-v1.62.2-linux-amd64/rclone
+  inflating: rclone-v1.62.2-linux-amd64/git-log.txt
+  inflating: rclone-v1.62.2-linux-amd64/README.html
+  inflating: rclone-v1.62.2-linux-amd64/rclone.1
 ```
   - If the `wget` fails, you can copy that `zip` file as follows:
 ```
@@ -604,8 +604,8 @@ Archive:  rclone-current-linux-amd64.zip
 3. Install `rclone`
 ```
 % mkdir -p bin man/man1
-% cp -pi rclone-v1.62.0-linux-amd64/rclone bin/
-% cp -pi rclone-v1.62.0-linux-amd64/rclone.1 man/man1/
+% cp -pi rclone-v1.62.2-linux-amd64/rclone bin/
+% cp -pi rclone-v1.62.2-linux-amd64/rclone.1 man/man1/
 ```
 
 :question: `-pi`
@@ -615,7 +615,7 @@ Archive:  rclone-current-linux-amd64.zip
 4. Use it
 ```
 % $PWD/bin/rclone version
-rclone v1.62.0
+rclone v1.62.2
 - os/version: centos 7.9.2009 (64 bit)
 - os/kernel: 3.10.0-1160.81.1.el7.x86_64 (x86_64)
 - os/type: linux
@@ -632,6 +632,8 @@ Rclone syncs your files to cloud storage
 ...
 press 'q' to quit
 ```
+
+:question: `-M`
 
 - we will later write a module to use that version.
 
@@ -762,6 +764,14 @@ Easy peasy ;-P
 
 > Simplistic illustration how "configuration" affects code building.
 
+
+5. Cleanup
+
+```
+% module list
+% module unload intel
+```
+
 ---
 
 ## Build some "Bio" Packages
@@ -785,11 +795,15 @@ $ git clone https://github.com/stamatak/standard-RAxML.git
 ```
 
   2. You can choose to build a sequential version (no multithreading), a
-     multithreaded version (Pthreads) or a MPI version. A different makefile
+     multithreaded version (PTHREADS) or a MPI version. A different makefile
      is supplied for each version. Look at the different versions.
 
 ```
+$ ls
+standard-RAxML
 $ ls standard-RAxML
+$ cd standard-RAxML
+....
 ```
 
   3. Load the `gcc` compiler, and build different versions of RAxML. 
@@ -798,46 +812,140 @@ $ ls standard-RAxML
 
 ```
 $ module load gcc/7.3.0
-$ cd standard-RAxML
 $ make -f Makefile.SSE3.gcc
 $ make -f Makefile.SSE3.PTHREADS.gcc
+```
+
+  - to build the MPI version, you also need to load the gcc `openmpi` for that
+    version
+
+```
+$ module load gcc/7.3/openmpi
 $ make -f Makefile.SSE3.MPI.gcc
 ```
 
- 4. Move the executables into a bin directory and run RAxML.
+ 4. Copy the executables into a `bin/` directory and run RAxML.
 
 ```
 $ mkdir bin
 $ cp raxmlHPC-PTHREADS-SSE3 bin/
+
 $ cd bin
 $ ./raxmlHPC-PTHREADS-SSE3
+....
 
+$ ./raxmlHPC-PTHREADS-SSE3 -help
+....
 ```
 
+---
+
 ### Building `samtools`
-1. Create a directory and download the samtools and ncurses source files. ncurses is a library that samtools needs to be compiled successfully. First, cd back into your workshop directory.
+
+1. Create a directory and download the `samtools` and `ncurses` source
+   files. `ncurses` is a library that samtools needs to be compiled
+   successfully.
+
+ - First, cd back into your workshop directory.
+
+```
+$ pwd
+/pool/<genomics|sao>/<usename>/ahw/sw+m/raxml/standard-RAxML/bin
+
+$ cd ../../..
+$ pwd
+/pool/<genomics|sao>/<usename>/ahw/sw+m
+```
+
+ - Create a directory and download the source files
+
 ```
 $ mkdir samtools
 $ cd samtools
 $ wget https://github.com/samtools/samtools/releases/download/1.17/samtools-1.17.tar.bz2
-$ tar xvf samtools-1.17.tar.bz2
-$ mv samtools-1.17 1.17
 $ wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
-$ tar xvf ncurses-6.4.tar.gz && cd ncurses-6.4
+$ tar xvf samtools-1.17.tar.bz2
+$ tar xvf ncurses-6.4.tar.gz
+$ mv samtools-1.17 1.17
 ```
 
-2. Build ncurses and samtools.
+2. Load the `gcc/7.3.0` module, build ncurses and samtools.
+
+ - load the  `gcc/7.3.0` module
+
 ```
+$ module list
 $ module load gcc/7.3.0
-$ ./configure --prefix=/pool/<genomics|sao>/<username>/samtools/1.17
-$ make && make install
+$ module list
+```
+ - build `ncurses`
+
+```
+$ cd ncurses-6.4
+$ ./configure --prefix=/pool/<genomics|sao>/$USER/samtools/1.17 |& tee do-configure.log
+
+$ make |& tee make.log
+
+$ make install |& install.log
+```
+
+ - Build `samtools`
+
+   - configure, for `bash`
+
+```
 $ cd ../1.17
-$ CPPFLAGS="-I./include" LDFLAGS="-L./lib" ./configure --with-ncurses –prefix=/pool/<genomics|sao>/<username>/samtools/1.17
+$ PFX=/pool/<genomics|sao>/$USER/samtools/1.17
+$ CPPFLAGS="-I${PFX}/include"
+$ LDFLAGS="-L${PFX}/lib"
+$ echo $CPPFLAGS $LDFLAGS
+$ export CPPFLAGS LDFLAGS
+$ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
+```
+
+   - configure, for `csh`
+
+```
+% cd ../1.17
+% set PFX = /pool/<genomics|sao>/$USER/samtools/1.17
+% setenv CPPFLAGS "-I${PFX}/include"
+% setenv LDFLAGS  "-L${PFX}/lib"
+% echo $CPPFLAGS $LDFLAGS
+% export CPPFLAGS LDFLAGS
+% ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
+```
+
+> use `genomics` or `sao` for `PFX`
+
+  - build and install 
+
+```
 $ make && make install
+```
+
+or
+
+```
+$ make |& tee make.log
+$ make install |& install.log
+```
+
+  - test it
+
+```
+$ cd $PFX
 $ mv bin bin-ncurses
 $ mkdir bin && cd bin
-$ cp ../samtools .
+$ cp ../ bin-ncurses/samtools .
 $ ./samtools
+....
+```
+
+ - cleanup
+
+```
+$ module list
+$ module unload gcc
 ```
 
 ---
@@ -1034,7 +1142,7 @@ For better control, use the options below.
   - What the output of `source ../do-configure.sou` looks like:
 
 ```
-% more /data/sao/hpc/advanced-workshops/sw+m/heasoft/do-configure.log
+% more /data/sao/hpc/ahws/sw+m/heasoft/do-configure.log
 Currently Loaded Modulefiles:
  1) uge/8.6.18   2) tools/local-user   3) tools/local-admin   4) idl/8.8(default)   5) gcc/10.1.0   6) tools/python/3.8(default)  
 checking build system type... x86_64-pc-linux-gnu
@@ -1056,30 +1164,31 @@ Found component heacore
 - Where? under the `ex01/` directory
 
 ```
-% cd /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01
-% mkdir modulefiles/rclone
+% cd /pool/<genomics|sao>/$USER/ahw/sw+m/ex01
+% mkdir -p modulefiles/rclone
 % cd modulefiles/rclone
 ```
-- With your favorite editor (`nano`, `vi`, `emacs`, etc) create the file `1.62.0` with the following content:
+- With your favorite editor (`nano`, `vi`, `emacs`, etc) create the file `1.62.2` with the following content:
 ```
 #%Module1.0
 #
 # set some internal variables
-set ver     1.62.0
-set base    /pool/<genomics|sao>/<username>/advanced-workshop/sw+m/ex01
+set ver     1.62.2
+set base    /pool/<genomics|sao>/<username>/ahw/sw+m/ex01
 #
 # what to show for 'module whatis'
 module-whatis "System paths to run rclone $ver"
 #
 # configure the PATH and the MANPATH
-prepend-path PATH    $base/rclone/$ver/bin
-prepend-path MANPATH $base/rclone/$ver/man
+prepend-path PATH    $base/bin
+prepend-path MANPATH $base/man
+#
 ```
 - or (cheat)
 ```
-% cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.0 ./
-% emacs 1.62.0
-$ nano 1.62.0
+% cp -pi /pool/sao/hpc/aw/ex01/modulefiles/rclone/1.62.2 ./
+% emacs 1.62.2
+$ nano 1.62.2
 ```
 and fix `<genomics|sao>/<username>` to be what you need.
 
@@ -1088,15 +1197,15 @@ and fix `<genomics|sao>/<username>` to be what you need.
 ### Load it using the full path
 
 ```
-% module load /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
+% module load /pool/<genomics|sao>/$USER/ahw/sw+m/ex01/modulefiles/rclone/1.62.2
 % which rclone
-/pool/<genomics|sao>/<username>/advanced-workshop/sw+m/ex01/bin/rclone
+/pool/<genomics|sao>/<username>/ahw/sw+m/ex01/bin/rclone
 ```
 
 ### Unload it and use the one we've installed
 
 ```
-% module unload /pool/<genomics|sao>/$USER/advanced-workshop/sw+m/ex01/rclone/1.62.0
+% module unload /pool/<genomics|sao>/$USER/ahw/sw+m/ex01/modulefiles/rclone/1.62.2
 % module load tools/rclone
 % which rclone
 /share/apps/bioinformatics/rclone/1.53.1/rclone
@@ -1111,7 +1220,7 @@ and fix `<genomics|sao>/<username>` to be what you need.
 % cd ~
 % mkdir modulefiles
 % mkdir modulefiles/rclone
-% cp -pi /pool/sao/hpc/ahw/sw+m/ex01/modulefiles/rclone/1.62.0 modulefiles/rclone/
+% cp -pi /data/sao/hpc/ahw/sw+m/ex01/modulefiles/rclone/1.62.2 modulefiles/rclone/
 % cd -
 ```
 
@@ -1119,16 +1228,23 @@ and fix `<genomics|sao>/<username>` to be what you need.
 
 ```
 % module use --append ~/modulefiles
-% module load rclone/1.62.0
+% module load rclone/1.62.2
+% module list
 % which rclone
 [guess]
 % module unload rclone
+% module list
+
+% which rclone
+[guess]
 
 % module load tools/rclone
+% module list
 % which rclone
 [guess]
 
 % module unload tools/rclone
+% module list
 ```
 
 ### To make it permanent
@@ -1137,12 +1253,16 @@ and fix `<genomics|sao>/<username>` to be what you need.
 % cat <<EOF > ~/.modulerc
 #%Module1.0
 # adding my own module files
-module use --append /home/<username>/modulefiles
+module use --append /home/$USER/modulefiles
 EOF
+
+% cat  ~/.modulerc
+....
+
 ```
 :question: the `<<EOF` construct
 
-- remember to substitute `<username>` by your username.
+- the shell will substitute `$USER` by your username.
 
 ## Check this out
 
@@ -1150,6 +1270,8 @@ EOF
 % module whatis rclone
 % module whatis tools/rclone
 ```
+
+:question: `cd jnk && pwd` vs `cd jnk ; pwd`
 
 ---
 
