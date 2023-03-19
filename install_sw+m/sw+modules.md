@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 15:55:37 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 15:57:39 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -886,7 +886,7 @@ $ ./configure --prefix=/pool/<genomics|sao>/$USER/samtools/1.17 |& tee do-config
 
 $ make |& tee make.log
 
-$ make install |& install.log
+$ make install |& tee install.log
 ```
 
  - Build `samtools`
