@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 16:06:52 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 16:09:09 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -1011,6 +1011,8 @@ setenv FC     gfortran
 # 
 make -j 8 >& make.log &
 ```
+
+:question: `-j 8`
 
   3. Install
 ```
