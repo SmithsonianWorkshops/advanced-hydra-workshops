@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 15:59:12 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 16:06:52 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -891,7 +891,7 @@ $ make install |& tee install.log
 
  - Build `samtools`
 
-Using `bash`
+:warning: using `bash`
 ```
 $ cd ../1.17
 $ PFX=/pool/<genomics|sao>/$USER/samtools/1.17
@@ -902,7 +902,7 @@ $ export CPPFLAGS LDFLAGS
 $ echo $CPPFLAGS $LDFLAGS
 $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
-Using `csh`
+:warning: using `csh`
 ```
 % cd ../1.17
 % set PFX = /pool/<genomics|sao>/$USER/samtools/1.17
@@ -941,9 +941,18 @@ $ ./samtools
 
  - cleanup
 
+using `bash`
 ```
 $ module list
 $ module unload gcc
+$ unset PFX CPPFLAGS LDFLAGS
+```
+using `csh`
+```
+% module list
+% module unload gcc
+% unset PFX
+% unsetenv CPPFLAGS LDFLAGS  
 ```
 
 ---
