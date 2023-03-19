@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 15:43:01 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 15:55:37 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -891,19 +891,20 @@ $ make install |& install.log
 
  - Build `samtools`
 
-   - configure, for `bash`
+   `bash`
 
 ```
 $ cd ../1.17
 $ PFX=/pool/<genomics|sao>/$USER/samtools/1.17
 $ CPPFLAGS="-I${PFX}/include"
 $ LDFLAGS="-L${PFX}/lib"
-$ echo $CPPFLAGS $LDFLAGS
 $ export CPPFLAGS LDFLAGS
+$ echo $CPPFLAGS $LDFLAGS
+
 $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
 
-   - configure, for `csh`
+   `csh`
 
 ```
 % cd ../1.17
@@ -911,7 +912,7 @@ $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 % setenv CPPFLAGS "-I${PFX}/include"
 % setenv LDFLAGS  "-L${PFX}/lib"
 % echo $CPPFLAGS $LDFLAGS
-% export CPPFLAGS LDFLAGS
+
 % ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
 
