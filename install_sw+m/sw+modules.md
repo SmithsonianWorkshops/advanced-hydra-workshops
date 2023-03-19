@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 15:37:02 2023 -> SGK -->
+<!-- <- Last updated: Sun Mar 19 15:43:01 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -546,17 +546,17 @@ https://github.com/SmithsonianWorkshops
 - For biologists (non SAO)
 ```
 $ cd /pool/genomics/$USER
-$ mkdir -p ahw/sw+m
-$ cd ahw/sw+m
 ```
-
 - For SAO (CfA)
 ```
 % cd /pool/sao/$USER
-% mkdir -p ahw/sw+m/hands-on
-% cd ahw/sw+m/hands-on
 ```
+- For all
 
+```
+% mkdir -p ahw/sw+m
+% cd ahw/sw+m
+```
 
 - `$USER` will be replaced for you by your username,
   - feel free to put this elsewhere.
