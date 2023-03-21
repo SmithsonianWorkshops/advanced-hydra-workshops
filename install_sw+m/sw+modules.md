@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Tue Mar 21 08:41:40 2023 -> SGK -->
+<!-- <- Last updated: Tue Mar 21 10:36:45 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -1328,6 +1328,11 @@ EOF
 ---
 
 ## Questions? 
+
+## Survey
+
+ - Please fill the workshop survey for
+   feedback at [`https://forms.gle/hA1iHcKpYfrg5Q96A`](https://forms.gle/hA1iHcKpYfrg5Q96A)
 
 ---
 
