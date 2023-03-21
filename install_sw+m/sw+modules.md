@@ -769,11 +769,11 @@ icc -o hello hello.o
 make: `hello' is up to date.
 ```
 
-> :bulb: `make` only build what is needed.
+> :bulb: `make` only builds what is needed.
 
 5. Build `hello` to behave differently
 
-   - remove what was build 
+   - remove what was built 
 
    - re-compile with a special flag
 
