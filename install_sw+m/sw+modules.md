@@ -830,6 +830,18 @@ $ git clone https://github.com/stamatak/standard-RAxML.git
 $ ls
 standard-RAxML
 $ ls standard-RAxML
+ancestralStates.c                gpl-3.0.txt                 Makefile.AVX.MPI.gcc       Makefile.SSE3.MPI.gcc         rapidBootstrap.c
+avxLikelihood.c                  leaveDropping.c             Makefile.AVX.PTHREADS.gcc  Makefile.SSE3.PTHREADS.gcc    README
+axml.c                           legacyCode.c                Makefile.AVX.PTHREADS.mac  Makefile.SSE3.PTHREADS.mac    rmq.h
+axml.h                           Makefile.AVX2.gcc           Makefile.gcc               Makefile.SSE3.QuartetMPI.gcc  rmqs.c
+bipartitionList.c                Makefile.AVX2.HYBRID.gcc    Makefile.HYBRID.gcc        makenewzGenericSpecial.c      rmqs.h
+classify.c                       Makefile.AVX2.mac           Makefile.MPI.gcc           manual                        rogueEPA.c
+eigen.c                          Makefile.AVX2.MPI.gcc       Makefile.PTHREADS.gcc      mem_alloc.c                   searchAlgo.c
+evaluateGenericSpecial.c         Makefile.AVX2.PTHREADS.gcc  Makefile.PTHREADS.mac      models.c                      topologies.c
+evaluatePartialGenericSpecial.c  Makefile.AVX2.PTHREADS.mac  Makefile.QuartetMPI.gcc    multiple.c                    treeIO.c
+fastDNAparsimony.c               Makefile.AVX.gcc            Makefile.SSE3.gcc          newviewGenericSpecial.c       usefulScripts
+fastSearch.c                     Makefile.AVX.HYBRID.gcc     Makefile.SSE3.HYBRID.gcc   optimizeModel.c               WindowsExecutables_v8.2.10
+globalVariables.h                Makefile.AVX.mac            Makefile.SSE3.mac          parsePartitions.c             WindowsExecutables_v8.2.4
 $ cd standard-RAxML
 ....
 ```
