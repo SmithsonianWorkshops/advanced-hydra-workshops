@@ -915,7 +915,7 @@ This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
  - First, cd back into your workshop directory and create a directory for samtools.
 
 ```
-$ cd /pool/genomics/$USER/ahw/sw+m
+$ cd /pool/<genomics|sao>/$USER/ahw/sw+m
 $ mkdir samtools
 $ cd samtools
 ```
@@ -953,7 +953,8 @@ Currently Loaded Modulefiles:
  1) uge/8.6.18   2) tools/local-user   3) gcc/7.3.0
 
 $ cd ncurses-6.4
-$ ./configure --prefix=/pool/genomics/$USER/samtools/ncurses-6.4 |& tee do-configure.log
+$ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
+$ ./configure --prefix=$PFX |& tee do-configure.log
 checking for grep... grep
 checking for egrep... grep -E
 Configuring NCURSES 6.4 ABI 6 (Tue Mar 21 14:47:06 EDT 2023)
@@ -990,13 +991,10 @@ samtools-1.17/INSTALL
 $ mv samtools-1.17 1.17
 ```
 
-
-
-```
-
  - Build `samtools`
 
 :warning: using `bash`
+
 ```
 $ cd ../1.17
 $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
@@ -1007,7 +1005,9 @@ $ export CPPFLAGS LDFLAGS
 $ echo $CPPFLAGS $LDFLAGS
 $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
+
 :warning: using `csh`
+
 ```
 % cd ../1.17
 % set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
