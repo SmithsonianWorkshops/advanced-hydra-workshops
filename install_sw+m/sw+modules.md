@@ -37,7 +37,7 @@
 
 - In most cases you are better off downloading the source and building the code (aka the executable) yourself.
 
-- Downloading an executable is easier but likely will not to work.
+- Downloading an executable is easier but likely will not work.
 
 ### Downloading Executables
 
