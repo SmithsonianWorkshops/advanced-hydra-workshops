@@ -909,51 +909,88 @@ With greatly appreciated code contributions by:
 
 ### Building `samtools`
 
-1. Create a directory and download the `samtools` and `ncurses` source
-   files. `ncurses` is a library that samtools needs to be compiled
-   successfully.
+1. We need to build the `ncurses` library before we build samtools.
 
- - First, cd back into your workshop directory.
+ - First, cd back into your workshop directory and create a directory for samtools.
 
 ```
-$ pwd
-/pool/<genomics|sao>/<usename>/ahw/sw+m/raxml/standard-RAxML/bin
-
-$ cd ../../..
-$ pwd
-/pool/<genomics|sao>/<usename>/ahw/sw+m
-```
-
- - Create a directory and download the source files
-
-```
+$ cd /pool/genomics/$USER/ahw/sw+m
 $ mkdir samtools
 $ cd samtools
-$ wget https://github.com/samtools/samtools/releases/download/1.17/samtools-1.17.tar.bz2
-$ wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
-$ tar xvf samtools-1.17.tar.bz2
+```
+
+ - Download the ncurses source files and unzip them:
+
+```
+$wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
+--2023-03-21 14:01:10--  https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
+Resolving ftp.gnu.org (ftp.gnu.org)... 209.51.188.20, 2001:470:142:3::b
+Connecting to ftp.gnu.org (ftp.gnu.org)|209.51.188.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3612591 (3.4M) [application/x-gzip]
+Saving to: ‘ncurses-6.4.tar.gz’
+
+100%[==============================================================================================================>] 3,612,591   --.-K/s   in 0.1s    
+
+2023-03-21 14:01:11 (24.4 MB/s) - ‘ncurses-6.4.tar.gz’ saved [3612591/3612591]
+
 $ tar xvf ncurses-6.4.tar.gz
+ncurses-6.4/
+ncurses-6.4/menu/
+ncurses-6.4/Makefile.in
+ncurses-6.4/misc/
+ncurses-6.4/MANIFEST
+ncurses-6.4/configure.in
+...
+```
+
+ - Load the  `gcc/7.3.0` module if it is not already loaded and build ncurses:
+
+```
+$ module list
+Currently Loaded Modulefiles:
+ 1) uge/8.6.18   2) tools/local-user   3) gcc/7.3.0
+
+$ cd ncurses-6.4
+$ ./configure --prefix=/pool/genomics/$USER/samtools/ncurses-6.4 |& tee do-configure.log
+checking for grep... grep
+checking for egrep... grep -E
+Configuring NCURSES 6.4 ABI 6 (Tue Mar 21 14:47:06 EDT 2023)
+checking for package version... 6.4
+...
+$ make |& tee make.log
+( cd man && make DESTDIR="" RPATH_LIST="/pool/genomics/dikowr/samtools/ncurses-6.4/lib" all )
+make[1]: Entering directory `/pool/genomics/dikowr/ahw/sw+m/samtools/ncurses-6.4/man'
+/bin/sh ./MKterminfo.sh ./terminfo.head ./../include/Caps ./../include/Caps-ncurses ./terminfo.tail >terminfo.5
+...
+$ make install |& tee install.log
+( cd man && make DESTDIR="" RPATH_LIST="/pool/genomics/dikowr/samtools/ncurses-6.4/lib" install )
+make[1]: Entering directory `/pool/genomics/dikowr/ahw/sw+m/samtools/ncurses-6.4/man'
+mkdir -p /pool/genomics/dikowr/samtools/ncurses-6.4/share/man
+...
+```
+
+1. Now we are ready to download and build samtools.
+
+- Download and unzip samtools, rename directory:
+
+```
+$ cd ..
+$ pwd
+/pool/genomics/$USER/ahw/sw+m/samtools
+
+$ wget https://github.com/samtools/samtools/releases/download/1.17/samtools-1.17.tar.bz2
+$ tar xvf samtools-1.17.tar.bz2
+samtools-1.17/
+samtools-1.17/AUTHORS
+samtools-1.17/ChangeLog.old
+samtools-1.17/INSTALL
+...
 $ mv samtools-1.17 1.17
 ```
 
-2. Load the `gcc/7.3.0` module, build ncurses and samtools.
 
- - load the  `gcc/7.3.0` module
 
-```
-$ module list
-$ module load gcc/7.3.0
-$ module list
-```
- - build `ncurses`
-
-```
-$ cd ncurses-6.4
-$ ./configure --prefix=/pool/<genomics|sao>/$USER/samtools/1.17 |& tee do-configure.log
-
-$ make |& tee make.log
-
-$ make install |& tee install.log
 ```
 
  - Build `samtools`
@@ -961,7 +998,7 @@ $ make install |& tee install.log
 :warning: using `bash`
 ```
 $ cd ../1.17
-$ PFX=/pool/<genomics|sao>/$USER/samtools/1.17
+$ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 $ CPPFLAGS="-I${PFX}/include"
 $ LDFLAGS="-L${PFX}/lib"
 $ export CPPFLAGS LDFLAGS
@@ -972,7 +1009,7 @@ $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 :warning: using `csh`
 ```
 % cd ../1.17
-% set PFX = /pool/<genomics|sao>/$USER/samtools/1.17
+% set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 % setenv CPPFLAGS "-I${PFX}/include"
 % setenv LDFLAGS  "-L${PFX}/lib"
 
@@ -982,7 +1019,7 @@ $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 
 > use `genomics` or `sao` for `PFX`
 
-  - build and install 
+  - build and install samtools
 
 ```
 $ make && make install
@@ -1001,9 +1038,14 @@ $ make install |& install.log
 $ cd $PFX
 $ mv bin bin-ncurses
 $ mkdir bin && cd bin
-$ cp ../ bin-ncurses/samtools .
+$ cp ../bin-ncurses/samtools .
 $ ./samtools
-....
+
+Program: samtools (Tools for alignments in the SAM format)
+Version: 1.17 (using htslib 1.17)
+
+Usage:   samtools <command> [options]
+...
 ```
 
  - cleanup
