@@ -862,7 +862,8 @@ $ make -f Makefile.SSE3.PTHREADS.gcc
 rm -f *.o raxmlHPC-PTHREADS-SSE3
 gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o axml.o axml.c
 gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o optimizeModel.o optimizeModel.c
-gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c...
+gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c
+...
 
 ```
 
@@ -875,7 +876,8 @@ $ make -f Makefile.SSE3.MPI.gcc
 rm -f *.o raxmlHPC-MPI-SSE3
 mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o axml.o axml.c
 mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o optimizeModel.o optimizeModel.c
-mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c...
+mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c
+...
 ```
 
  4. Copy the executables into a `bin/` directory and run RAxML.
@@ -901,7 +903,6 @@ RAxML, will now set the number of threads automatically to 2 !
 $ ./raxmlHPC-PTHREADS-SSE3 -help
 This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
 
-With greatly appreciated code contributions by:
 ...
 ```
 
