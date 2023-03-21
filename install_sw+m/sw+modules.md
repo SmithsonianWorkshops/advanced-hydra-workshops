@@ -842,18 +842,28 @@ evaluatePartialGenericSpecial.c  Makefile.AVX2.PTHREADS.mac  Makefile.QuartetMPI
 fastDNAparsimony.c               Makefile.AVX.gcc            Makefile.SSE3.gcc          newviewGenericSpecial.c       usefulScripts
 fastSearch.c                     Makefile.AVX.HYBRID.gcc     Makefile.SSE3.HYBRID.gcc   optimizeModel.c               WindowsExecutables_v8.2.10
 globalVariables.h                Makefile.AVX.mac            Makefile.SSE3.mac          parsePartitions.c             WindowsExecutables_v8.2.4
-$ cd standard-RAxML
-....
 ```
 
-  3. Load the `gcc` compiler, and build different versions of RAxML. 
+  3. Unload the intel compiler, load the `gcc` compiler, and build different versions of RAxML. 
 
      - :warning: loading the right version of `gcc` is important
 
 ```
+$ module unload intel
 $ module load gcc/7.3.0
+$ cd standard-RAxML
 $ make -f Makefile.SSE3.gcc
+rm -f *.o raxmlHPC-SSE3
+gcc  -D__SIM_SSE3  -msse3 -D_GNU_SOURCE -O2 -fomit-frame-pointer -funroll-loops     -c -o axml.o axml.c
+gcc  -D__SIM_SSE3  -msse3 -D_GNU_SOURCE -O2 -fomit-frame-pointer -funroll-loops     -c -o optimizeModel.o optimizeModel.c
+gcc  -D__SIM_SSE3  -msse3 -D_GNU_SOURCE -O2 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c...
+
 $ make -f Makefile.SSE3.PTHREADS.gcc
+rm -f *.o raxmlHPC-PTHREADS-SSE3
+gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o axml.o axml.c
+gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o optimizeModel.o optimizeModel.c
+gcc  -D_USE_PTHREADS -D__SIM_SSE3 -D_GNU_SOURCE -msse3 -O2 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c...
+
 ```
 
   - to build the MPI version, you also need to load the gcc `openmpi` for that
@@ -862,20 +872,37 @@ $ make -f Makefile.SSE3.PTHREADS.gcc
 ```
 $ module load gcc/7.3/openmpi
 $ make -f Makefile.SSE3.MPI.gcc
+rm -f *.o raxmlHPC-MPI-SSE3
+mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o axml.o axml.c
+mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o optimizeModel.o optimizeModel.c
+mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -funroll-loops     -c -o multiple.o multiple.c...
 ```
 
  4. Copy the executables into a `bin/` directory and run RAxML.
 
 ```
 $ mkdir bin
-$ cp raxmlHPC-PTHREADS-SSE3 bin/
+$ cp raxmlHPC-SSE3 raxmlHPC-PTHREADS-SSE3 raxmlHPC-MPI-SSE3 bin/
 
 $ cd bin
+$ ls
+raxmlHPC-MPI-SSE3  raxmlHPC-PTHREADS-SSE3  raxmlHPC-SSE3
 $ ./raxmlHPC-PTHREADS-SSE3
-....
+
+WARNING: The number of threads is currently set to 0
+You can specify the number of threads to run via -T numberOfThreads
+NumberOfThreads must be set to an integer value greater than 1
+
+RAxML, will now set the number of threads automatically to 2 !
+
+
+ Error, you must specify a model of substitution with the "-m" option
 
 $ ./raxmlHPC-PTHREADS-SSE3 -help
-....
+This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
+
+With greatly appreciated code contributions by:
+...
 ```
 
 ---
