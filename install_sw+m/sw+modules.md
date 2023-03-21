@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Sun Mar 19 16:09:09 2023 -> SGK -->
+<!-- <- Last updated: Tue Mar 21 08:41:40 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -743,7 +743,35 @@ hello world!
 
 :exclamation: `icc` not `cc`
 
-4. Build it to behave differently
+4. Dependency explained
+
+```
+% make
+make: `hello' is up to date.
+% touch hello.o
+% ls -ltr
+....
+
+% make
+icc -o hello hello.o
+% ls -ltr
+....
+
+% touch hello.c
+% ls -ltr
+....
+
+% make
+icc    -c -o hello.o hello.c
+icc -o hello hello.o
+
+% make
+make: `hello' is up to date.
+```
+
+> :bulb: `make` only build what is needed.
+
+5. Build `hello` to behave differently
 
    - remove what was build 
 
@@ -762,7 +790,7 @@ hello world!
 Easy peasy ;-P
 ```
 
-> Simplistic illustration how "configuration" affects code building.
+> :bulb: Simplistic illustration how "configuration" affects code building.
 
 
 5. Cleanup
