@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Wed Mar 22 09:37:47 2023 -> SGK -->
+<!-- <- Last updated: Wed Mar 22 09:40:17 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -963,7 +963,7 @@ $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 > :shell: `csh` users:
 
 ```
-$ set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
+% set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 ```
 
 > :warning: use `genomics` or `sao` for `PFX`
