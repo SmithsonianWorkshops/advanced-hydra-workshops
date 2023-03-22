@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Tue Mar 21 20:35:50 2023 -> SGK -->
+<!-- <- Last updated: Tue Mar 21 20:39:02 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -954,16 +954,16 @@ Currently Loaded Modulefiles:
 
 $ cd ncurses-6.4
 ```
-:warning: using `bash`
+> :warning: using `bash`
 
 ```
 $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 ```
 
-:warning: using `csh`
+> :warning: using `csh`
 
 ```
-$ set PFX /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
+$ set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 ```
 
 > :warning: use `genomics` or `sao` for `PFX`
@@ -1010,7 +1010,7 @@ $ mv samtools-1.17 1.17
 
  - Build `samtools`
 
-:warning: using `bash`
+> :warning: using `bash`
 
 ```
 $ cd 1.17
@@ -1023,7 +1023,7 @@ $ echo $CPPFLAGS $LDFLAGS
 $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
 
-:warning: using `csh`
+> :warning: using `csh`
 
 ```
 % cd ../1.17
@@ -1082,7 +1082,7 @@ using `csh`
 % module list
 % module unload gcc
 % unset PFX
-% unsetenv CPPFLAGS LDFLAGS  
+ unsetenv CPPFLAGS LDFLAGS  
 ```
 
 ---
