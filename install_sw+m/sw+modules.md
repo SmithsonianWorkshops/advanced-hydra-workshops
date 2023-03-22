@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Tue Mar 21 20:42:38 2023 -> SGK -->
+<!-- <- Last updated: Wed Mar 22 09:37:47 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -910,9 +910,9 @@ This is RAxML version 8.2.12 released by Alexandros Stamatakis on May 2018.
 
 ### Building `samtools`
 
-1. We need to build the `ncurses` library before we build samtools.
+1. We need to build the `ncurses` library before we build `samtools`.
 
- - First, cd back into your workshop directory and create a directory for samtools.
+ - First, cd back into your workshop directory and create a directory for `samtools`.
 
 ```
 $ cd /pool/<genomics|sao>/$USER/ahw/sw+m
@@ -954,13 +954,13 @@ Currently Loaded Modulefiles:
 
 $ cd ncurses-6.4
 ```
-> :warning: using `bash`
+> :shell: `bash` users:
 
 ```
 $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 ```
 
-> :warning: using `csh`
+> :shell: `csh` users:
 
 ```
 $ set PFX = /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
@@ -1010,7 +1010,7 @@ $ mv samtools-1.17 1.17
 
  - Build `samtools`
 
-> :warning: using `bash`
+> :shell: `bash` users:
 
 ```
 $ cd 1.17
@@ -1023,7 +1023,7 @@ $ echo $CPPFLAGS $LDFLAGS
 $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
 
-> :warning: using `csh`
+> :shell: `csh` users:
 
 ```
 % cd ../1.17
@@ -1071,13 +1071,16 @@ Usage:   samtools <command> [options]
 
  - cleanup
 
-using `bash`
+> :shell: `bash` users:
+
 ```
 $ module list
 $ module unload gcc
 $ unset PFX CPPFLAGS LDFLAGS
 ```
-using `csh`
+
+> :shell: `csh` users:
+
 ```
 % module list
 % module unload gcc
