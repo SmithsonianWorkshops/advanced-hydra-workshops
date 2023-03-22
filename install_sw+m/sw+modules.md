@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Tue Mar 21 10:36:45 2023 -> SGK -->
+<!-- <- Last updated: Tue Mar 21 20:35:50 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -884,7 +884,7 @@ mpicc  -D_WAYNE_MPI -D__SIM_SSE3 -O2 -D_GNU_SOURCE -msse3 -fomit-frame-pointer -
 
 ```
 $ mkdir bin
-$ cp raxmlHPC-SSE3 raxmlHPC-PTHREADS-SSE3 raxmlHPC-MPI-SSE3 bin/
+$ cp -pi raxmlHPC-SSE3 raxmlHPC-PTHREADS-SSE3 raxmlHPC-MPI-SSE3 bin/
 
 $ cd bin
 $ ls
@@ -923,7 +923,7 @@ $ cd samtools
  - Download the ncurses source files and unzip them:
 
 ```
-$wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
+$ wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
 --2023-03-21 14:01:10--  https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
 Resolving ftp.gnu.org (ftp.gnu.org)... 209.51.188.20, 2001:470:142:3::b
 Connecting to ftp.gnu.org (ftp.gnu.org)|209.51.188.20|:443... connected.
@@ -953,7 +953,24 @@ Currently Loaded Modulefiles:
  1) uge/8.6.18   2) tools/local-user   3) gcc/7.3.0
 
 $ cd ncurses-6.4
+```
+:warning: using `bash`
+
+```
 $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
+```
+
+:warning: using `csh`
+
+```
+$ set PFX /pool/<genomics|sao>/$USER/samtools/ncurses-6.4
+```
+
+> :warning: use `genomics` or `sao` for `PFX`
+
+and then
+
+```
 $ ./configure --prefix=$PFX |& tee do-configure.log
 checking for grep... grep
 checking for egrep... grep -E
@@ -996,7 +1013,7 @@ $ mv samtools-1.17 1.17
 :warning: using `bash`
 
 ```
-$ cd ../1.17
+$ cd 1.17
 $ PFX=/pool/<genomics|sao>/$USER/samtools/ncurses-6.4
 $ CPPFLAGS="-I${PFX}/include"
 $ LDFLAGS="-L${PFX}/lib"
@@ -1018,7 +1035,7 @@ $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 % ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 ```
 
-> use `genomics` or `sao` for `PFX`
+> :warning: use `genomics` or `sao` for `PFX`
 
   - build and install samtools
 
@@ -1037,9 +1054,12 @@ $ make install |& install.log
 
 ```
 $ cd $PFX
-$ mv bin bin-ncurses
+$ cd ..
+$ pwd
+....
+
 $ mkdir bin && cd bin
-$ cp ../bin-ncurses/samtools .
+$ cp ../ncurses-6.4/bin/samtools .
 $ ./samtools
 
 Program: samtools (Tools for alignments in the SAM format)
