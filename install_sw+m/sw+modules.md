@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Tue Mar 21 20:39:02 2023 -> SGK -->
+<!-- <- Last updated: Tue Mar 21 20:42:38 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -1082,7 +1082,7 @@ using `csh`
 % module list
 % module unload gcc
 % unset PFX
- unsetenv CPPFLAGS LDFLAGS  
+% unsetenv CPPFLAGS LDFLAGS  
 ```
 
 ---
