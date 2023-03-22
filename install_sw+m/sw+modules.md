@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Wed Mar 22 09:40:17 2023 -> SGK -->
+<!-- <- Last updated: Wed Mar 22 09:44:22 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -989,9 +989,9 @@ mkdir -p /pool/genomics/dikowr/samtools/ncurses-6.4/share/man
 ...
 ```
 
-1. Now we are ready to download and build samtools.
+1. Now we are ready to download and build `samtools`.
 
-- Download and unzip samtools, rename directory:
+- Download and unzip `samtools`, rename directory:
 
 ```
 $ cd ..
@@ -1008,7 +1008,7 @@ samtools-1.17/INSTALL
 $ mv samtools-1.17 1.17
 ```
 
- - Build `samtools`
+ - Configure `samtools`
 
 > :shell: `bash` users:
 
@@ -1037,7 +1037,7 @@ $ ./configure --with-ncurses --prefix=$PFX |& tee do-configure.log
 
 > :warning: use `genomics` or `sao` for `PFX`
 
-  - build and install samtools
+  - Build and install `samtools`
 
 ```
 $ make && make install
@@ -1050,7 +1050,7 @@ $ make |& tee make.log
 $ make install |& install.log
 ```
 
-  - test it
+  - Test `samtools`
 
 ```
 $ cd $PFX
@@ -1069,12 +1069,13 @@ Usage:   samtools <command> [options]
 ...
 ```
 
- - cleanup
+ - Cleanup the environment (optional)
 
 > :shell: `bash` users:
 
 ```
 $ module list
+....
 $ module unload gcc
 $ unset PFX CPPFLAGS LDFLAGS
 ```
@@ -1083,6 +1084,7 @@ $ unset PFX CPPFLAGS LDFLAGS
 
 ```
 % module list
+....
 % module unload gcc
 % unset PFX
 % unsetenv CPPFLAGS LDFLAGS  
