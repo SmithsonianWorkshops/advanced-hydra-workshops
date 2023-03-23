@@ -1,5 +1,5 @@
 
-<!-- <- Last updated: Wed Mar 22 09:44:22 2023 -> SGK -->
+<!-- <- Last updated: Thu Mar 23 09:14:21 2023 -> SGK -->
 
 # Installing Software and Writing Modules 
 
@@ -402,7 +402,7 @@ set-alias    crunch "crunch --with-that-option \*"
 #%Module1.0
 #
 # load two modules and set the HEASOFT env variable
-module load gcc/10.1.10
+module load gcc/10.1.0
 module load python/3.8
 setenv HEASOFT /home/<username>/heasoft/6.3.1
 ```
