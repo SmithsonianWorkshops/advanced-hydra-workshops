@@ -10,4 +10,7 @@
 - [Hands on material](conda/conda.md)
 - [Recording available on Microsoft Stream](https://web.microsoftstream.com/video/142fb1fd-c27f-4ab2-b4ef-6e482527921a) 
 
+## Shell scripting and usefull tools (e.g. sed, awk, grep, .... 2023-05-10)
+- [Registration is open](https://forms.gle/X74hcaCpMNFnSy6F8)
+
 ### More to come
