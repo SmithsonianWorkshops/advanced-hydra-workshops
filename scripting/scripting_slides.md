@@ -71,7 +71,7 @@ Text...
 
 In the hands-on portion of the workshop you will learn how to:
 - Run a set of commands: Scripts
-- Simplyfy and avoid errors
+- Simplify and avoid errors
 - Test assumptions
 - Generalize a script to be used for multiple files or executions: Arguments 
 - Ease hands-on time by repeating a command for every file: for loops
