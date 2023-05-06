@@ -12,13 +12,19 @@ In the intro portion of the workshop you will learn:
 
 ## What is scripting?
 
-Scripting vs. Programming.
+**Scripting vs. Programming**
+
+Scripting languages are translated and cannot be converted into an executable file. 
+
+Programming languages are generally compiled and created to executable the file. 
+
+Scripting languages can combine existing modules or components, while programming languages are used to build applications from scratch
 
 ---
 
 ## What are shells?
 
-A shell is a program where users can type commands. 
+A shell is a program where users can type commands. See additional lessons [here](https://datacarpentry.org/shell-genomics/01-introduction/index.html). 
 
 **Bash**
 
@@ -40,36 +46,44 @@ Loops allow us to repeat a command or set of commands for each item in a list.
 
 **Logical Operators**
 
-Text...
+Logical operators in Bash are used to test conditions and create complex expressions by combining two or more conditions. These operators allow you to evaluate the truthiness of a condition or multiple conditions, providing a way to control the flow of execution in your scripts (e.g. if ; then).
 
 **Variables**
  
-Text...
+A variable is a character string to which we assign a value. The value assigned could be a number, text, filename, device, or any other type of data.
 
 **Arguments**
 
-Text...
+Arguments are a wasy to supply parameters to bash scripts. Arguments are useful when a script has to perform different functions depending on the values of the input.
 
 ## What are some examples of tools we use?
 
 **Tools**
 
   `sed` - the steam editor for filtering and transforming text
+  
   `awk` - pattern scanning and processing language
+  
   `tr` - translate or delete characters
+  
   `cut` - remove sections from each line of files
+  
   `bc` - An arbitrary precision calculator language
+  
   `date` +<format> –date="specification"
+  
   
 **Languages**
 
   `PERL` - practical extraction and report language 
+  
   `Python` - high level general purpose programming language
 
 
 # `scripting` hands-on
 
 In the hands-on portion of the workshop you will learn how to:
+
 - Run a set of commands: Scripts
 - Simplify and avoid errors
 - Test assumptions
@@ -80,6 +94,6 @@ In the hands-on portion of the workshop you will learn how to:
 
 ## Log in to Hydra
 
-If you need a reminder about how to log into Hydra and how to change your password, check out our Intro to Hydra tutorial: https://github.com/SmithsonianWorkshops/Hydra-introduction/blob/master/hydra_intro.md
+If you need a reminder about how to log into Hydra and how to change your password, check out our Intro to Hydra tutorial: `https://github.com/SmithsonianWorkshops/Hydra-introduction/blob/master/hydra_intro.md`
 
 
