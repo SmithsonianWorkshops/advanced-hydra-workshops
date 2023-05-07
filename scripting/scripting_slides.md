@@ -55,8 +55,8 @@ In the intro portion of the workshop you will learn:
    level instructions ("complicated").
  * By contrast, scripting refers to instructions that are parsed and executed
    by a program, hence 
-   ** there is no need to compile the script (convenient) 
-   ** but, _in principle_, they run more slowly than executables.
+    * there is no need to compile the script (convenient) 
+    * but, _in principle_, they run more slowly than executables.
  * Some scripting languages are parsed to check for syntax errors before
    executing them, but *not* shell scripts.
  * Scripts can combine existing modules or components, while programming
@@ -78,25 +78,25 @@ In the intro portion of the workshop you will learn:
 
  * A script can take arguments (options) and thus be more general, and allows
    you to define variables, use expressions or execute commands
- ** A variable is a way to hold a value and refer to it by its name, or a way
+  * A variable is a way to hold a value and refer to it by its name, or a way
    to modify how some commands behave - variables can also be one dimensional
    arrays (lists)
- ** An expression allows to perform simple arithmetic or use commands to
+  * An expression allows to perform simple arithmetic or use commands to
    create values held by variables (for example: set the variable `num` to hold the
    number of lines in a file).
 
  * The scripting syntax allows for "flow control" namely it allows for
- ** tests and logical operators - `if` statements
- ** loops - `for` statements
- ** more flow control: `case`, `while`, `until` and `select`
- ** `bash` also allows to define functions
- ** the precise syntax is shell specific
+  * tests and logical operators - `if` statements
+  * loops - `for` statements
+  * more flow control: `case`, `while`, `until` and `select`
+  * `bash` also allows to define functions
+  * the precise syntax is shell specific
 
  * Scripts allow for I/O redirection
- ** input: aka `stdin`
- ** output: aka `stdout`
- ** error: aka `stderr`
- ** pipes: redirecting output of one command to be the input to another
+  * input: aka `stdin`
+  * output: aka `stdout`
+  * error: aka `stderr`
+  * pipes: redirecting output of one command to be the input to another
  command
 
  * Sophisticated shell scripting is akin to programming, we can't & won't teach
@@ -124,7 +124,7 @@ In the intro portion of the workshop you will learn:
 
 ## Script Flow Control
 
-## Tests and Logical Operators**
+## Tests and Logical Operators
 
  * Logical operators can be used to test conditions and create complex
    expressions by combining conditions. 
