@@ -2,7 +2,7 @@
 
 In the intro portion of the workshop you will learn:
 
-* What is scripting and its applications?
+* What is scripting and what are its applications?
 * What are shells?
 * Which one(s) to use?
 * How to write scripts.
@@ -16,9 +16,9 @@ In the intro portion of the workshop you will learn:
 
 Scripting languages are translated and cannot be converted into an executable file. 
 
-Programming languages are generally compiled and created to executable the file. 
+Programming languages are generally compiled and executables are created to execute the code. 
 
-Scripting languages can combine existing modules or components, while programming languages are used to build applications from scratch
+Scripting languages can combine existing modules or components, while programming languages are used to build applications from scratch.
 
 ---
 
@@ -32,7 +32,7 @@ Bash is a command line language and unix shell, stands for "Bourne again shell."
 
 **C shell**
 
-C shell is a command line language and shell that used C programing language like syntax. 
+C shell is a command line language and shell that uses C programing language like syntax. 
 
 
 
