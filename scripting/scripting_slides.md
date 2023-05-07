@@ -55,8 +55,10 @@ In the intro portion of the workshop you will learn:
    level instructions ("complicated").
  * By contrast, scripting refers to instructions that are parsed and executed
    by a program, hence 
-    * there is no need to compile the script (convenient) 
-    * but, _in principle_, they run more slowly than executables.
+
+   * there is no need to compile the script (convenient) 
+   * but, _in principle_, they run more slowly than executables.
+
  * Some scripting languages are parsed to check for syntax errors before
    executing them, but *not* shell scripts.
  * Scripts can combine existing modules or components, while programming
@@ -86,17 +88,19 @@ In the intro portion of the workshop you will learn:
    number of lines in a file).
 
  * The scripting syntax allows for "flow control" namely it allows for
-  * tests and logical operators - `if` statements
-  * loops - `for` statements
-  * more flow control: `case`, `while`, `until` and `select`
-  * `bash` also allows to define functions
-  * the precise syntax is shell specific
+
+   * tests and logical operators - `if` statements
+   * loops - `for` statements
+   * more flow control: `case`, `while`, `until` and `select`
+   * `bash` also allows to define functions
+   * the precise syntax is shell specific
 
  * Scripts allow for I/O redirection
-  * input: aka `stdin`
-  * output: aka `stdout`
-  * error: aka `stderr`
-  * pipes: redirecting output of one command to be the input to another
+
+   * input: aka `stdin`
+   * output: aka `stdout`
+   * error: aka `stderr`
+   * pipes: redirecting output of one command to be the input to another
  command
 
  * Sophisticated shell scripting is akin to programming, we can't & won't teach
@@ -148,6 +152,7 @@ fi
 ## Useful tools for scripting
 
 ## Simple ones
+
   * `sed` - the steam editor for filtering and transforming text
   * `awk` - pattern scanning and processing language
   * `tr` - translate or delete characters
