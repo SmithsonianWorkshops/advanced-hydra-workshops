@@ -10,7 +10,7 @@
 
 ---
 
-## What are shells?
+# What are shells?
 
   The program that is started after logging on a Linux machine and
   that allows to type commands (aka the login shell). For historical
@@ -29,7 +29,7 @@
 
 ---
 
-## Which shell(s) to use?
+# Which shell(s) to use?
 
   On Linux machines `sh` and `bash` are the same program, `csh` and `tcsh` are
   also the same program. 
@@ -47,9 +47,9 @@
 
 ---
 
-## What is scripting and what are its applications?
+# What is scripting and what are its applications?
 
-### Scripting vs. Programming
+## Scripting vs. Programming
 
  * Programming languages are sets of instructions compiled to produce executables with machine
    level instructions (a more "complicated" process).
@@ -77,7 +77,7 @@
 
 ---
 
-## How to write scripts.
+# How to write scripts?
 
  * A script is a text file that holds a list of commands, and thus can be
    written with any type of editor (`nano`, `vi`, `emacs`).
@@ -96,7 +96,7 @@
 
 ---
 
-## How to write scripts (cont'd)
+# How to write scripts (cont'd)
 
  * Scripting syntax allows for "flow control" namely it allows for
 
@@ -114,10 +114,10 @@
    * pipes: redirecting output of one command to be the input to another
  command
 
+---
+
 > Sophisticated shell scripting is akin to programming, we can't & won't teach
 > programming today.
-
----
 
 ## Script Variables
 
@@ -168,7 +168,93 @@ echo ${name2}
 ```
 ---
 
-## Script Arguments
+### Variable arrays
+
+* `bash` syntax
+```
+arr=(1 2 3)
+echo ${arr[@]}
+1 2 3
+echo ${#arr[@]}
+3
+echo ${arr[0]}
+1
+echo ${arr[1]}
+2
+```
+
+---
+
+### The `export` command in `bash`
+
+  * makes the exported variables seen by child processes, like programs or scripts
+  * example
+```
+cat hello.sh
+echo hello=$hello
+
+hello='yo!'
+echo hello=$hello
+sh hello.sh
+hello=
+
+export hello
+sh hello.sh
+hello=yo!
+
+```
+---
+
+### Handling full paths with `basename` & `dirname`
+
+  * example
+```
+path=to/some/where/some.txt
+base=$(basename $path)
+file=$(dirname $path)
+echo base=$base file=$file
+```
+
+`base=some.txt file=to/some/where`
+
+---
+
+### Using `let` for simple arithmetic in `bash`
+
+```
+let x=1
+let y=$x+3
+echo x=$x y=$y
+```
+
+ `x=1 y=4`
+
+---
+
+### I/O and pipes
+
+* `>`, `>>`, `&>`, `&>>`, and `2>&1`
+* `|` and `tee`
+* `<<EOF`
+
+---
+
+### Using `$(command)` in `bash`
+
+You can set a variable to be the result of a command
+```
+let x=1
+let y=$x+3
+
+Y=$(echo $y | awk '{printf "%3.3d", $1}')
+echo Y=$Y
+```
+
+`Y=004`
+
+---
+
+# Script Arguments
 
   * Arguments are a way to supply parameters to a script. 
 
@@ -187,7 +273,7 @@ echo etc...
 ```
 ----
 
-### How it works
+# How it works
 
 ```
 $ sh echo.sh
@@ -208,7 +294,7 @@ etc...
 ```
 ---
 
-## Script Flow Control
+# Script Flow Control
 
 ## Tests and Logical Operators
 
@@ -235,10 +321,13 @@ fi
 
 ---
 
+> The indentation is optional, and you can write this in a more compact way, using `;`. 
+
+&nbsp;
+
 ### `bash` example (II)
 
 
-> The indentation is optional, and you can write this in a more compact way, using `;`. 
 ```
 let num=$1
 if [ $num -gt 5 ]; then
@@ -306,7 +395,21 @@ done
 
 ---
 
-## Useful tools for scripting
+### `chmod +x`, `$#` and `$path`
+
+  * To start a script w/out the `sh`
+```
+chmod +x script
+```
+  * Best practice to add as 1st line
+```
+#!/bin/sh
+```
+  * Can run the script using its name if in the `path`
+
+---
+
+# Useful tools for scripting
 
 ## Simple ones
 
@@ -327,21 +430,112 @@ done
 
 ---
 
-### `sed` - the stream editor for filtering and transforming text
+## `sed` - the stream editor for filtering and transforming text
 
-### `awk` - pattern scanning and processing language
+```
+ sed 's/this/that/' file > newfile
 
-### `grep` - search a file for a pattern
+ sed 's/this/that/g'
+ sed -e 's/one/two' -e 's/blah/foo/'
+ sed -e "s/XXX/$values/" template.txt > input.txt
+```
 
 ---
 
-### `tr` - translate or delete characters
+## `awk` - pattern scanning and processing language
 
-### `cut` - remove sections from each line of files
+* awk instructions are
 
-### `bc` - An arbitrary precision calculator language
+`<condition> { what to do }`
 
-### `date` +<format> -date="specification" - date handling
+* special conditions
+
+`BEGIN {}`
+
+`END {}`
+
+ * special variables
+
+`NR`
+
+`NF`
+
+* operators
+
+`>, <, ==, =!`, etc...
+
+* no `{what to do}` means `{print $0}` or print the line
+
+---
+
+* examples:
+```
+awk '{print $1}' file
+awk -F: '{print $1}' file
+awk 'NR==3' file
+awk 'NF>4 { print $4}' file
+awk -f instructions.awk file
+```
+
+---
+
+## `grep` - search a file for a pattern
+
+```
+grep hello file
+grep -i hello file
+grep -v hello file
+egrep 'hello|bye' file
+```
+---
+
+## `tr` - translate or delete characters
+
+```
+tr '[a-z]' '[A-Z]' < input > output
+```
+
+---
+
+## `cut` - remove sections from each line of files
+
+* missing
+
+---
+
+## `bc` - An arbitrary precision calculator language
+
+```
+qty=23.45
+blob=$(echo "$qty * 12.4" | bc)
+echo $blob
+```
+
+---
+
+## `date` - date handling
+
+* subtract one hour or 3600 seconds
+
+```
+let x=$(date --date='1/5/2022' +%s)
+let x-=3600
+then=$(date --date=@$x)
+
+date --date='1/5/2022'
+Wed Jan  5 00:00:00 EST 2022
+
+echo $then
+Tue Jan  4 23:00:00 EST 2022
+```
+
+* change the format with `+`
+
+```
+then=$(date +%y%m%d_%H%M --date=@$x)
+echo $then
+220104_2300
+```
 
 ---
 
