@@ -13,18 +13,21 @@
 # What are shells?
 
   The program that is started after logging on a Linux machine and
-  that allows to type commands (aka the login shell). For historical
+  that allows users to type commands (aka the login shell). For historical
   reasons there are several shells:
 
   1. The Bourne shell (`sh`) or the Bourne again shell (`bash`)
   2. The C shell (`csh`) or the tC shell (`tcsh`)
   3. The Korn shell (`ksh`)
+  4. The Z shell (`zsh`)
 
   You can check the [Introduction to the Command Line for
   Genomics](https://datacarpentry.org/shell-genomics/01-introduction/index.html)
-  carpentries lesson for an intro to `bash`.
+  Carpentries lesson for an intro to `bash`.
 
-> Everything about each shell is explain in the "man pages", there are books
+&nbsp;
+
+> Everything about each shell is explained in the "man pages", there are books
 > written about scripting and there is a ton of info on the web too.
 
 ---
@@ -90,7 +93,7 @@
     * A variable is a mechanism to hold a value and refer to it by its name, or a way
    to modify how some commands behave - variables can also be one dimensional
    arrays (lists)
-    * An expression allows to perform simple arithmetic or use commands to
+    * An expression allows a user to perform simple arithmetic or use commands to
    create values held by variables (for example: set the variable `num` to hold the
    number of lines in a file).
 
@@ -119,18 +122,33 @@
 > Sophisticated shell scripting is akin to programming, we can't & won't teach
 > programming today.
 
-## Script Variables
+&nbsp;
 
-  * A variable is a character string to which a value is assign. 
+> We will focus on basic skill and make time for hands-on learning.
 
-  * The assigned value can be a number, some text, a filename, device, or any other type of
-    data.
+&nbsp;
 
-  * The value of a variable is obtained by using `$` followed by the variable name
+> There is more than one way to skin a cat, which makes things confusing at
+> first.
 
 ---
 
-### `bash` examples
+# Script Variables
+
+## What are variables
+
+  * A variable is a character string to which a value is assigned. 
+
+  * The assigned value can be a number, some text, a filename, a device, or any other type of
+    data.
+
+  * The value of a variable is obtained by using `$` followed by the variable name.
+
+---
+
+# Variable Examples
+
+## `bash` syntax
 ```
 filename=/there/goes/nothing.txt
 string='hello class'
@@ -138,7 +156,7 @@ let num=33
 echo $filename $string $num
 ```
 
-### `csh` examples
+## `csh` syntax
 ```
 set filename = there/goes/nothing.txt
 set string = 'hello class'
@@ -146,31 +164,45 @@ set string = 'hello class'
 echo $filename $string $num
 ``` 
 
+## Result in both cases
+
+`there/goes/nothing.txt hello class 33`
+
+
 ---
 
-### Quotes
+# Quotes when setting variables
 
-  * quotes `'` vs double quotes `"`
+## Single quotes `'` vs double quotes `"`
 ```
 blah='what ever'
 name1='hello $blah'
 name2="hello $blah"
-echo $name1
-echo $name2
+echo name1=$name1
+echo name2=$name2
 ```
-  * in case of doubts, use `{` and `}`
+## In case of doubts, use `{` and `}`
  ```
 blah='what ever'
 name1='hello $blah'
 name2="hello ${blah}"
-echo ${name1}
-echo ${name2}
+echo name1=${name1}
+echo name2=${name2}
 ```
+
 ---
 
-### Variable arrays
+## Output:
+```
+name1=hello $blah
+name2=hello what ever
+```
 
-* `bash` syntax
+---
+
+# Variable arrays
+
+## `bash` syntax
 ```
 arr=(1 2 3)
 echo ${arr[@]}
@@ -185,14 +217,40 @@ echo ${arr[1]}
 
 ---
 
-### The `export` command in `bash`
+# Variable arrays (cont'd)
+
+## `csh` syntax
+
+```
+set arr = (1 2 3)
+echo $arr
+1 2 3
+echo $#arr
+3
+echo ${arr[1]}
+1
+echo ${arr[2]}
+2
+```
+
+## Also
+
+> Note 1-indexed vs 0-indexed
+
+---
+
+# Exporting variables
+
+## The `export` command in `bash`
 
   * makes the exported variables seen by child processes, like programs or scripts
   * example
 ```
 cat hello.sh
 echo hello=$hello
-
+```
+  * result:
+```
 hello='yo!'
 echo hello=$hello
 sh hello.sh
@@ -201,47 +259,93 @@ hello=
 export hello
 sh hello.sh
 hello=yo!
-
 ```
+
+---
+# `csh` equivalent is `setenv`
+
+## `csh` uses `setenv`
+```
+setenv hello 'yo!'
+```
+
+## Note no '=' sign
+
 ---
 
-### Handling full paths with `basename` & `dirname`
+# Handling full paths
 
-  * example
+## `bash` with `basename` & `dirname`
 ```
 path=to/some/where/some.txt
 base=$(basename $path)
 file=$(dirname $path)
 echo base=$base file=$file
 ```
+* `base=some.txt file=to/some/where`
 
-`base=some.txt file=to/some/where`
+## `csh`, using the `:h` `:t` `:r` `:e` constructs
+```
+set path = to/some/where/some.txt
+set base = $path:h
+set file = $path:t
+echo base=$base file=$file root=$file:r ext=$file:e
+```
+
+* `base=to/some/where file=some.txt root=some ext=txt`
 
 ---
 
-### Using `let` for simple arithmetic in `bash`
+# Simple Arithmetic
+## Using `let` in `bash`
 
 ```
 let x=1
 let y=$x+3
 echo x=$x y=$y
 ```
+## Using `@` in `csh`
 
+```
+@ x = 1
+@ y = $x + 3
+echo x=$x y=$y
+```
+
+## output:
  `x=1 y=4`
 
 ---
 
-### I/O and pipes
+# I/O and pipes
 
-* `>`, `>>`, `&>`, `&>>`, and `2>&1`
-* `|` and `tee`
-* `<<EOF`
+## Various redirections
+* redirect a command to read from a file: `command < file`
+* redirect output and error to a file
+  * `>`, `>>`, `&>`, `&>>`, and `2>&1`
+* redirect output of one command as input to the next
+  * `command1 | command2`
+* read input from script or terminal
+```
+command <<EOF
+some text
+ok to use $variables
+EOF
+```
+
+* duplicate ouput to show on the output and to be written in a file; the `tee` command:
+
+```
+command | tee file
+```
 
 ---
 
-### Using `$(command)` in `bash`
+# Using `$(command)` in `bash`
 
-You can set a variable to be the result of a command
+## Examples
+
+* You can set a variable to be the result of a command
 ```
 let x=1
 let y=$x+3
@@ -249,17 +353,45 @@ let y=$x+3
 Y=$(echo $y | awk '{printf "%3.3d", $1}')
 echo Y=$Y
 ```
-
+* output:
 `Y=004`
+
+---
+
+# Using the backticks \` in `csh` and in `bash`
+
+## When using `csh`
+
+```
+@ x = 1
+@ y = $x + 3
+
+set Y = `echo $y | awk '{printf "%3.3d", $1}'`
+echo Y=$Y
+```
+
+## Equivalent in `bash`
+
+```
+let x=1
+let y=$x+3
+
+Y=`echo $y | awk '{printf "%3.3d", $1}'`
+echo Y=$Y
+```
 
 ---
 
 # Script Arguments
 
+## Arguments
+
   * Arguments are a way to supply parameters to a script. 
 
   * Arguments are useful when a script has to perform differently
     depending on the values of some input parameters.
+
+## Example
 
   * A trivial `bash` example, `echo.sh`
 ```
@@ -275,6 +407,8 @@ echo etc...
 
 # How it works
 
+## No argument
+
 ```
 $ sh echo.sh
 this is a demo of args
@@ -283,7 +417,12 @@ you have passed 0 argument(s)
 the first argument is ''
 the second argument is ''
 etc...
+```
+---
 
+## Same with 3 arguments
+
+```
 $ sh echo.sh help me now
 this is a demo of args
 the script name is 'echo.sh'
@@ -307,7 +446,9 @@ etc...
 
 ---
 
-### `bash` example
+# The `if` statement
+
+## `bash` example
 ```
 let num=$1
 if [ $num -gt 5 ]
@@ -317,16 +458,17 @@ else
   echo this is small
 fi
 ```
-> Note the blank spaces around the `[` (but not after a `=`)
+# Note
 
----
-
-> The indentation is optional, and you can write this in a more compact way, using `;`. 
+> Note the blank spaces around the `[`, while none after a `=` when setting a variable.
 
 &nbsp;
 
-### `bash` example (II)
+> The indentation is optional, and you can write this in a more compact way, using `;`. 
 
+---
+
+## `bash` example (more compact notation)
 
 ```
 let num=$1
@@ -336,30 +478,34 @@ else
   echo this is small
 fi
 ```
+
 ---
 
-### `csh` equivalent
+## `csh` equivalent
 ```
 @ num = $1
-if ($num > 33) then
+if ($num > 5) then
   echo this is big
 else
   echo this is small
 endif
 ```
+
 ---
 
-### Loops
+# Loops
+
+## Purpose
 
  * Loops allow us to repeat a command or set of commands for each item in a list.
- * `bash` examples
+
+## `bash` examples
  ```
  for val in one two three
 do 
    echo val=$val
 done
 
-echo 'using $ls'
 for val in $(ls)
 do
    echo val=$val
@@ -368,17 +514,15 @@ done
 
 ---
 
-### Loops (cont'd)
+# Loops (cont'd)
 
-* `bash` loops on indices
+## `bash` loops on indices
 ```
-echo "i=1; i<=5; i++"
 for (( i=1; i<=5; i++ ))
 do 
    echo i=$i
 done
 
-echo "i in {0..10..2}"
 for i in {0..10..2}
 do
    echo i=$i
@@ -387,25 +531,54 @@ done
 
 ---
 
-### Other Flow Control Instructions, `$status`, `||` and `&&`
+# Other Flow Control Instructions, `$status`, `||` and `&&`
+
+## Other flow control
 
  * `case` - multiple options "if"
  * `while` - loop on a simple condition
+ * etc...
+
+## Checking command status and error check
+
  * `$status`, `||` and `&&` - error check
 
 ---
 
-### `chmod +x`, `$#` and `$path`
+# Making scripts excutables
 
-  * To start a script w/out the `sh`
+## To start a script w/out the `sh` or `csh` in front
+
 ```
 chmod +x script
 ```
-  * Best practice to add as 1st line
+
+## Best practice to add as 1st line
 ```
 #!/bin/sh
 ```
-  * Can run the script using its name if in the `path`
+or
+```
+#!/bin/csh
+```
+
+---
+
+## Can run the script using its name if in the `path`
+
+### `bash`
+```
+PATH=($PATH /where/the/script/is)
+```
+### `csh`
+```
+set path = ($path  /where/the/script/is)
+rehash
+```
+
+### alternatively
+
+ * edit `.bashrc`, `.cshrc` or use a module
 
 ---
 
@@ -421,7 +594,7 @@ chmod +x script
   * `bc` - An arbitrary precision calculator language
   * `date` +<format> -date="specification" - date handling
 
-### More sophisticated ones
+## More sophisticated ones
   
  * `PERL` - Practical Extraction and Report Language 
  * `Python` - high level general purpose programming language
@@ -430,8 +603,9 @@ chmod +x script
 
 ---
 
-## `sed` - the stream editor for filtering and transforming text
+# `sed` - the stream editor for filtering and transforming text
 
+## Examples
 ```
  sed 's/this/that/' file > newfile
 
@@ -442,25 +616,27 @@ chmod +x script
 
 ---
 
-## `awk` - pattern scanning and processing language
+# `awk` - pattern scanning and processing language
+
+## Intro
 
 * awk instructions are
 
 `<condition> { what to do }`
 
-* special conditions
+* Special conditions
 
 `BEGIN {}`
 
 `END {}`
 
- * special variables
+ * Special variables
 
 `NR`
 
 `NF`
 
-* operators
+* Operators
 
 `>, <, ==, =!`, etc...
 
@@ -468,18 +644,21 @@ chmod +x script
 
 ---
 
-* examples:
+## Examples
 ```
 awk '{print $1}' file
 awk -F: '{print $1}' file
-awk 'NR==3' file
-awk 'NF>4 { print $4}' file
+awk 'NR == 3' file
+awk 'NF > 4  { print $4}' file
+awk '$2 == 0 { print $1}' file
 awk -f instructions.awk file
 ```
 
 ---
 
-## `grep` - search a file for a pattern
+# `grep` - search a file for a pattern
+
+## Examples
 
 ```
 grep hello file
@@ -489,21 +668,29 @@ egrep 'hello|bye' file
 ```
 ---
 
-## `tr` - translate or delete characters
+# `tr` - translate or delete characters
 
+## Examples
 ```
 tr '[a-z]' '[A-Z]' < input > output
+tr -d '[^a-z]'  < input > output
 ```
 
 ---
 
-## `cut` - remove sections from each line of files
+# `cut` - remove sections from each line of files
+
+## Example
 
 * missing
 
 ---
 
-## `bc` - An arbitrary precision calculator language
+# `bc` - An arbitrary precision calculator language
+
+## Examples
+
+### `bash`
 
 ```
 qty=23.45
@@ -511,9 +698,19 @@ blob=$(echo "$qty * 12.4" | bc)
 echo $blob
 ```
 
+### `csh`
+
+```
+set qty = 23.45
+set blob = `echo "$qty * 12.4" | bc`
+echo $blob
+```
+
 ---
 
-## `date` - date handling
+# `date` - date handling
+
+## Example
 
 * subtract one hour or 3600 seconds
 
