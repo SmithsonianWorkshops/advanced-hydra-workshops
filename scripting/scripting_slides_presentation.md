@@ -34,8 +34,8 @@ You can check the [Introduction to the Command Line for Genomics](https://dataca
 &nbsp;
 
 
-> Everything about each shell is explained in the "man pages", there are books
-> written about scripting and there is a ton of info on the web too.
+> Everything about each shell is explained in the "man pages", there are books written about scripting and there is a ton of info on the web too.
+
 > We have included a [reference slide deck](insert full slide deck address here), with extended information on tools covered in this presentation, and additional scripting tools and examples. 
 
 ---
