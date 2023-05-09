@@ -106,7 +106,7 @@
    * tests and logical operators - `if` statements
    * loops - `for` statements
    * more flow control: `case`, `while`, `until` and `select`
-   * `bash` also allows to define functions (not covered)
+   * `bash` also allows users to define functions (not covered)
    * the precise syntax is shell specific, i.e. `[ba]sh` syntax is different from `[t]csh` syntax.
 
  * Scripts allow for I/O redirection
@@ -124,11 +124,11 @@
 
 &nbsp;
 
-> We will focus on basic skill and make time for hands-on learning.
+> We will focus on basic skills and make time for hands-on learning.
 
 &nbsp;
 
-> There is more than one way to skin a cat, which makes things confusing at
+> There is more than one way to bake a cake, which makes things confusing at
 > first.
 
 ---
@@ -150,7 +150,7 @@
 
 ## `bash` syntax
 ```
-filename=/there/goes/nothing.txt
+filename=/here/goes/nothing.txt
 string='hello class'
 let num=33
 echo $filename $string $num
@@ -158,7 +158,7 @@ echo $filename $string $num
 
 ## `csh` syntax
 ```
-set filename = there/goes/nothing.txt
+set filename = /here/goes/nothing.txt
 set string = 'hello class'
 @ num = 33
 echo $filename $string $num
@@ -166,7 +166,7 @@ echo $filename $string $num
 
 ## Result in both cases
 
-`there/goes/nothing.txt hello class 33`
+`/here/goes/nothing.txt hello class 33`
 
 
 ---
@@ -175,15 +175,16 @@ echo $filename $string $num
 
 ## Single quotes `'` vs double quotes `"`
 ```
-blah='what ever'
+blah='tell me more'
+name0=hello
 name1='hello $blah'
 name2="hello $blah"
 echo name1=$name1
 echo name2=$name2
 ```
-## In case of doubts, use `{` and `}`
+## In case of doubt, use `{` and `}`
  ```
-blah='what ever'
+blah='tell me more'
 name1='hello $blah'
 name2="hello ${blah}"
 echo name1=${name1}
@@ -195,7 +196,7 @@ echo name2=${name2}
 ## Output:
 ```
 name1=hello $blah
-name2=hello what ever
+name2=hello tell me more
 ```
 
 ---
@@ -297,6 +298,10 @@ echo base=$base file=$file root=$file:r ext=$file:e
 
 ---
 
+:tea: Let's pause here for 5-10 minutes :coffee:
+
+---
+
 # Simple Arithmetic
 ## Using `let` in `bash`
 
@@ -334,7 +339,7 @@ ok to use $variables
 EOF
 ```
 
-* duplicate ouput to show on the output and to be written in a file; the `tee` command:
+* duplicate output to show on the output and to be written in a file; the `tee` command:
 
 ```
 command | tee file
@@ -532,7 +537,7 @@ done
 
 ---
 
-# Other Flow Control Instructions, `$status`, `||` and `&&`
+# Other Flow Control Instructions, `$?`, `||` and `&&` ($status` for `csh`)
 
 ## Other flow control
 
@@ -542,7 +547,141 @@ done
 
 ## Checking command status and error check
 
- * `$status`, `||` and `&&` - error check
+ * `$?`, `||` and `&&` - error checking for `bash`
+ * `$status` - error checking for `csh`
+
+---
+
+# The `case`, or a mutiple options test
+
+## In `bash`
+
+```
+$ cat case.sh
+#!/bin.sh
+
+var="$1"
+
+case $var in
+  big)
+    num=300
+    color=none
+    ;;
+  small)
+    num=1
+    color=none
+    ;;
+  blue*)
+    num=0
+    color=$var
+    ;;
+  *)
+    echo var="'$var'" is not a valid option
+    exit 1
+    ;;
+esac
+echo num=$num color=$color
+```
+
+## Usage examples
+```
+$ sh case.sh
+var='' is not a valid option
+$ sh case.sh big
+num=300 color=none
+$ sh case.sh small
+num=1 color=none
+$ sh case.sh blue
+num=0 color=blue
+$ sh case.sh bluepale
+num=0 color=bluepale
+```
+---
+
+# The `case` (cont'd)
+
+## In `csh` equivalent
+```
+$ cat case.csh
+#!/bin/csh
+
+set var = "$1"
+
+switch ($var)
+case big:
+    set num   = 300
+    set color = none
+    breaksw
+case small:
+    set num   = 1
+    set color = none
+    breaksw
+case blue*:
+    set num   = 0
+    set color = $var
+    breaksw
+default:
+    echo var="'$var'" is not a valid option
+    exit 1
+endsw
+echo num=$num color=$color
+```
+
+---
+
+# Error status: check if command executed properly
+
+## `bash`
+```
+$ gerp junk test
+sh: gerp: command not found
+$ echo $?
+127
+$ grep junk test
+grep: test: No such file or directory
+$ echo $?
+2
+$ grep junk case.sh
+$ echo $?
+1
+$ grep exit case.sh
+    exit 1
+$ echo $?
+0
+$ grep junk case.sh  || echo no junk
+no junk
+$ grep exit case.sh  && echo got exit
+    exit 1
+got exit
+```
+
+## In practice
+
+```
+grep junk case.sh
+if [ $? != 0 ]; then
+  echo "no junk"
+  echo "exiting"
+  exit 1
+fi
+```
+
+or
+
+```
+grep junk case.sh || (echo no junk; echo exiting; exit 1)
+```
+
+## The `csh` equivalent
+
+```
+grep junk case.csh
+if ($status != 0) then
+  echo "no junk"
+  echo "exiting"
+  exit 1
+endif
+```
 
 ---
 
