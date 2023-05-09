@@ -285,21 +285,22 @@ conditionals | meaning | example
 
 https://www.gnu.org/software/bash/manual/html_node/Bash-Conditional-Expressions.html
 
-### 5. Ease hands-on time by repeating a command for every file: for loops (5.sh)
+### 5. Ease hands-on time by repeating a command for every file: for loops (`5.sh`)
 
 For loop format:
 ```
-for VAR in string1 string2…; do
+for VAR in string1 string2; do
   command
 done
 ```
 
 ```
-cp 4.sh 5.sh
-nano 5.sh
+$ cp 4.sh 5.sh
+$ nano 5.sh
 ```
 
 ⚠️ We're switching to checking directories instead of files in this version
+
 ```
 #!/bin/sh
 # count the number of sequences for every .fasta file in a directory
@@ -335,7 +336,7 @@ fastas/rplB_all.fasta
 
 (If you want to include multiple extensions use more advanced Bash globbing e.g. `*.{fasta,fa}` for files that end in .fasta or .fa)
 
-### 6. Getting portions of path and file name (basename, dirname, sed) (6.sh)
+### 6. Getting portions of path and file name (basename, dirname, sed) (`6.sh`)
 
 Notice how the file name is actually the directory and filename above? We can get the filename portion of a path and remove extensions.
 
@@ -495,6 +496,20 @@ $ for FASTA in fastas/*fasta; do qsub blast_one.job $FASTA; done
 
 This works, but the log file is a mess!
 
-Give the log file name `-o` in the for loop:
+Give the log file name `-o` in the `for` loop.
 
-for FASTA in fastas/*fasta; do FILENAME=$(basename $FASTA); GENENAME=$(echo ${FILENAME} | sed 's/.fasta//'); qsub -o ${GENENAME}.log blast_one.job $FASTA; done
+```
+$ for FASTA in fastas/*fasta; do qsub -o ${FASTA}.log blast_one.job ${FASTA}; done
+```
+
+> Where did the log files go? What are they called?
+
+We use some of the scripting tricks we learned to improve the name and location of the log file.
+
+```
+$ for FASTA in fastas/*fasta; do
+  FILENAME=$(basename $FASTA)
+  GENENAME=$(echo ${FILENAME} | sed 's/.fasta//');
+  qsub -o ${GENENAME}.log blast_one.job $FASTA
+done
+```
