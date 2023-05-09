@@ -1,11 +1,13 @@
 # Advanced Hydra, Scripting- Hands on
 ## Setup
 ### Log on to Hydra
+Let us know if you have any problems logging in to Hydra.
 
-### Quick text editor refresher
-We’ll be using nano. If you prefer vi or emacs, please free to use that.🙂
-Quick nano review: ctrl+x to save and exit.
-Using a text editor on Hydra is more convenient than editing on your workstation and transferring revisions.
+### `nano` refresher
+- We’ll be using nano. If you prefer vi or emacs, please free to use that.🙂
+- Quick nano review: ctrl+x to save and exit.
+- Using a text editor on Hydra is more convenient than editing on your workstation and transferring revisions.
+
 ### Working directory
 We'll be working in `/scratch/{genomics|sao|...}/USER/`
 
@@ -14,12 +16,18 @@ $ cd /scratch/genomics/USER/
 ```
 
 ### Starting data
-The sample files we'll be working with are in /data/genomics/workshops/ahw_scripting
+The sample files we'll be working with are in `/data/genomics/workshops/ahw_scripting`
+
 Make a copy of this directory into your directory
-`cp -a /data/genomics/workshops/ahw_scripting .`
 
 ```
-$tree ahw_scripting
+$ cp -a /data/genomics/workshops/ahw_scripting .
+```
+
+Let's see what it's in this directory with the `tree` command.
+
+```
+$ tree ahw_scripting
 ahw_scripting/
 ├── blastdb
 │   ├── difficile_genomes.fna
@@ -37,28 +45,29 @@ ahw_scripting/
 ```
 
 Now let's change directory into the `ahw_scripting` directory:
+
 ```
 $ cd ahw_scripting
 ```
 
 Quick look at a fasta file:
 ```
-head -n 2 fastas/atpA_all.fasta
+$ head -n 2 fastas/atpA_all.fasta
 >NZ_CM000441.1_cds_WP_003421367.1_3400_gene=atpA
 ATGAACTTAAAACCTGAAGAAATAAGTTCTATAATTAAACAGCAAATAAAAAATTATGAGAATAAAGTTGAGTTGACAGATACAGGTAGTGTTTTAACAGTTGGGGATGGTATAGCGAGTGTATATGGATTAGAAAAAGCTATGTCTGGTGAGTTGCTAGAGTTCCCAGGTGAAATATATGGTATGGCAC…
 ```
 
 Fasta format: Sequence identifier line that starts with ">" followed by any combination of text (including spaces)
-The Sequence (DNA shown here) in one or more lines.
+The sequence in one or more lines.
 
 ## Scripting concepts 
-### 0. Use a script to run a set of commands sequentially (hello_world.sh)
+### 0. Use a script to run a set of commands sequentially (`hello_world.sh`)
 
 ```
 $ nano hello_world.sh
 ```
 
-(best practice: use .sh extension for bash scripts)
+> Best practice: use `.sh` extension for bash scripts
 
 ```
 # My first script
