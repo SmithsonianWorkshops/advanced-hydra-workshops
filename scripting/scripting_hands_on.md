@@ -138,9 +138,9 @@ We set the variable with `FILE=fastas/dapD_all.fasta`
 
 ⚠️NO SPACES on either side of the `=`
 
-To get the value of the variable, we use $FILE or ${FILE}.
+To get the value of the variable, we use `$FILE` or `${FILE}`.
 
-Both versions work, but it's best practice to use ${FILE} notation.
+Both versions work, but it's best practice to use `${FILE}` notation.
 
 One reason for the `${}` notation is because it clearly defines where the variable name ends.
 
