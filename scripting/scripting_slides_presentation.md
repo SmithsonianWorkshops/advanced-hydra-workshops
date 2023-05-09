@@ -201,7 +201,7 @@ filename=/here/goes/nothing.txt
 string='hello class'
 let num=33
 echo $filename $string $num
-
+```
 
 ## Result 
 `/here/goes/nothing.txt hello class 33`
@@ -225,7 +225,7 @@ echo name1=$name1
 echo name2=$name2
 ```
 ## In case of doubt, use `{` and `}`
- ```
+```
 blah='tell me more'
 name1='hello $blah'
 name2="hello ${blah}"
