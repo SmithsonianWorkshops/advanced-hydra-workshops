@@ -271,7 +271,9 @@ hello=yo!
 setenv hello 'yo!'
 ```
 
-## Note no '=' sign
+&nbsp;
+
+> Note no '=' sign
 
 ---
 
@@ -298,7 +300,9 @@ echo base=$base file=$file root=$file:r ext=$file:e
 
 ---
 
-:tea: Let's pause here for 5-10 minutes :coffee:
+ &nbsp; ![:tea:](imgs/tea.png "a tea cup")
+Let's pause here for 5-10 minutes
+![:coffee:](imgs/coffee.png "a coffee cup")
 
 ---
 
@@ -472,6 +476,11 @@ fi
 
 > The indentation is optional, and you can write this in a more compact way, using `;`. 
 
+&nbsp;
+
+> In fact, you can put more commands on a single line by separating them with
+> `;` while you use `#` to add comments
+
 ---
 
 ## `bash` example (more compact notation)
@@ -547,7 +556,7 @@ done
 
 ## Checking command status and error check
 
- * `$?`, `||` and `&&` - error checking for `bash`
+ * `$?` `||` and `&&` - error checking for `bash`
  * `$status` - error checking for `csh`
 
 ---
@@ -571,6 +580,12 @@ case $var in
     num=1
     color=none
     ;;
+```
+
+---
+
+## `case.sh` cont'd
+```
   blue*)
     num=0
     color=$var
@@ -582,6 +597,8 @@ case $var in
 esac
 echo num=$num color=$color
 ```
+
+---
 
 ## Usage examples
 ```
@@ -616,6 +633,12 @@ case small:
     set num   = 1
     set color = none
     breaksw
+```
+
+---
+
+## `case.csh` cont'd
+```
 case blue*:
     set num   = 0
     set color = $var
@@ -644,6 +667,12 @@ $ echo $?
 $ grep junk case.sh
 $ echo $?
 1
+```
+
+---
+
+## `bash` (cont'd)
+```
 $ grep exit case.sh
     exit 1
 $ echo $?
@@ -654,6 +683,8 @@ $ grep exit case.sh  && echo got exit
     exit 1
 got exit
 ```
+
+---
 
 ## In practice
 
@@ -671,6 +702,8 @@ or
 ```
 grep junk case.sh || (echo no junk; echo exiting; exit 1)
 ```
+
+---
 
 ## The `csh` equivalent
 
