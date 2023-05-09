@@ -504,7 +504,7 @@ $ for FASTA in fastas/*fasta; do qsub -o ${FASTA}.log blast_one.job ${FASTA}; do
 
 > Where did the log files go? What are they called?
 
-We use some of the scripting tricks we learned to improve the name and location of the log file.
+We can use some of the scripting tricks we learned to improve the name and location of the log file.
 
 ```
 $ for FASTA in fastas/*fasta; do
