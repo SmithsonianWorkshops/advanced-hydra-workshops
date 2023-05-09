@@ -93,7 +93,7 @@ total 500
 We'll be iteratively developing a script that works with the fasta files that we saw earlier. We will be adding to the script to learn new concepts. At the core of what we'll be doing is working with files and directories. As you saw in the `hello_world.sh` script, when you start a script it uses your current working directory when it starts. We'll be referring to the files in the `fasta/` directory in this example.
 
 ```
-$nano 1.sh
+$ nano 1.sh
 ```
 
 ```
@@ -105,13 +105,13 @@ grep -c ">" fastas/dapD_all.fasta
 
 Useful tool: grep: returns lines that contain certain text (`">"`) in one or more files (`fasta/dapD_all.fasta`). It returns the found lines or, with the option `-c` (short for `--count`) a count of the lines that match the query.
 
-The first line, `#!/bin/sh`, has a special meaning and formatting. The symbols `#!` in combination is called a shebang https://en.wikipedia.org/wiki/Shebang_(Unix) and to function properly it must be the first line of the script **without any space after the `#!` and the `/`.** 
+The first line, `#!/bin/sh`, has a special meaning and formatting. The symbols `#!` in combination is called a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) and to function properly it must be the first line of the script **without any space after the `#!` and the `/`.** 
 
 The `/bin/sh` following the shebang (`#!`) is the path to the `sh` executable (run `which sh` to check).
 
 We're now going to mark the program as executable which is a special file attribute on Unix systems that tells the system the file (be it a text script or a compiled program) can be read by the shell and executed.
 
-The command `chmod +x FILE` marks a file as executable. 
+The command `chmod +x file` marks a file as executable. 
 
 The combination of making your script executable and using the shebang line allow you to call the script from the command line without `sh FILE`. One thing about calling the script is that you need to specify the path (relative or absolute) to the script. By using `./1.sh`, we are telling the shell to look in the current direction `./` for the file named 1.sh and execute it.
 
@@ -135,15 +135,17 @@ The executable mode is copied too 🙂
 We're taking the script form above and making a variable name `FILE` that contains the string `fastas/dapD_all.fasta`. 
 
 We set the variable with `FILE=fastas/dapD_all.fasta` 
+
 ⚠️NO SPACES on either side of the `=`
 
 To get the value of the variable, we use $FILE or ${FILE}.
+
 Both versions work, but it's best practice to use ${FILE} notation.
 
 One reason for the `${}` notation is because it clearly defines where the variable name ends.
 
-Does the variable include white space? 
-Use quotes around it: like in  `MULTIWORD="two words"` 
+> What if the variable include white space? 
+> Use quotes around it: like in  `MULTIWORD="two words"` 
 
 ```
 #!/bin/sh
@@ -196,7 +198,7 @@ grep -c ">" ${FILE}
 Try it:
 
 ```
-$./3.sh fastas/atpA_all.fasta
+$ ./3.sh fastas/atpA_all.fasta
 The number of sequences in fastas/atpA_all.fasta
 155
 ```
@@ -217,13 +219,14 @@ Uh-oh, it's hung. What's happening? (⚠️Use control-c to get back to the prom
 
 ### 4. Test assumptions and flow control: if statements (`4.sh`)
 
-Examples of tests: 
-- files/dirs exist
-- contents contain certain text
-- previous command was successful
+We can add some simple tests to our script to catch some of the common errors. It can be difficult to account for all possible errors, but checking for common ones (required argument not given, needed file doesn't exist) is worth your effort.
 
-Best practice: adding tests not only helps others who use the script, it will help your use.
-It can be difficult to account for all possible errors, but checking for common ones (required argument not given, needed file doesn't exist) is worth the time.
+Examples of types of tests you could use to: 
+- A file or directory exists.
+- A variable contains certain text.
+- A previous command was successful.
+
+There are many ways to add tests, we'll be starting with the `if` statement.
 
 Bash `if` statements:
 
@@ -236,7 +239,8 @@ fi
 ```
 
 ⚠️ at least one space on either side of `[` and `]`
-Best practice: add indentation (often two spaces) to make the structure clear, although it is not required.
+
+> Best practice: add indentation (often two spaces) to make the structure clear, although it is not required.
 
 What do conditions/logical expressions look like in Bash? Let's look at examples by modifying our program.
 
@@ -269,6 +273,15 @@ $ ./4.sh fastas/atpA_all.fasta
 The number of sequences in fastas/atpA_all.fasta
 155
 ```
+
+conditionals | meaning | example
+---|---|---
+`-z` | Text string is zero length | `if [ -z ${1} ]; then`…
+`-n`  | Test string is non-zero length | ` if [ -n ${1}]; then`…
+`-d` | The directory given exists | `if [ -d /fastas ]; then`…
+`-f` | The file exists | `if [ -f /fastas/rplB_all.fasta ]; then`…
+`!`  | negates the condition | `if [ ! -f /fasta/rplB_all.fasta ]; then`…
+`-eq -ne -lt -le -gt -ge` | =, ≠, <, ≤, >, ≥ | `if [ ${COUNT} -gt 0 ]; then`…
 
 https://www.gnu.org/software/bash/manual/html_node/Bash-Conditional-Expressions.html
 
