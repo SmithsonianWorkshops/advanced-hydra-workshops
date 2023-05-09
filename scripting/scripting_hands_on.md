@@ -4,8 +4,8 @@
 Let us know if you have any problems logging in to Hydra.
 
 ### `nano` refresher
-- We’ll be using nano. If you prefer vi or emacs, please free to use that.🙂
-- Quick nano review: ctrl+x to save and exit.
+- We’ll be using nano. If you prefer `vi` or `emacs`, please free to use that.🙂
+- Quick nano review: `ctrl+x` to save and exit.
 - Using a text editor on Hydra is more convenient than editing on your workstation and transferring revisions.
 
 ### Working directory
