@@ -8,6 +8,19 @@ Let us know if you have any problems logging in to Hydra.
 - Quick nano review: `ctrl+x` to save and exit.
 - Using a text editor on Hydra is more convenient than editing on your workstation and transferring revisions.
 
+Let's set a couple `nano` options that will help us today. We'll add a setting that will highlight syntax for bash scripts and another that will let us use the mouse to click the nano screen to move the cursor.
+
+```
+$ nano ~/.nanorc
+```
+
+Then enter these lines and save the file with `ctrl+x`
+
+```
+include /usr/share/nano/sh.nanorc
+set mouse
+```
+
 ### Working directory
 We'll be working in `/scratch/{genomics|sao|...}/USER/`
 
