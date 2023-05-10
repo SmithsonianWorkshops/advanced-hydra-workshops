@@ -28,7 +28,7 @@
   4. The Z shell (`zsh`)
 
 
-You can check the [Introduction to the Command Line for Genomics](https://datacarpentry.org/shell-genomics/01-introduction/index.html) Carpentries lesson for an intro to `bash`.
+You can check the [Introduction to the Command Line for Genomics](https://datacarpentry.org/shell-genomics/01-introduction/) Carpentries lesson for an intro to `bash`.
 
 
 &nbsp;
