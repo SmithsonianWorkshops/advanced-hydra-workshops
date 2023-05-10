@@ -1,0 +1,47 @@
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -l mres=8G,h_data=8G,h_vmem=8G
+#$ -cwd
+#$ -j y
+#$ -N blast_one
+#$ -o blast_one.log
+#
+# ----------------Modules------------------------- #
+module load bioinformatics/blast
+#
+# ----------------Your Commands------------------- #
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+#
+
+# File to blast is the first argument
+if [ -z ${1} ]; then
+  echo "ERROR: Give the file name as an argument"
+  exit 1
+fi
+
+FILE=${1}
+if [ ! -f ${FILE} ]; then
+  echo "ERROR: The file you entered was not found: ${1}"
+  exit 1
+fi
+
+# Blast DB (path/DB_name)
+DB=blastdb/difficile
+
+# Output directory for blast results
+OUTDIR=blast_results
+if [ ! -d ${OUTDIR} ]; then
+  mkdir ${OUTDIR}
+fi
+
+echo "BLAST of fasta file ${FILE} against ${DB}"
+FILENAME=$(basename ${FILE})
+GENENAME=$(echo ${FILENAME} | sed 's/.fasta//')
+echo "${FILENAME}, gene: ${GENENAME}, output: ${OUTDIR}/${GENENAME}.csv"
+blastn -db ${DB} -query ${FILE} -outfmt 10 -max_target_seqs 25 -out ${OUTDIR}/${GENENAME}.csv
+
+#
+echo = `date` job $JOB_NAME done

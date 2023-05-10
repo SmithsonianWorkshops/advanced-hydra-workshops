@@ -113,7 +113,9 @@ $ nano 1.sh
 
 ```
 #!/bin/sh
-# count the number of sequences in a fasta file 
+
+# 1. count the number of sequences in a fasta file
+
 echo "The number of sequences in fasta/dapD_all.fasta"
 grep -c ">" fastas/dapD_all.fasta
 ```
@@ -167,7 +169,9 @@ One reason for the `${}` notation is because it clearly defines where the variab
 
 ```
 #!/bin/sh
-# count the number of sequences in a fasta file
+
+# 1. count the number of sequences in a fasta file
+# 2. Add a variable
 
 # The file to be examined
 FILE=fastas/dapD_all.fasta
@@ -201,7 +205,10 @@ $ nano 3.sh
 
 ```
 #!/bin/sh
-# count the number of sequences in a fasta file
+
+# 1. count the number of sequences in a fasta file
+# 2. Add a variable
+# 3. Add argument for file name
 
 # The file to be examined is given as an argument
 FILE=${1}
@@ -272,7 +279,11 @@ $ nano 4.sh
 
 ```
 #!/bin/sh
-# count the number of sequences in a fasta file
+
+# 1. count the number of sequences in a fasta file
+# 2. Add a variable
+# 3. Add argument for file name
+# 4. Add sanity checks
 
 if [ -z ${1} ]; then
   echo "ERROR: Give the file name as an argument"
@@ -324,8 +335,14 @@ $ nano 5.sh
 
 ```
 #!/bin/sh
-# count the number of sequences for every .fasta file in a directory
 
+# 1. count the number of sequences in a fasta file
+# 2. Add a variable
+# 3. Add argument for file name
+# 4. Add sanity checks
+# 5. Change to calculating number of sequences for every file in a directory
+
+# The directory to examine is given as an argument
 if [ -z ${1} ]; then
   echo "ERROR: Give the directory name as an argument"
   exit 1
@@ -368,8 +385,15 @@ $ nano 6.sh
 
 ```
 #!/bin/sh
-# count the number of sequences for every file in a directory
 
+# 1. count the number of sequences in a fasta file
+# 2. Add a variable
+# 3. Add argument for file name
+# 4. Add sanity checks
+# 5. Change to calculating number of sequences for every file in a directory
+# 6. Get portions of the filename to improve output
+
+# The directory to examine is given as an argument
 if [ -z ${1} ]; then
   echo "ERROR: Give the directory name as an argument"
   exit 1
@@ -429,6 +453,7 @@ module load bioinformatics/blast
 echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
 #
 
+# Directory with the fasta files
 DIR=fastas
 if [ ! -d ${DIR} ]; then
   echo "ERROR: The directory you entered was not found: ${DIR}"
@@ -438,7 +463,7 @@ fi
 # Blast DB (path/DB_name)
 DB=blastdb/difficile
 
-# Output directory for fasta results
+# Output directory for blast results
 OUTDIR=blast_results
 if [ ! -d ${OUTDIR} ]; then
   mkdir ${OUTDIR}
@@ -460,6 +485,13 @@ echo = `date` job $JOB_NAME done
 ## Using scripting in a job file: for loop to submit a job repeatedly (blast_one.job)
 
 Preview: In the job array lesson we'll show an alternative way to submit multiple computations to run in parallel. The job array method adds flexibility in controlling the execution.
+
+⚠️ This method can be used to submit MANY jobs very quickly
+
+Considerations:
+- Turn off email alerts! (`-m` and `-M` options in `qsub`)
+- Test with a small set of jobs
+- Many very short jobs (<1 minute) adds admin load to the server
 
 ```
 # /bin/sh
@@ -485,16 +517,17 @@ if [ -z ${1} ]; then
   exit 1
 fi
 
+# File to blast is the first argument
 FILE=${1}
 if [ ! -f ${FILE} ]; then
   echo "ERROR: The file you entered was not found: ${1}"
   exit 1
 fi
 
-# Blast DB (path/DB_name
+# Blast DB (path/DB_name)
 DB=blastdb/difficile
 
-# Output directory for fasta results
+# Output directory for blast results
 OUTDIR=blast_results
 if [ ! -d ${OUTDIR} ]; then
   mkdir ${OUTDIR}
@@ -511,6 +544,8 @@ echo = `date` job $JOB_NAME done
 ```
 
 Submitting:
+
+
 
 ```
 $ for FASTA in fastas/*fasta; do qsub blast_one.job $FASTA; done
