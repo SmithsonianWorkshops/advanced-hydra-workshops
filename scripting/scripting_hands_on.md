@@ -37,6 +37,8 @@ Make a copy of this directory into your directory
 $ cp -a /data/genomics/workshops/ahw_scripting .
 ```
 
+> Why `cp -a` instead of `cp -r`? The `-a` arguments copies directories and preserves modification times, symbolic links, and other settings.
+
 Let's see what it's in this directory with the `tree` command.
 
 ```
@@ -99,7 +101,7 @@ total 500
 -rw-rw-r-- 1 user user 137176 May  6 22:06 rplB_all.fasta
 ```
 
-> Question: What working directory is the script using when it starts?
+> Question: What working directory is the script using when it starts? What happens if you run the script from a different directory?
 
 ### 1. Interacting with files/directories (`1.sh`)
 
@@ -120,7 +122,7 @@ Useful tool: grep: returns lines that contain certain text (`">"`) in one or mor
 
 The first line, `#!/bin/sh`, has a special meaning and formatting. The symbols `#!` in combination is called a [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) and to function properly it must be the first line of the script **without any space after the `#!` and the `/`.** 
 
-The `/bin/sh` following the shebang (`#!`) is the path to the `sh` executable (run `which sh` to check).
+The `/bin/sh` following the shebang (`#!`) is the path to the `sh` executable.
 
 We're now going to mark the program as executable which is a special file attribute on Unix systems that tells the system the file (be it a text script or a compiled program) can be read by the shell and executed.
 
@@ -150,6 +152,9 @@ We're taking the script form above and making a variable name `FILE` that contai
 We set the variable with `FILE=fastas/dapD_all.fasta` 
 
 ⚠️NO SPACES on either side of the `=`
+
+⚠️Variable names are case sensitive `FILE` is different than `file`
+
 
 To get the value of the variable, we use `$FILE` or `${FILE}`.
 
@@ -216,7 +221,7 @@ The number of sequences in fastas/atpA_all.fasta
 155
 ```
 
-Anyone run it without any arguments? If not try it:
+> Anyone run it without any arguments? If not try it:
 
 ```
 $ ./3.sh
@@ -226,8 +231,11 @@ The number of sequences in
 Uh-oh, it's hung. What's happening? (⚠️Use control-c to get back to the prompt)
 
 > Challenge:
+
 > Give more than one file as arguments, what happens and why?
+
 > What if you give a file that doesn't exist?
+
 > What if you give the directory `fastas` instead of a file?
 
 ### 4. Test assumptions and flow control: if statements (`4.sh`)
@@ -332,7 +340,7 @@ fi
 echo "The number of sequences in each file in ${DIR}"
 for FILE in ${DIR}/*.fasta; do
   echo ${FILE}
-  grep -c ">" ${FILE} || echo "WARNING: no sequences found in file"
+  grep -c ">" ${FILE}
 done
 ```
 
@@ -378,9 +386,11 @@ for FILE in ${DIR}/*.fasta; do
   FILENAME=$(basename ${FILE})
   GENENAME=$(echo ${FILENAME} | sed 's/.fasta//')
   echo "${FILENAME} (gene: ${GENENAME}):"
-  grep -c ">" ${FILE} || echo "WARNING: no sequences found in file"
+  grep -c ">" ${FILE}
 done
 ```
+
+Why `$(basename ${FILE})`? The `$()` executes the command and then returns the text output from that command. We use this to assign the variable `FILENAME` to what basename ${FILE} outputs.
 
 ```
 $ ./6.sh fastas
@@ -425,9 +435,8 @@ if [ ! -d ${DIR} ]; then
   exit 1
 fi
 
-# Blast DB (path/DB_name
+# Blast DB (path/DB_name)
 DB=blastdb/difficile
-# Add check of DB here?
 
 # Output directory for fasta results
 OUTDIR=blast_results
