@@ -116,7 +116,7 @@ We will focus on the `bash` shell in our lessons here.
 
 
  * A script can take arguments (options) and thus be more general, it allows
-   you to define variables, use expressions or execute commands
+   you to define variables, use expressions or execute commands.
     * A variable is a mechanism to hold a value and refer to it by its name, or a way
    to modify how some commands behave - variables can also be one dimensional
    arrays (lists)
