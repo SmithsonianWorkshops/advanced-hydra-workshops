@@ -1,4 +1,4 @@
 # Advanced Hydra Workshops
 ## Shell Scripting and Usefull Tools (e.g. sed, awk, grep, .... 2023-05-10)
-* [Slides](scripting_slides.pdf)
+* [Slides](scripting_slides_presentation.pdf)
 * [Hands on Material](scripting_hands_on.md)
