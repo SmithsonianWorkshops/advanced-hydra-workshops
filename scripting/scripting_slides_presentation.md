@@ -48,7 +48,7 @@ You can check the [Introduction to the Command Line for Genomics](https://dataca
 
 
   * `bash` is the shell most used by biologists (and used to install packages for
-    historical reasons)
+    historical reasons).
   * `csh` is the shell most used by astronomers.
 
 
