@@ -221,7 +221,7 @@ Uh-oh, it's hung. What's happening? (⚠️Use control-c to get back to the prom
 
 We can add some simple tests to our script to catch some of the common errors. It can be difficult to account for all possible errors, but checking for common ones (required argument not given, needed file doesn't exist) is worth your effort.
 
-Examples of types of tests you could use to: 
+Examples of types of tests you could use include checking whether: 
 - A file or directory exists.
 - A variable contains certain text.
 - A previous command was successful.
