@@ -168,7 +168,7 @@ The number of sequences in fastas/dapD_all.fasta
 
 In our previous script we add the name of the file to examine as part of the script file. One of our goals in scripting is to make reusable code. 
 
-We wouldn't want to edit the script and change the `FILE` variable each time we use it which would be time consuming, error prone, manual task. 
+We wouldn't want to edit the script and change the `FILE` variable each time we use it which would be a time consuming, error prone, manual task. 
 
 Most programs take arguments that change the way the program runs. Some are optional, like the `-l` in `ls -l`, and others are required, like the file names you are going to copy from/to with the `cp` command.
 
