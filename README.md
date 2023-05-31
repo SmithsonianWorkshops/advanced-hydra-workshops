@@ -14,5 +14,9 @@
 - [Slides](scripting/scripting_slides_presentation.pdf)
 - [Hands on material](scripting/scripting_hands_on.md)
 - [Recording available on Microsoft Stream](https://sinet-my.sharepoint.com/:v:/r/personal/dikowr_si_edu/Documents/scripting.mp4?csf=1&web=1&e=nbIlOY)
-
+- Add'l Reference Material (long)
+   - [Slides](scripting/scripting_reference_slides-long.pdf)
+   - [Markup](scripting/scripting_reference_slides-long.md)
+## Job Arrays (2023-06-21)
+- [Registration link](https://forms.gle/GVo7pHhasY5pkfqe7)
 ### More to come
