@@ -4,80 +4,97 @@
 
  * What are jobs arrays, when and why use them?
  * How to write job arrays scripts.
- * How to submit jobs arrays: task range, increment and limit concurrent tasks.
+ * How to submit jobs arrays: 
+   * task range, increment and limit concurrent tasks.
  * Job arrays tips and tricks.
- * How to write parallel job arrays.
+ * Parallel job arrays.
  * How to consolidate small tasks in job arrays.
  * How to manage job arrays: `qstat[+]`, `qdel`, `qacct[+]`.
- * HPC wiki on job arrays: [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays) 
+ * HPC wiki on job arrays:
+ * [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays) 
+
 ---
 
-# What are jobs arrays, when and why use them?
+# Introduction
+
+## What are jobs arrays, when and why use them?
 
   * Job arrays allow you to run the same job file multiple times in a single job submission.
-     * job arrays have each a unique job id and multiple task ids
-  * They are typically for running a given analysis on different input files or parameters.
+  * They are typically used for running a given analysis on different input files or parameters.
   * They allow you to use the same job file and a single `qsub` to run a type of analysis instead of writing a myriad of very similar job files.
+  * Job arrays have each a unique job id with multiple task ids
   
 ---
 
-# How to write job arrays scripts: a trivial example
+# How to write job arrays scripts
+
+## A trivial example
 
   * Job array scripts, or job files, are like any other job file, except that
-    * they use the task identifier stored in the variable `SGE_TASK_ID`
+    they have a task identifier stored in the variable `SGE_TASK_ID`
 
-  * A trivial example:
+  * Example:
+
+&nbsp;
+
 ```
-echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE
-echo jobID=$JOB_ID and taskID=$SGE_TASK_ID
-#
+echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE \
+ with jobID=$JOB_ID and taskID=$SGE_TASK_ID
 model < model.$SGE_TASK_ID.inp
-#
 echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 ```
-> run `model` using the input file `model.N.inp`
+
+&nbsp;
+
+&nbsp;&nbsp; this example runs `model` using the input file `model.N.inp`
+
 ---
 
-# How to submit jobs arrays: task range, increment and limit concurrent tasks.
+# How to submit jobs arrays
 
-  * That trivial example can be queued on 100 tasks with
+## That trivial example can be queued on 100 tasks with
 ```
 qsub -t 1-100 trivial_example.job
 ```
 
-> queues one job with 100 tasks, the equivalent of 100 job files with
+&nbsp;
+
+&nbsp;&nbsp; this queues one job with 100 tasks, or the equivalent of 100 job files with
+
 ```
-model < model.1.inp
+    model < model.1.inp
 ```
 
 in `test1.job`
 
 ```
-model < model.2.inp
+    model < model.2.inp
 ```
 in `test2.job`, etc..., up to
 
 ```
-model < model.100.inp
+    model < model.100.inp
 ```
 
 in `test100.job` - hence one job file instead of 100.
 
-> assumes you have 100 input files called `model.1.inp`, `model.2.inp`, ..., `model.100.inp`
+&nbsp;&nbsp;&nbsp; this assumes that you have 100 input files called
+`model.1.inp`, `model.2.inp`, ... , `model.100.inp`
   
 ---
 
-# Job arrays tips and tricks.
+# A more complete job array file
 
-  * A more complete job array file - `csh` syntax
+## task range and limit concurrent tasks: `csh` syntax
 
 ```
 # /bin/csh
 #
-#$ -N model-1k -cwd -j y -o model.$TASK_ID.log
+#$ -N model-100 -cwd -j y -o model.$TASK_ID.log
 #$ -t 1-1000 -tc 100
 #
-echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE with jobID=$JOB_ID and taskID=$SGE_TASK_ID
+echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE \
+ with jobID=$JOB_ID and taskID=$SGE_TASK_ID
 #
 set INPUT  = model.$SGE_TASK_ID.inp
 set OUTPUT = model.$SGE_TASK_ID.out
@@ -85,23 +102,20 @@ set OUTPUT = model.$SGE_TASK_ID.out
 #
 echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 ```
-Note:
-  * Task range and max concurrent task embedded in the script
-  * Different log file and output file for each task
-  * :attention: `$TASK_ID` vs `$SGE_TASK_ID`
-  
+
 ---
 
-# Job arrays tips and tricks (cont'd).
 
-  * The same more complete job array file - `sh` syntax
+## task range and limit concurrent tasks: `sh` syntax
+
 ```
-# /bin/csh
+# /bin/sh
 #
-#$ -N model-1k -cwd -j y -o model.$TASK_ID.log
+#$ -N model-100 -cwd -j y -o model.$TASK_ID.log
 #$ -t 1-1000 -tc 100
 #
-echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE with jobID=$JOB_ID and taskID=$SGE_TASK_ID
+echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE \
+ with jobID=$JOB_ID and taskID=$SGE_TASK_ID
 #
 INPUT=model.$SGE_TASK_ID.inp
 OUTPUT=model.$SGE_TASK_ID.out
@@ -112,19 +126,54 @@ echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 
 ---
 
-# Job arrays tips and tricks (cont'd).
+## Note
 
-  * Converting the task id `$SGE_TASK_ID`
+  * Task range and max concurrent task embedded in the script
 
-  1. formatting, replacing 1,2,...,100 by 001,002,...,100
+```
+-t 1-1000 -tc 100
+```
 
-`csh` syntax
+  * Different log file and output file for each task
+
+```
+-o model.$TASK_ID.log
+INPUT=model.$SGE_TASK_ID.inp
+OUTPUT=model.$SGE_TASK_ID.out
+./model < $INPUT > $OUTPUT
+```
+
+  * Use `$TASK_ID` in embedded `-o` directive vs `$SGE_TASK_ID` in the script
+
+---
+
+# Job arrays tips and tricks 
+
+## Various ways of using the task id `$SGE_TASK_ID`
+
+  1. formatting
+  2. using `awk`
+  3. using `sed`
+  4. using `bc`
+  5. using `cd`
+  6. using `<<EOF`
+  7. using your own tool
+
+---
+
+## Formatting: replacing 1,2,...,100 by 001,002,...,100
+
+ * `csh` syntax
+
 ```
 @ i = $SGE_TASK_ID
 set I = `echo $i | awk '{printf "%3.3d", $1}'`
 ```
 
-or `sh` syntax
+&nbsp;
+
+ * `sh` syntax
+
 ```
 let i=$SGE_TASK_ID
 I=$(echo $i | awk '{printf "%3.3d", $1}')
@@ -132,63 +181,138 @@ I=$(echo $i | awk '{printf "%3.3d", $1}')
 
 ---
 
-  2. using `awk` to extract parameters from a single file
+## Using `awk` to extract parameters from a single file
 
-`csh` syntax
+* `csh` syntax
+
 ```
 @ i = $SGE_TASK_ID
 set P = (`awk "NR==$i" parameters-list.txt`)
 ```
 
-or `sh` syntax
+&nbsp;
+
+* `sh` syntax
 
 ```
 let i=$SGE_TASK_ID
 P=$(awk "NR==$i" parameters-list.txt)
 ```
 
-  * the variable `P` will hold the content of the `i`-th line of `parameters-list.txt`, and can be used as:
+&nbsp;
+
+&nbsp;&nbsp; the variable `P` will hold the content of the `i`-th line of `parameters-list.txt`, and can be used as:
+
 ```
 ./compute $P
 ```
+
   assuming `compute` takes parameters.
      
 ---
 
-  3. using `sed` and a template
+## Using `sed` and a template
+
+ * `csh`
 
 ```
-@ i = $SGE_TASK_ID                         // let i=$SGE_TASK_ID
-sed "s/XXX/$i/" input-template.inp > model.$i.inp
+@ i = $SGE_TASK_ID
+sed "s/NNN/$i/" input-template.inp > model.$i.inp
 model < model.$i.inp > model.$i.out
 ```
 
----
+&nbsp;
 
-  4. using `bc` to run models on temperatures starting at 23.72 and by 2.43 increments
+ * `sh`
 
 ```
-@ i = $SGE_TASK_ID                          // let i=$SGE_TASK_ID
-set tp = `echo "23.72 + $i*2.43" | bc`      // tp=$(echo "23.72 + $i*2.43" | bc)
+let i=$SGE_TASK_ID
+sed "s/NNN/$i/" input-template.inp > model.$i.inp
+model < model.$i.inp > model.$i.out
+```
+
+&nbsp;
+
+&nbsp;&nbsp; replace `NNN` in the template by the task id
+
+---
+
+## Using `bc` to run models on temperatures
+
+  * run on tp starting at 23.72 and increasing by 2.43 increments
+
+  * `csh`
+
+```
+@ i = $SGE_TASK_ID
+set tp = `echo "23.72 + $i*2.43" | bc`
 sed "s/TP/$tp/" input-template.inp > model.$i.inp
 model < model.$i.inp > model.$i.out
 ```
 
+&nbsp;
+
+ * `sh`
+
+```
+let i=$SGE_TASK_ID
+tp=$(echo "23.72 + $i*2.43" | bc)
+sed "s/TP/$tp/" input-template.inp > model.$i.inp
+model < model.$i.inp > model.$i.out
+```
+
+&nbsp;
+
+&nbsp;&nbsp; replace `TP` in the template by the computed temperature stored
+in $tp
+
 ---
 
-  5. using your own tool, `mytool`, to convert a task id to parameters
+## Using `cd` and different directotories for each task
+
+  * `csh`
 
 ```
-@ i = $SGE_TASK_ID               // i=$SGE_TASK_ID
-set P = (`./mytool $i`)          // P=`./mytool $i`
+@ i = $SGE_TASK_ID
+cd task.$i
+model < model.inp > model.out
 ```
+
+&nbsp;
+
+  * `sh`
+
+```
+let i=$SGE_TASK_ID
+cd task.$i
+model < model.inp > model.out
+```
+
+&nbsp;
+
+&nbsp;&nbsp; assumes there is a `model.inp` file in each `task.N` directory
 
 ---
 
-  6. using the `<<EOF` construct
+## Using the `<<EOF` construct
+
+  * `csh`
+
 ```
-@ i = $SGE_TASK_ID                          // let i=$SGE_TASK_ID
-set tp = `echo "23.72 + $i*2.43" | bc`      // tp=$(echo "23.72 + $i*2.43" | bc)
+@ i = $SGE_TASK_ID
+set tp = `echo "23.72 + $i*2.43" | bc`
+model <<EOF > model.$.out
+$tp
+EOF
+```
+
+&nbsp;
+
+  * `sh`
+
+```
+let i=$SGE_TASK_ID
+tp=$(echo "23.72 + $i*2.43" | bc)
 model <<EOF > model.$.out
 $tp
 EOF
@@ -196,14 +320,52 @@ EOF
 
 ---
 
+## Using your own tool, `mytool`, to convert a task id to parameters
+
+  * `csh`
+
+```
+@ i = $SGE_TASK_ID
+set P = (`./mytool $i`)
+./compute $P
+```
+
+&nbsp;
+
+  * `sh`
+
+```
+i=$SGE_TASK_ID
+P=$(./mytool $i)
+./compute $P
+```
+
+---
+
 # How to consolidate small tasks in job arrays.
+
+## Why
 
   * Each task is started like a job, hence has the same overhead as starting one job
   * Users should avoid running lots of very short tasks (< 10-30m)
   * It is relatively easy to consolidate short tasks into longer ones, using the task increment:
     * `qsub -t 200-500:20` will run tasks with id=200,220,240,...,500
-  * Examples of job files that consolidate short tasks
-  * `csh` syntax
+
+## How
+
+ * use the variables:
+
+```
+$SGE_TASK_FIRST
+$SGE_TASK_LAST
+$SGE_TASK_STEPSIZE
+$SGE_TASK_ID
+```
+
+---
+
+## Example to consolidate short tasks: `csh` syntax
+
 ```
 @ iFr = $SGE_TASK_ID                                  
 @ iTo = $iFr + $SGE_TASK_STEPSIZE - 1                 
@@ -216,11 +378,17 @@ while ($i <= $iTo)
   @ i++
 end
 ```
-  * `sh` syntax
+
+---
+
+## Example to consolidate short tasks: `sh` syntax
+
 ```
 let iFr=$SGE_TASK_ID
 let iTo=$iFr+$SGE_TASK_STEPSIZE-1
-if [ $iTo -gt $SGE_TASK_LAST ]; then let iTo=$SGE_TASK_LAST; fi
+if [ $iTo -gt $SGE_TASK_LAST ]; then
+  let iTo=$SGE_TASK_LAST
+fi
 #
 echo running model.csh for taskIDs $iFr to $iTo
 let i=$iFr
@@ -230,17 +398,25 @@ while [ $i -ge ]<= $iTo ]; do
 done
 ```
 
-where the script `model.csh` or `model.sh` do the work and takes one argument: the id.
+---
+
+## Where 
+
+* the script `model.csh` or `model.sh` do the work and takes one argument: the id.
 
 ---
 
-# Parallel job arrays.
+# Parallel job arrays
 
-  * Job arrays can be parallel jobs/tasks
-  * Each task requests a parallel environment, as per the `-pe` specification
+  * Job arrays can run parallel tasks
+  * Each task request a parallel environment, as per the `-pe` specification:
      * `-pe mthread N` for multi-threaded
      * `-pe mpich N` or `-pe orte N` for MPI
-  * Check the HPC wiki for more info
+
+&nbsp;
+
+  * Check the HPC wiki for more info 
+    at [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
   
 ---
 
@@ -250,13 +426,17 @@ where the script `model.csh` or `model.sh` do the work and takes one argument: t
   * job deletion with `qdel`
   * job accounting with `qacct` or `qacct+`
   
+(details missing)
+
 ---
 
 # Also remember
 
- * separate name spaces
- * avoid emails (`-m abe`)
- * test on a small set of tasks
+ * separate name spaces: some of the tasks will run at the same time and
+   should not write in the same file
+ * test on a small set of tasks first
+ * avoid sending emails with `-m abe`, it applies to each task (lots of emails).
+ * manage the results files, esp. if a lot  of them are created
  
 ---
 
