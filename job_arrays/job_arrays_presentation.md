@@ -9,9 +9,10 @@
  * Job arrays tips and tricks.
  * Parallel job arrays.
  * How to consolidate small tasks in job arrays.
- * How to manage job arrays: `qstat[+]`, `qdel`, `qacct[+]`.
+ * How to manage job arrays:
+   * `qstat(+)`, `qdel`, `qalter`, `qacct(+)`.
  * HPC wiki on job arrays:
- * [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays) 
+   * [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays) 
 
 ---
 
@@ -55,6 +56,7 @@ echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 ## That trivial example can be queued on 100 tasks with
 ```
 qsub -t 1-100 trivial_example.job
+Your job-array NNNNNN.1-100:1 ("trivial_example.job") has been submitted
 ```
 
 &nbsp;
@@ -138,12 +140,17 @@ echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 
 ```
 -o model.$TASK_ID.log
+
 INPUT=model.$SGE_TASK_ID.inp
 OUTPUT=model.$SGE_TASK_ID.out
 ./model < $INPUT > $OUTPUT
 ```
 
-  * Use `$TASK_ID` in embedded `-o` directive vs `$SGE_TASK_ID` in the script
+  &nbsp;
+
+  * Also:
+    * use `$TASK_ID` in embedded `-o` directive 
+    * use `$SGE_TASK_ID` in the script
 
 ---
 
@@ -151,13 +158,13 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 ## Various ways of using the task id `$SGE_TASK_ID`
 
-  1. formatting
+  1. formatting trick
   2. using `awk`
   3. using `sed`
   4. using `bc`
   5. using `cd`
   6. using `<<EOF`
-  7. using your own tool
+  7. using your own tool (sh, csh, awk, perl, python, C, Fortan, ...)
 
 ---
 
@@ -170,7 +177,7 @@ OUTPUT=model.$SGE_TASK_ID.out
 set I = `echo $i | awk '{printf "%3.3d", $1}'`
 ```
 
-&nbsp;
+## &nbsp;
 
  * `sh` syntax
 
@@ -190,7 +197,7 @@ I=$(echo $i | awk '{printf "%3.3d", $1}')
 set P = (`awk "NR==$i" parameters-list.txt`)
 ```
 
-&nbsp;
+## &nbsp;
 
 * `sh` syntax
 
@@ -199,9 +206,9 @@ let i=$SGE_TASK_ID
 P=$(awk "NR==$i" parameters-list.txt)
 ```
 
-&nbsp;
+## &nbsp;
 
-&nbsp;&nbsp; the variable `P` will hold the content of the `i`-th line of `parameters-list.txt`, and can be used as:
+ * the variable `P` will hold the content of the `i`-th line of `parameters-list.txt`, and can be used as:
 
 ```
 ./compute $P
@@ -213,7 +220,11 @@ P=$(awk "NR==$i" parameters-list.txt)
 
 ## Using `sed` and a template
 
- * `csh`
+ * to replace `NNN` in the template by the task id
+
+## &nbsp;
+
+ * `csh` syntax
 
 ```
 @ i = $SGE_TASK_ID
@@ -221,9 +232,9 @@ sed "s/NNN/$i/" input-template.inp > model.$i.inp
 model < model.$i.inp > model.$i.out
 ```
 
-&nbsp;
+## &nbsp;
 
- * `sh`
+ * `sh` syntax
 
 ```
 let i=$SGE_TASK_ID
@@ -231,46 +242,36 @@ sed "s/NNN/$i/" input-template.inp > model.$i.inp
 model < model.$i.inp > model.$i.out
 ```
 
-&nbsp;
-
-&nbsp;&nbsp; replace `NNN` in the template by the task id
-
 ---
 
-## Using `bc` to run models on temperatures
+## Using `bc` to run models on temperatures grid
 
-  * run on tp starting at 23.72 and increasing by 2.43 increments
+  * start at 23.72 and increase by 2.43 increments,
+  * replace `TP` by the temperature and `NNN` by the task id
 
-  * `csh`
+## `csh` syntax
 
 ```
 @ i = $SGE_TASK_ID
 set tp = `echo "23.72 + $i*2.43" | bc`
-sed "s/TP/$tp/" input-template.inp > model.$i.inp
-model < model.$i.inp > model.$i.out
+sed -e "s/NNN/$i/" -e "s/TP/$tp/" input-template.inp \
+  > model.$i.inp
 ```
 
-&nbsp;
-
- * `sh`
+## `sh` syntax
 
 ```
 let i=$SGE_TASK_ID
 tp=$(echo "23.72 + $i*2.43" | bc)
-sed "s/TP/$tp/" input-template.inp > model.$i.inp
-model < model.$i.inp > model.$i.out
+sed -e "s/NNN/$i/" -e "s/TP/$tp/" input-template.inp \
+  > model.$i.inp
 ```
-
-&nbsp;
-
-&nbsp;&nbsp; replace `TP` in the template by the computed temperature stored
-in $tp
 
 ---
 
 ## Using `cd` and different directotories for each task
 
-  * `csh`
+  * `csh` syntax
 
 ```
 @ i = $SGE_TASK_ID
@@ -278,9 +279,9 @@ cd task.$i
 model < model.inp > model.out
 ```
 
-&nbsp;
+## &nbsp;
 
-  * `sh`
+  * `sh` syntax
 
 ```
 let i=$SGE_TASK_ID
@@ -296,25 +297,25 @@ model < model.inp > model.out
 
 ## Using the `<<EOF` construct
 
-  * `csh`
+  * `csh` syntax
 
 ```
 @ i = $SGE_TASK_ID
 set tp = `echo "23.72 + $i*2.43" | bc`
 model <<EOF > model.$.out
-$tp
+temp=$tp
 EOF
 ```
 
-&nbsp;
+## &nbsp;
 
-  * `sh`
+  * `sh` syntax
 
 ```
 let i=$SGE_TASK_ID
 tp=$(echo "23.72 + $i*2.43" | bc)
 model <<EOF > model.$.out
-$tp
+temp=$tp
 EOF
 ```
 
@@ -322,7 +323,7 @@ EOF
 
 ## Using your own tool, `mytool`, to convert a task id to parameters
 
-  * `csh`
+  * `csh` syntax
 
 ```
 @ i = $SGE_TASK_ID
@@ -330,9 +331,9 @@ set P = (`./mytool $i`)
 ./compute $P
 ```
 
-&nbsp;
+## &nbsp;
 
-  * `sh`
+  * `sh` syntax
 
 ```
 i=$SGE_TASK_ID
@@ -340,18 +341,23 @@ P=$(./mytool $i)
 ./compute $P
 ```
 
+## &nbsp;
+
+* `mytool` can be anything you want:
+  * any shell script, awk, perl, python, C, fortran, ... 
+
 ---
 
 # How to consolidate small tasks in job arrays.
 
-## Why
+## Why?
 
   * Each task is started like a job, hence has the same overhead as starting one job
   * Users should avoid running lots of very short tasks (< 10-30m)
   * It is relatively easy to consolidate short tasks into longer ones, using the task increment:
     * `qsub -t 200-500:20` will run tasks with id=200,220,240,...,500
 
-## How
+## How?
 
  * use the variables:
 
@@ -364,7 +370,9 @@ $SGE_TASK_ID
 
 ---
 
-## Example to consolidate short tasks: `csh` syntax
+## Example to consolidate short tasks
+
+  * `csh` syntax
 
 ```
 @ iFr = $SGE_TASK_ID                                  
@@ -381,7 +389,9 @@ end
 
 ---
 
-## Example to consolidate short tasks: `sh` syntax
+## Example to consolidate short tasks
+
+ * `sh` syntax
 
 ```
 let iFr=$SGE_TASK_ID
@@ -392,15 +402,14 @@ fi
 #
 echo running model.csh for taskIDs $iFr to $iTo
 let i=$iFr
-while [ $i -ge ]<= $iTo ]; do
+for ((i=$iFr; i<=iTo; i++)); do
   ./model.sh $i >& model.$i.log
-  let i++
 done
 ```
 
 ---
 
-## Where 
+## assuming that  
 
 * the script `model.csh` or `model.sh` do the work and takes one argument: the id.
 
@@ -408,42 +417,68 @@ done
 
 # Parallel job arrays
 
-  * Job arrays can run parallel tasks
+## Job arrays can run parallel tasks
+
   * Each task request a parallel environment, as per the `-pe` specification:
      * `-pe mthread N` for multi-threaded
      * `-pe mpich N` or `-pe orte N` for MPI
 
-&nbsp;
+&nbsp; 
 
   * Check the HPC wiki for more info 
     at [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
   
 ---
 
-# How to manage job arrays: `qstat[+]`, `qdel`, `qacct[+]`.
+# How to manage job arrays
 
-  * job status with `qstat` or `qstat+`
-  * job deletion with `qdel`
-  * job accounting with `qacct` or `qacct+`
-  
-(details missing)
+## job status with `qstat` or `qstat+`
+  * list task id(s) for running jobs - single job id
+  * remaining task range for queued jobs
+
+## job deletion with `qdel`
+  * can delete specific tasks w/ `-t` flags
+  * otherwise delete all the tasks: running and queued!
+
+## job modification with `qalter`
+  * supports `-t` and `-tc` flags
+  * use `-tc` if and when needed, can be used to increase its value progressively
+
+## job accounting with `qacct` or `qacct+`
+  * use `-t` flag to get info on specific task(s)
+  * otherwise return info on all the tasks (can be (very) long)
 
 ---
 
 # Also remember
 
- * separate name spaces: some of the tasks will run at the same time and
-   should not write in the same file
+## Can run a lot of confurrent tasks
+ * separate name spaces
+   * some of the tasks will run at the same time
+   * should not write in the same file
+ * I/O contention:
+   * concurrent tasks read the same file(s)?
+ * manage the results files
+   * esp. if a lot  are created in the same directory
  * test on a small set of tasks first
- * avoid sending emails with `-m abe`, it applies to each task (lots of emails).
- * manage the results files, esp. if a lot  of them are created
+ * avoid sending emails with `-m abe`
+   * it applies to each task (lots of emails).
+
+---
+
+## Resource limits:
+    * Limit of 10,000 tasks per job array,
+    * Limit of 2,500 jobs per user in the queue, and
+    * Limit of 25,000 jobs in the queue (for all users).
  
 ---
 
 # HPC wiki on job arrays
 
- * [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
+ * goto [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
 
 ---
 
 # Hands on portion
+
+---
