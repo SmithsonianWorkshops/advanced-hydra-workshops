@@ -2,9 +2,9 @@
 
 ## In the intro portion of the workshop you will learn:
 
- * What are jobs arrays, when and why use them?
+ * What are job arrays, when and why use them?
  * How to write job arrays scripts.
- * How to submit jobs arrays: 
+ * How to submit job arrays: 
    * task range, increment and limit concurrent tasks.
  * Job arrays tips and tricks.
  * Parallel job arrays.
@@ -18,7 +18,7 @@
 
 # Introduction
 
-## What are jobs arrays, when and why use them?
+## What are job arrays, when and why use them?
 
   * Job arrays allow you to run the same job file multiple times in a single job submission.
   * They are typically used for running a given analysis on different input files or parameters.
@@ -51,7 +51,7 @@ echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 
 ---
 
-# How to submit jobs arrays
+# How to submit job arrays
 
 ## That trivial example can be queued on 100 tasks with
 ```
@@ -164,7 +164,7 @@ OUTPUT=model.$SGE_TASK_ID.out
   4. using `bc`
   5. using `cd`
   6. using `<<EOF`
-  7. using your own tool (sh, csh, awk, perl, python, C, Fortan, ...)
+  7. using your own tool (sh, csh, awk, perl, python, C, Fortran, ...)
 
 ---
 
@@ -269,7 +269,7 @@ sed -e "s/NNN/$i/" -e "s/TP/$tp/" input-template.inp \
 
 ---
 
-## Using `cd` and different directotories for each task
+## Using `cd` and different directories for each task
 
   * `csh` syntax
 
