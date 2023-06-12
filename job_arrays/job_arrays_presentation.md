@@ -1,4 +1,4 @@
-# Using Job Arrays on Hydra (slides)
+# Using Job Arrays on Hydra (slides, `sh` only)
 
 ## In the intro portion of the workshop you will learn:
 
@@ -87,27 +87,6 @@ in `test100.job` - hence one job file instead of 100.
 
 # A more complete job array file
 
-## task range and limit concurrent tasks: `csh` syntax
-
-```
-# /bin/csh
-#
-#$ -N model-100 -cwd -j y -o model.$TASK_ID.log
-#$ -t 1-1000 -tc 100
-#
-echo + `date` $JOB_NAME started on $HOSTNAME in $QUEUE \
- with jobID=$JOB_ID and taskID=$SGE_TASK_ID
-#
-set INPUT  = model.$SGE_TASK_ID.inp
-set OUTPUT = model.$SGE_TASK_ID.out
-./model < $INPUT > $OUTPUT
-#
-echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
-```
-
----
-
-
 ## task range and limit concurrent tasks: `sh` syntax
 
 ```
@@ -154,6 +133,13 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 ---
 
+# Hands on Part I
+
+  * First pause here for 10m
+  * link to Hands on Part I markdown
+
+---
+
 # Job arrays tips and tricks 
 
 ## Various ways of using the task id `$SGE_TASK_ID`
@@ -170,15 +156,6 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 ## Formatting: replacing 1,2,...,100 by 001,002,...,100
 
- * `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-set I = `echo $i | awk '{printf "%3.3d", $1}'`
-```
-
-## &nbsp;
-
  * `sh` syntax
 
 ```
@@ -189,15 +166,6 @@ I=$(echo $i | awk '{printf "%3.3d", $1}')
 ---
 
 ## Using `awk` to extract parameters from a single file
-
-* `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-set P = (`awk "NR==$i" parameters-list.txt`)
-```
-
-## &nbsp;
 
 * `sh` syntax
 
@@ -224,16 +192,6 @@ P=$(awk "NR==$i" parameters-list.txt)
 
 ## &nbsp;
 
- * `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-sed "s/NNN/$i/" input-template.inp > model.$i.inp
-model < model.$i.inp > model.$i.out
-```
-
-## &nbsp;
-
  * `sh` syntax
 
 ```
@@ -249,15 +207,6 @@ model < model.$i.inp > model.$i.out
   * start at 23.72 and increase by 2.43 increments,
   * replace `TP` by the temperature and `NNN` by the task id
 
-## `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-set tp = `echo "23.72 + $i*2.43" | bc`
-sed -e "s/NNN/$i/" -e "s/TP/$tp/" input-template.inp \
-  > model.$i.inp
-```
-
 ## `sh` syntax
 
 ```
@@ -270,16 +219,6 @@ sed -e "s/NNN/$i/" -e "s/TP/$tp/" input-template.inp \
 ---
 
 ## Using `cd` and different directotories for each task
-
-  * `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-cd task.$i
-model < model.inp > model.out
-```
-
-## &nbsp;
 
   * `sh` syntax
 
@@ -297,18 +236,6 @@ model < model.inp > model.out
 
 ## Using the `<<EOF` construct
 
-  * `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-set tp = `echo "23.72 + $i*2.43" | bc`
-model <<EOF > model.$.out
-temp=$tp
-EOF
-```
-
-## &nbsp;
-
   * `sh` syntax
 
 ```
@@ -322,16 +249,6 @@ EOF
 ---
 
 ## Using your own tool, `mytool`, to convert a task id to parameters
-
-  * `csh` syntax
-
-```
-@ i = $SGE_TASK_ID
-set P = (`./mytool $i`)
-./compute $P
-```
-
-## &nbsp;
 
   * `sh` syntax
 
@@ -372,25 +289,6 @@ $SGE_TASK_ID
 
 ## Example to consolidate short tasks
 
-  * `csh` syntax
-
-```
-@ iFr = $SGE_TASK_ID                                  
-@ iTo = $iFr + $SGE_TASK_STEPSIZE - 1                 
-if ($iTo > $SGE_TASK_LAST) @ iTo = $SGE_TASK_LAST     
-#
-echo running model.csh for taskIDs $iFr to $iTo
-@ i = $iFr                                            
-while ($i <= $iTo)
-  ./model.csh $i >& model-$i.log
-  @ i++
-end
-```
-
----
-
-## Example to consolidate short tasks
-
  * `sh` syntax
 
 ```
@@ -400,18 +298,14 @@ if [ $iTo -gt $SGE_TASK_LAST ]; then
   let iTo=$SGE_TASK_LAST
 fi
 #
-echo running model.csh for taskIDs $iFr to $iTo
+echo running model.sh for taskIDs $iFr to $iTo
 let i=$iFr
 for ((i=$iFr; i<=iTo; i++)); do
   ./model.sh $i >& model.$i.log
 done
 ```
 
----
-
-## assuming that  
-
-* the script `model.csh` or `model.sh` do the work and takes one argument: the id.
+ * assumes that the script `model.sh` do the work and takes one argument: the id.
 
 ---
 
@@ -440,6 +334,8 @@ done
   * can delete specific tasks w/ `-t` flags
   * otherwise delete all the tasks: running and queued!
 
+---
+
 ## job modification with `qalter`
   * supports `-t` and `-tc` flags
   * use `-tc` if and when needed, can be used to increase its value progressively
@@ -452,7 +348,7 @@ done
 
 # Also remember
 
-## Can run a lot of confurrent tasks
+## Can run a lot of concurrent tasks
  * separate name spaces
    * some of the tasks will run at the same time
    * should not write in the same file
@@ -479,6 +375,9 @@ done
 
 ---
 
-# Hands on portion
+# Hands on Part II
+
+  * First pause here for 10m
+  * link to Hands on Part II markdown
 
 ---
