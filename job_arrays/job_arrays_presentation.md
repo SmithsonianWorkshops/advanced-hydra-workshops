@@ -85,6 +85,18 @@ in `test100.job` - hence one job file instead of 100.
   
 ---
 
+* Regular job: one job file, one job ID
+
+![A regular job](imgs/regular-job.jpg "regular job")
+
+---
+
+* Job array: one job file, one job ID, multiple tasks and task IDs
+
+![A job array](imgs/job-array.jpg "job array")
+
+---
+
 # A more complete job array file
 
 ## task range and limit concurrent tasks: `sh` syntax
@@ -135,8 +147,8 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 # Hands on Part I
 
-  * First pause here for 10m
-  * link to Hands on Part I markdown
+  * ![:tea:](imgs/tea.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee.png "a coffee cup")
+  * [Hands on Part I markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/)
 
 ---
 
@@ -377,7 +389,7 @@ done
 
 # Hands on Part II
 
-  * First pause here for 10m
-  * link to Hands on Part II markdown
+  * ![:tea:](imgs/tea.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee.png "a coffee cup")
+  * [Hands on Part I markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/)
 
 ---
