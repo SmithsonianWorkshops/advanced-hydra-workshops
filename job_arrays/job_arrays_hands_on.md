@@ -407,7 +407,10 @@ qsub -t 1-17 blast-ja.job
 ```
 
 
-| *NOTE* | Job task options can also be added to the qsub directives in a job file with: `#$ -t 1-17`|
+| *NOTE* |     |
+| ---    | --- |
+|        | job array options can also be included as embedded qsub directives in the job file with: |
+|        |  `#$ -t 1-17`|
 
 
 ## UCE alignments: filename from file
