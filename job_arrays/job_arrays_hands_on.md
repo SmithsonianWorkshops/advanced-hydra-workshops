@@ -14,7 +14,7 @@ cd ahw/ja
 > for SAO ppl, use `/pool/sao` instead of `/pool/genomics`
 
 
-—
+---
 
 
 ## Trivial example
@@ -26,7 +26,7 @@ We'll create a job array that illustrates some of the concepts we've started tal
 We're going to look at the variables `$JOB_ID` and `$SGE_TASK_ID` which contain the job and task IDs. We'll see in later examples how to differentiate what analysis each task in the job array should perform using the task ID.
 
 
-### make a subdirectory
+### Make a subdirectory
 
 
 ``` 
@@ -35,10 +35,10 @@ cd ex01
 ```
 
 
-### Test 1
+### Trivial job
 
 
-Let's look at a file `trivial.job` which was created with the [qsub generator tool] (https://galaxy.si.edu/tools/QSubGen/):
+Let's look at a file `trivial.job` which was created with the [qsub generator tool](https://galaxy.si.edu/tools/QSubGen/):
 
 
 ```
@@ -78,10 +78,10 @@ cp /pool/genomics/instructor02/ahw/ja/ex01/trivial.job ./
 This job echoes the values of the variables `$JOB_ID` and `$SGE_TASK_ID` to a file named with those variables, i.e., `trivial-$JOB_ID.$SGE_TASK_ID.out`
 
 
-—
+---
 
 
-## First let's submit it as a regular job (not a job)::
+## First let's submit it as a regular job (not as a job array):
 
 
 ```
@@ -90,7 +90,7 @@ Your job 12496330 ("trivial") has been submitted
 ```
 
 
-This creates an output file named with your job ID: `trivial-12496330-undefined.out`:
+This creates an output file named with your job ID, i.e., `trivial-12496330-undefined.out`:
 
 
 ```
@@ -98,12 +98,12 @@ $ cat trivial-12496330-undefined.out
 This is job 12496330 and task ID is undefined
 ```
 
-
 | *NOTE* | Your job will have a different job ID |
-|               | $SGE_TASK_ID has the value "undefined" for non-array jobs |
+| --- | --- |
+|     | $SGE_TASK_ID has the value "undefined" for non-array jobs |
 
 
-—
+---
 
 
 ## Now, let's submit it  as a job array
@@ -146,7 +146,7 @@ Looking at our echo command from the job file, we see how `$SGE_TASK_ID` is used
 ```
 echo This is job $JOB_ID and task ID is $SGE_TASK_ID > trivial-$JOB_ID-$SGE_TASK_ID.out
 ```
-—
+---
 
 
 ## Create separate log files
@@ -181,7 +181,7 @@ The variable `$TASK_ID` can be used to create separate log files (`-o` option in
 
 
 | *NOTE* | `$TASK_ID` is used for log file names, `$SGE_TASK_ID` is used in your job script |
-
+| --- | --- |
 
 ```
 $ qsub -t 1-10 -o 'trivial-$JOB_ID-$TASK_ID.log' trivial.job
@@ -197,8 +197,8 @@ Your job-array 12496439.1-10:1 ("trivial") has been submitted
 
 ```
 $ ls trivial-12496439-*.log
-t-12496439-10.log  t-12496439-2.log  t-12496439-4.log  t-12496439-6.log  t-12496439-8.log
-t-12496439-1.log   t-12496439-3.log  t-12496439-5.log  t-12496439-7.log  t-12496439-9.log
+trivial-12496439-10.log  trivial-12496439-2.log  trivial-12496439-4.log  trivial-12496439-6.log  trivial-12496439-8.log
+trivial-12496439-1.log   trivial-12496439-3.log  trivial-12496439-5.log  trivial-12496439-7.log  trivial-12496439-9.log
 ```
 
 
@@ -274,18 +274,19 @@ trivial-12508283-2.log   trivial-12508283-4.out  trivial-12508283-7.log  trivial
 
 
 $ head -999 *.log
-…
+...
 
 
 $head -999 *.out
-…
+...
 ```
 
+----
 
-(back to presentation, part II)
+# Back to the the presentation, Part II
 
 
-—
+---
 
 
 # Hands-on part 2
@@ -309,12 +310,12 @@ Blast is an example of an analysis that can greatly benefit from the use of job 
 ## BLAST: input files have task ID
 
 
-In the `/pool/…./blast/` directory you will see the following files and directories:
+In the `/pool/..../blast/` directory you will see the following files and directories:
 
 
 1. `blast.job`: a  regular job script that executes `blastn` to query a custom BLAST database located in the `blastdb/` directory. We're going to edit this file to be an array job.
 1. `split_fasta.pl`: this script executes a perl command from LINK to split a fasta file into smaller files.
-1. `blastdb/`: this contains a custom blast database of the genome of `Agaricus …` (NCBI LINK) made with the `makeblastdb` command. We are using a small reference DB for this workshop to decrease runtime and memory needs compared to a query against the full `nt` NCBI database.
+1. `blastdb/`: this contains a custom blast database of the genome of `Agaricus ...` (NCBI LINK) made with the `makeblastdb` command. We are using a small reference DB for this workshop to decrease runtime and memory needs compared to a query against the full `nt` NCBI database.
 1. `uce.fasta`: this is the fasta file we're querying.
 
 
@@ -323,7 +324,7 @@ In the `/pool/…./blast/` directory you will see the following files and direct
 
 ```
 $ cd ..
-$ cp -r /pool/…./blast ./
+$ cp -r /pool/..../blast ./
 ```
 
 
@@ -416,7 +417,7 @@ Often your input files don't have a sequential numbering scheme that you can dir
 One method to get the input filename from the task ID is by using a  file with the list of these input filenames. The line of the file corresponding to task ID will be fetched to get the input filename. This method can also be used to get other parameters that  can be used as parameters for a command.
 
 
-In the `/pool/…/align/` directory we have:
+In the `/pool/.../align/` directory we have:
 
 
 1. `fastas/`: a directory of input fasta files that need to be aligned. Each file has sequences from a different UCE locus and needs to be aligned separately.
@@ -424,7 +425,7 @@ In the `/pool/…/align/` directory we have:
 1. `uce-list`: a text file listing every uce locus in the `fastas`. It was created with `cd fastas; ls * | sed 's/.fasta//' >../uce-list`
 
 
-Let’s look at the `uce-list` file and get a line count:
+Let's look at the `uce-list` file and get a line count:
 
 
 ```
@@ -533,7 +534,7 @@ Your job-array 12499954.1-100:1 ("mafft") has been submitted
 ```
 
 
-—
+---
 
 
 ## Job status, accounting, etc
