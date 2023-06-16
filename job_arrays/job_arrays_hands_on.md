@@ -1,4 +1,4 @@
-# Hands-on part 1
+# Hands-on, Part I
 
 
 ## Create a location for the hands on portion
@@ -98,9 +98,10 @@ $ cat trivial-12496330-undefined.out
 This is job 12496330 and task ID is undefined
 ```
 
-| *NOTE* | Your job will have a different job ID |
-| --- | --- |
-|     | $SGE_TASK_ID has the value "undefined" for non-array jobs |
+| *NOTE* |     |
+| ---    | --- |
+|        | Your job will have a different job ID |
+|        | $SGE_TASK_ID has the value "undefined" for non-array jobs |
 
 
 ---
@@ -180,8 +181,10 @@ What happened is that the 10 tasks started all at the same time, each attempting
 The variable `$TASK_ID` can be used to create separate log files (`-o` option in `qusb`) for each task.
 
 
-| *NOTE* | `$TASK_ID` is used for log file names, `$SGE_TASK_ID` is used in your job script |
-| --- | --- |
+| *NOTE* |     |
+| ---    | --- |
+|        | `$TASK_ID` is used for log file names |
+|        | `$SGE_TASK_ID` is used in your job script |
 
 ```
 $ qsub -t 1-10 -o 'trivial-$JOB_ID-$TASK_ID.log' trivial.job
@@ -289,8 +292,7 @@ $head -999 *.out
 ---
 
 
-# Hands-on part 2
-
+# Hands-on, Part II
 
 ## Using tasks with analyses
 
