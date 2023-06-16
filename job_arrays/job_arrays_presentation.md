@@ -147,7 +147,7 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 # Hands on Part I
 
-  ![:tea:](imgs/tea.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee.png "a coffee cup")
+  ![:tea:](imgs/tea-half.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee-half.png "a coffee cup")
 
   * [Hands on Part I markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/job_arrays/job_arrays_hands_on.md)
 
@@ -390,7 +390,7 @@ done
 
 # Hands on Part II
 
-  * ![:tea:](imgs/tea.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee.png "a coffee cup")
+  * ![:tea:](imgs/tea-half.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee-half.png "a coffee cup")
   * [Hands on Part I markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/job_arrays/job_arrays_hands_on.md#hands-on-part-ii)
 
 ---
