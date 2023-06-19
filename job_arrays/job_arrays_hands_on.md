@@ -449,11 +449,7 @@ $ wc -l uce-list
 2120 uce-list
 ```
 
-
-`uce-list` has the names of the loci and there are a total of 2120 of them. In our exercise we’ll be running the first 100 of these tasks, but in a real analysis, you would run all 2120.
-
-
-
+`uce-list` has the names of the loci and there are a total of 2120 of them. In our exercise we'll be running the first 100 of these tasks, but in a real analysis, you would run all 2120.
 
 ### Edit the job file
 
@@ -461,7 +457,7 @@ $ wc -l uce-list
 Open `mafft.job` in your favorite text editor (e.g. `nano`, `vi`, or `emacs`).
 
 
-This time we’re going to add the `-t` option to the job file. We’re also going to use the `-tc` option which will limit the number of tasks running concurrently. 
+This time we're going to add the `-t` option to the job file. We're also going to use the `-tc` option which will limit the number of tasks running concurrently. 
 
 
 You want to use `-tc` when each task might stress the cluster and effectively reduce the efficiency of your job array. In most cases heavy I/O is the primary reason to limit the number of concurrent tasks. 
@@ -470,7 +466,7 @@ You want to use `-tc` when each task might stress the cluster and effectively re
 Also, before submitting a job array with a lots of task, test things on just a few tasks
 
 
-In our exercise we’ll just be running the first 100 UCEs, so add:
+In our exercise we'll just be running the first 100 UCEs, so add:
 `#$ -t 1-100 -tc 20`
 
 
@@ -484,7 +480,7 @@ Change the output file to:
 Next, we need to add a command to get the UCE identifier from the `uce-list`. 
 
 
-The utility `sed` has a command to print a specific line from a file. For example to print the 10th line of `uce-list` you would use: `sed -n "10p" uce-list`. We’ll use the `${SGE_TASK_ID}` to put the current task number into the sed command. The returned text will be assigned to a new variable, `$UCE`
+The utility `sed` has a command to print a specific line from a file. For example to print the 10th line of `uce-list` you would use: `sed -n "10p" uce-list`. We'll use the `${SGE_TASK_ID}` to put the current task number into the sed command. The returned text will be assigned to a new variable, `$UCE`
 
 
 Add:
@@ -532,7 +528,7 @@ $ more mafft-array.job
 ```
 
 
-Now, let’s submit the job:
+Now, let's submit the job:
 ```
 $ qsub -t 1-100 -tc 20 mafft-array.job
 Your job-array 12499954.1-100:1 ("mafft") has been submitted
