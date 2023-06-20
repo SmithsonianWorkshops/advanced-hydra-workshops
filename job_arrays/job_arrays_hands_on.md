@@ -616,7 +616,7 @@ will list in the last column the task id for the running tasks, and the range of
 
 
 ```
-qstat+ +a%
+$ qstat+ +a%
 
 
 ```
@@ -626,7 +626,7 @@ gives you a more compact output. It also lists the job efficiency, a convenient 
 ### No. of concurrent tasks
 
 
-* Changing the number of concurrent tasks
+* Changing the number of concurrent tasks:
 
 
 You can change the number of concurrent task of an already submitted job array with `qalter`:
@@ -635,10 +635,10 @@ You can change the number of concurrent task of an already submitted job array w
 ```
 $ qalter -tc 25 123456789
 ```
-this will increase it from 20 to 25 (you need to use the right job id)
+this will increase it from 20 to 25 (you need to use the right job id).
 
 
-* You can decrease it too, but this does not affect the running tasks, only the number of tasks that will be started subsequently
+* You can decrease it too, but this does not affect the running tasks, only the number of tasks that will be started subsequently.
 
 
 
@@ -648,9 +648,9 @@ this will increase it from 20 to 25 (you need to use the right job id)
 ### Accounting
 
 
-* the commands `qacct` and `qacct+` will return accounting information for all the completed tasks, which can be (very) long
-* they take a `-t` option to limit the output to a task or a range of tasks
-* also `qstat+` allows you to pick a subset of the accounting info and get a tabular output:
+* the commands `qacct` and `qacct+` will return accounting information for all the completed tasks, which can be (very) long.
+* they take a `-t` option to limit the output to a task or a range of tasks.
+* `qstat+` also allows you to pick a subset of the accounting info and get a tabular output:
 
 
 ```
