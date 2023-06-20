@@ -473,7 +473,7 @@ This time we're going to add the `-t` option to the job file as an embedded dire
 You want to use `-tc` when each task might stress the cluster and effectively reduce the efficiency of your job array. In most cases heavy I/O is the primary reason to limit the number of concurrent tasks. 
 
 
-Also, before submitting a job array with a lots of task, test things on just a few tasks
+Also, before submitting a job array with a lot of tasks, test things on just a few tasks
 
 
 In our exercise we'll run the 95 loci, but specify that no more than 20 can run at one time, so add
