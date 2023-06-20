@@ -71,7 +71,7 @@ echo = `date` job $JOB_NAME done
 
 You can copy that file with
 ```
-cp /pool/genomics/instructor02/ahw/ja/ex01/trivial.job ./
+cp /data/genomics/workshops/ahw/ja/ex01/trivial.job ./
 ```
 
 
@@ -81,7 +81,7 @@ This job echoes the values of the variables `$JOB_ID` and `$SGE_TASK_ID` to a fi
 ---
 
 
-## First let's submit it as a regular job (not as a job array):
+## First let's submit it as a 'regular' job (not as a job array):
 
 
 ```
@@ -107,7 +107,7 @@ This is job 12496330 and task ID is undefined
 ---
 
 
-## Now, let's submit it  as a job array
+## Now, let's submit it as a job array
 
 
 * Adding `-t` followed by a range of task ids to `qsub` turns a job into a job array.
@@ -215,9 +215,6 @@ $ cat trivial-12496439-1.log
 ```
 
 
-Edit job file to use embedded directives?
-
-
 ## You can use embedded directives
 
 
@@ -252,7 +249,7 @@ echo = `date` job $JOB_NAME done
 $ cd ..
 $ mkdir ex01b
 $ cd ex01b
-$ cp /pool/genomics/instructor02/ahw/ja/ex01b/trivial.job ./
+$ cp /data/genomics/workshops/ahw/ja/ex01b/trivial.job ./
 $ qsub trvial.job
 Your job-array 12508283.1-10:1 ("trivial") has been submitted
 $ qstat+ +a%
