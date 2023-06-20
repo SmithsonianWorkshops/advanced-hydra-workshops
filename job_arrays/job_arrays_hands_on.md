@@ -633,7 +633,7 @@ You can change the number of concurrent task of an already submitted job array w
 
 
 ```
-$qalter -tc 25 123456789
+$ qalter -tc 25 123456789
 ```
 this will increase it from 20 to 25 (you need to use the right job id)
 
