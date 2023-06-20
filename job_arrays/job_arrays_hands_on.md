@@ -309,22 +309,18 @@ Blast is an example of an analysis that can greatly benefit from the use of job 
 ## BLAST: input files have task ID
 
 
-In the `/pool/..../blast/` directory you will see the following files and directories:
+The directory `/data/genomics/workshops/ahw/ja/ex02/` has a BLAST example we'll use with job arrays. Copy it into your `/pool/genomics/$USER/ahw/ja/` directory with:
+
+```
+cp -r /data/genomics/workshops/ahw/ja/ex02 /pool/genomics/$USER/ahw/ja/
+```
 
 
 1. `blast.job`: a  regular job script that executes `blastn` to query a custom BLAST database located in the `blastdb/` directory. We're going to edit this file to be an array job.
 1. `split_fasta.pl`: this script executes a perl command from LINK to split a fasta file into smaller files.
 1. `blastdb/`: this contains a custom blast database of the genome of `Agaricus ...` (NCBI LINK) made with the `makeblastdb` command. We are using a small reference DB for this workshop to decrease runtime and memory needs compared to a query against the full `nt` NCBI database.
-1. `uce.fasta`: this is the fasta file we're querying.
+1. `cyphomyrmex-muelleri-1464.fasta`: this is the fasta file we're querying.
 
-
-### Copy these files
-
-
-```
-$ cd ..
-$ cp -r /pool/..../blast ./
-```
 
 
 ### Split the fasta
@@ -334,27 +330,30 @@ We'll use `split_fasta.pl` to create reduced sized input files we can run as an 
 
 
 ```
-$ ./split_fasta.pl  --length 25 uce.fasta
+$ ./split_fasta.pl  --length 50 cyphomyrmex-muelleri-1464.fasta
+
+Splitting cyphomyrmex-muelleri-1464.fasta into files with 50 sequences per file
 
 
-Splitting uce.fasta into files with 25 sequences per file
-
-
-Split 423 FASTA records in 7837 lines, with total sequence length 431173
-Created 17 files
-
+Split 931 FASTA records in 17395 lines, with total sequence length 959426
+Created 19 files
 
 $ ls *.fasta
-10.fasta  13.fasta  16.fasta  2.fasta  5.fasta  8.fasta
-11.fasta  14.fasta  17.fasta  3.fasta  6.fasta  9.fasta
-12.fasta  15.fasta  1.fasta   4.fasta  7.fasta  uce.fasta
+10.fasta  14.fasta  18.fasta  3.fasta  7.fasta
+11.fasta  15.fasta  19.fasta  4.fasta  8.fasta
+12.fasta  16.fasta  1.fasta   5.fasta  9.fasta
+13.fasta  17.fasta  2.fasta   6.fasta  cyphomyrmex-muelleri-1464.fasta
 ```
 
 
-We can now  submit a job array with 17 tasks, each task will use the task ID in the fasta **filename**
+We can now  submit a job array with 19 tasks, each task will use the task ID in the fasta **filename**
 
 
 Copy blast.job to blast-ja.job and edit  blast-ja.job using your favorite editor (`nano`, `vi`, `emacs`, etc):
+
+```
+$ cp blast.job blast-ja.job
+```
 
 
 Change the log file option from:
@@ -376,20 +375,20 @@ Change the blast command to include `$SGE_TASK_ID`
 
 From:
 ```
-blastn -db blastdb/Agabi_varbur \
+blastn -db blastdb/aculeata \
    -max_target_seqs 20 \
    -num_threads $NSLOTS \
-   -query uce.fasta \
-   -out uce.tsv \
+   -query cyphomyrmex-muelleri-1464.fasta \
+   -out cyphomyrmex-muelleri-1464.tsv \
    -outfmt 6
 ```
 
 
 To:
 ```
-blastn -db blastdb/Agabi_varbur \
+blastn -db blastdb/aculeata \
   -max_target_seqs 20 \
-  -num_threads $NSLOTS 
+  -num_threads $NSLOTS \
   -query $SGE_TASK_ID.fasta \
   -out $SGE_TASK_ID.tsv \
   -outfmt 6
@@ -400,14 +399,14 @@ And submit as a job array:
 
 
 ```
-qsub -t 1-17 blast-ja.job
+qsub -t 1-19 blast-ja.job
 ```
 
 
 | *NOTE* |     |
 | ---    | --- |
 |        | job array options can also be included as embedded qsub directives in the job file with: |
-|        |  `#$ -t 1-17`|
+|        |  `#$ -t 1-19`|
 
 
 ## UCE alignments: filename from file
@@ -418,13 +417,17 @@ Often your input files don't have a sequential numbering scheme that you can dir
 
 One method to get the input filename from the task ID is by using a  file with the list of these input filenames. The line of the file corresponding to task ID will be fetched to get the input filename. This method can also be used to get other parameters that  can be used as parameters for a command.
 
+The next example in `/data/genomics/workshops/ahw/ja/ex03` is aligning DNA sequences with `mafft`.
 
-In the `/pool/.../align/` directory we have:
+Copy the `ex03` directory into `/pool/genomics/$USER/ahw/ja/`
 
+```
+cp -r /data/genomics/workshops/ahw/ja/ex03 /pool/genomics/$USER/ahw/ja/
+```
 
 1. `fastas/`: a directory of input fasta files that need to be aligned. Each file has sequences from a different UCE locus and needs to be aligned separately.
-1. `mafft.job`: a job file to align one of the fasta files that we'll modify to work as a job array.
-1. `uce-list`: a text file listing every uce locus in the `fastas`. It was created with `cd fastas; ls * | sed 's/.fasta//' >../uce-list`
+2. `mafft.job`: a job file to align one of the fasta files that we'll modify to work as a job array.
+3. `uce-list`: a text file listing every uce locus in the `fastas`. It was created with `cd fastas; ls * | sed 's/-unaligned.fasta//' >../uce-list`
 
 
 Let's look at the `uce-list` file and get a line count:
@@ -432,29 +435,35 @@ Let's look at the `uce-list` file and get a line count:
 
 ```
 $ head uce-list
-uce-0
-uce-1002
-uce-1004
-uce-1006
-uce-1007
-uce-1008
-uce-100
-uce-1010
-uce-1012
-uce-1013
+uce-200
+uce-201
+uce-204
+uce-205
+uce-206
+uce-207
+uce-208
+uce-20
+uce-211
+uce-212
+
 $ wc -l uce-list
-2120 uce-list
+95 uce-list
 ```
 
-`uce-list` has the names of the loci and there are a total of 2120 of them. In our exercise we'll be running the first 100 of these tasks, but in a real analysis, you would run all 2120.
+`uce-list` has the names of the loci, there are 95 lines, one for each file in `fasata`.
 
 ### Edit the job file
 
+Make a copy of `mafft.job` to `mafft-ja.job`
 
-Open `mafft.job` in your favorite text editor (e.g. `nano`, `vi`, or `emacs`).
+```
+$ cp mafft.job mafft-ja.job
+```
+
+Open `mafft-ja.job` in your favorite text editor (e.g. `nano`, `vi`, or `emacs`).
 
 
-This time we're going to add the `-t` option to the job file. We're also going to use the `-tc` option which will limit the number of tasks running concurrently. 
+This time we're going to add the `-t` option to the job file as an embedded directive. We're also going to use the `-tc` option which will limit the number of tasks running concurrently. 
 
 
 You want to use `-tc` when each task might stress the cluster and effectively reduce the efficiency of your job array. In most cases heavy I/O is the primary reason to limit the number of concurrent tasks. 
@@ -463,15 +472,21 @@ You want to use `-tc` when each task might stress the cluster and effectively re
 Also, before submitting a job array with a lots of task, test things on just a few tasks
 
 
-In our exercise we'll just be running the first 100 UCEs, so add:
-`#$ -t 1-100 -tc 20`
+In our exercise we'll run the 95 loci, but specify that no more than 20 can run at one time, so add
+`#$ -t 1-95 -tc 20` to the `Parameters` section at the top with the other embedded qsub directives (exact position in this section doesn't matter).
 
+```
+#$ -t 1-95 -tc 20
+```
 
-* Question? How would you run the second 100?
+* Question? How would you run only the first half of loci? The second half? A specific locus?
 
 
 Change the output file to:
-`#$ -o log_files/mafft-$TASK_ID.log`
+
+```
+#$ -o log_files/mafft-$TASK_ID.log
+```
 
 
 Next, we need to add a command to get the UCE identifier from the `uce-list`. 
@@ -481,17 +496,20 @@ The utility `sed` has a command to print a specific line from a file. For exampl
 
 
 Add:
-`UCE=$(sed -n "${SGE_TASK_ID}p" uce-list)`
 
+```
+UCE=$(sed -n "${SGE_TASK_ID}p" uce-list)
+```
 
 Finally, we need to change the `mafft` command to use the new `$UCE` variable.
 
 
 Change this line:
+
 ```
 mafft --quiet \
   --thread $NSLOTS \
-  --auto $INPUTDIR/uce-100.fasta >$OUTPUTDIR/uce-100-mafft.fasta
+  --auto $INPUTDIR/uce-200-unaligned.fasta >$OUTPUTDIR/uce-200-aligned.fasta
 ```
 
 
@@ -499,7 +517,7 @@ To:
 ```
 mafft --quiet \
   --thread $NSLOTS \
-  --auto $INPUTDIR/$UCE.fasta >$OUTPUTDIR/$UCE-mafft.fasta
+  --auto $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
 ```
 
 
@@ -519,9 +537,48 @@ fi
 
 
 The job file should look like this:
+
 ```
-$ more mafft-array.job
-[missing]
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -pe mthread 2
+#$ -l mres=16G,h_data=8G,h_vmem=8G
+#$ -cwd
+#$ -j y
+#$ -N mafft
+#$ -o log_files/mafft-$TASK_ID.log
+#$ -t 1-95 -tc 20
+#
+#
+# ----------------Modules------------------------- #
+module load bio/mafft
+#
+# ----------------Your Commands------------------- #
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+echo + NSLOTS = $NSLOTS
+
+#
+
+OUTPUTDIR=aligned
+INPUTDIR=fastas
+mkdir -p $OUTPUTDIR
+
+UCE=$(sed -n "${SGE_TASK_ID}p" uce-list)
+
+if [ ! -f $INPUTDIR/$UCE-unaligned.fasta ]; then
+  echo "ERROR: input file is missing: $INPUTDIR/$UCE-unaligned.fasta"
+  exit 1
+fi
+
+mafft --quiet \
+  --thread $NSLOTS \
+  --auto $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
+
+#
+echo = `date` job $JOB_NAME done
 ```
 
 
