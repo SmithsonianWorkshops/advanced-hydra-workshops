@@ -18,5 +18,9 @@
    - [Slides](scripting/scripting_reference_slides-long.pdf)
    - [Markup](scripting/scripting_reference_slides-long.md)
 ## Job Arrays (2023-06-21)
-- [Registration link](https://forms.gle/GVo7pHhasY5pkfqe7)
+- [Slides - (`sh` examples only)](job_arrays/job_arrays_presentation.pdf)
+- [Hands on Material](job_arrays/job_arrays_hands_on.md)
+## also:  
+- [Slides - (long version, `csh` and `sh` examples)](job_arrays/job_arrays_presentation_long.pdf)
+- [Slides - (`csh` examples only)](job_arrays/job_arrays_presentation_csh.pdf)
 ### More to come
