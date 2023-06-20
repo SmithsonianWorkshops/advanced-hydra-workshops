@@ -220,7 +220,6 @@ $ cat trivial-12496439-1.log
 
 * you can specify `-t 1-10 ` and `-o trivial-$JOB_ID-$TASK_ID.log` using embedded directives:
 
-
 ```
 # /bin/sh
 # 
@@ -244,13 +243,15 @@ sleep 10
 #
 echo = `date` job $JOB_NAME done
 ```
+
 * so try it:
+  
 ```
 $ cd ..
 $ mkdir ex01b
 $ cd ex01b
-$ cp /data/genomics/workshops/ahw/ja/ex01b/trivial.job ./
-$ qsub trvial.job
+$ cp /data/genomics/workshops/ahw/ja/ex01b/trivial-ja.job ./
+$ qsub trvial-ja.job
 Your job-array 12508283.1-10:1 ("trivial") has been submitted
 $ qstat+ +a%
 Total running (PEs/jobs) = 10/10, 0 queued (job) for user 'hpc'.
@@ -281,7 +282,7 @@ $head -999 *.out
 ...
 ```
 
-----
+---
 
 # Back to the the presentation, Part II
 
