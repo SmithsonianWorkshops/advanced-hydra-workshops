@@ -584,10 +584,9 @@ echo = `date` job $JOB_NAME done
 
 Now, let's submit the job:
 ```
-$ qsub -t 1-100 -tc 20 mafft-array.job
-Your job-array 12499954.1-100:1 ("mafft") has been submitted
+$ qsub mafft-ja.job
+Your job-array 12603930.1-95:1 ("mafft") has been submitted
 ```
-
 
 ---
 
