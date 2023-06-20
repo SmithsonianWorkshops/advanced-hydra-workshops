@@ -1,0 +1,24 @@
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -l mres=2G,h_data=2G,h_vmem=2G
+#$ -cwd
+#$ -j y
+#$ -N trivial
+#$ -o trivial.log
+# ----------------Modules------------------------- #
+#
+# ----------------Your Commands------------------- #
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+#
+# $SGE_TASK_ID is the value of the task ID for the current task in the array
+# write out the job and task ID to a file 
+echo This is job $JOB_ID and task ID is $SGE_TASK_ID > trivial-$JOB_ID-$SGE_TASK_ID.out
+
+
+# pause for 10 seconds
+sleep 10
+#
+echo = `date` job $JOB_NAME done

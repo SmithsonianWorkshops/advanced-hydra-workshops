@@ -1,0 +1,27 @@
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -l mres=8G,h_data=8G,h_vmem=8G
+#$ -cwd
+#$ -j y
+#$ -N blast
+#$ -o blast.log
+#
+# ----------------Modules------------------------- #
+module load bio/blast
+#
+# ----------------Your Commands------------------- #
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+echo + NSLOTS = $NSLOTS
+
+#
+blastn -db blastdb/aculeata \
+   -max_target_seqs 20 \
+   -num_threads $NSLOTS \
+   -query cyphomyrmex-muelleri-1464.fasta \
+   -out cyphomyrmex-muelleri-1464.tsv \
+   -outfmt 6
+#
+echo = `date` job $JOB_NAME done

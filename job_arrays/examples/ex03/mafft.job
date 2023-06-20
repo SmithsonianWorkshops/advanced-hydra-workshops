@@ -1,0 +1,31 @@
+# /bin/sh
+# ----------------Parameters---------------------- #
+#$ -S /bin/sh
+#$ -q sThC.q
+#$ -pe mthread 2
+#$ -l mres=16G,h_data=8G,h_vmem=8G
+#$ -cwd
+#$ -j y
+#$ -N mafft
+#$ -o log_files/mafft.log
+#
+# ----------------Modules------------------------- #
+module load bio/mafft
+#
+# ----------------Your Commands------------------- #
+#
+echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
+echo + NSLOTS = $NSLOTS
+
+#
+
+OUTPUTDIR=aligned
+INPUTDIR=fastas
+mkdir -p $OUTPUTDIR
+
+mafft --quiet \
+  --thread $NSLOTS \
+  --auto $INPUTDIR/uce-200-unaligned.fasta >$OUTPUTDIR/uce-200-aligned.fasta
+
+#
+echo = `date` job $JOB_NAME done
