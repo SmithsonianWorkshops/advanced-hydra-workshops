@@ -2,11 +2,11 @@
 
 ## In the intro portion of the workshop you will learn:
 
- * What are job arrays, when and why use them?
+ * What are job arrays, when, and why use them?
  * How to write job arrays scripts.
  * How to submit job arrays: 
-   * task range, increment and limit concurrent tasks.
- * Job arrays tips and tricks.
+   * task ranges, increments, and limiting concurrent tasks.
+ * Job array tips and tricks.
  * Parallel job arrays.
  * How to consolidate small tasks in job arrays.
  * How to manage job arrays:
@@ -99,7 +99,7 @@ in `test100.job` - hence one job file instead of 100.
 
 # A more complete job array file
 
-## task range and limit concurrent tasks: `sh` syntax
+## task range and limiting concurrent tasks: `sh` syntax
 
 ```
 # /bin/sh
@@ -153,11 +153,11 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 ---
 
-# Job arrays tips and tricks 
+# Job array tips and tricks 
 
 ## Various ways of using the task id `$SGE_TASK_ID`
 
-  1. formatting trick
+  1. formatting tricks
   2. using `awk`
   3. using `sed`
   4. using `bc`
@@ -215,7 +215,7 @@ model < model.$i.inp > model.$i.out
 
 ---
 
-## Using `bc` to run models on temperatures grid
+## Using `bc` to run models on a temperature grid
 
   * start at 23.72 and increase by 2.43 increments,
   * replace `TP` by the temperature and `NNN` by the task id
@@ -326,7 +326,7 @@ done
 
 ## Job arrays can run parallel tasks
 
-  * Each task request a parallel environment, as per the `-pe` specification:
+  * Each task requests a parallel environment, as per the `-pe` specification:
      * `-pe mthread N` for multi-threaded
      * `-pe mpich N` or `-pe orte N` for MPI
 
@@ -368,7 +368,7 @@ done
  * I/O contention:
    * concurrent tasks read the same file(s)?
  * manage the results files
-   * esp. if a lot  are created in the same directory
+   * esp. if a lot are created in the same directory
  * test on a small set of tasks first
  * avoid sending emails with `-m abe`
    * it applies to each task (lots of emails).
@@ -384,7 +384,7 @@ done
 
 # HPC wiki on job arrays
 
- * goto [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
+ * go to [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
 
 ---
 
