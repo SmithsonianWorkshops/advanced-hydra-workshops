@@ -61,18 +61,18 @@ echo + `date` job $JOB_NAME started in $QUEUE with jobID=$JOB_ID on $HOSTNAME
 # write out the job and task ID to a file 
 echo This is job $JOB_ID and task ID is $SGE_TASK_ID > trivial-$JOB_ID-$SGE_TASK_ID.out
 
-
 # pause for 10 seconds
 sleep 10
 #
 echo = `date` job $JOB_NAME done
 ```
 
-
 You can copy that file with
 ```
 cp /data/genomics/workshops/ahw/ja/ex01/trivial.job ./
 ```
+
+> we'll be using `ja` as an abbreviation for "job arrays" in the material
 
 
 This job echoes the values of the variables `$JOB_ID` and `$SGE_TASK_ID` to a file named with those variables, i.e., `trivial-$JOB_ID.$SGE_TASK_ID.out`
@@ -81,7 +81,7 @@ This job echoes the values of the variables `$JOB_ID` and `$SGE_TASK_ID` to a fi
 ---
 
 
-## First let's submit it as a 'regular' job (not as a job array):
+## First let's submit it as a 'regular' job (i.e. not as a job array):
 
 
 ```
@@ -303,6 +303,7 @@ When you submit a job array, the *identical job script* is run multiple times. H
 
  use the task ID.
 
+In these examples we'll be using data from the study: Hanisch, P.E., Sosa-Calvo, J. and Schultz, T.R., The Last Piece of the Puzzle? Phylogenetic Position and Natural History of the Monotypic Fungus-Farming Ant Genus *Paramycetophylax* (Formicidae: Attini), Insect Systematics and Diversity, 2022, [https://doi.org/10.1093/isd/ixab029](https://doi.org/10.1093/isd/ixab029).
 
 Blast is an example of an analysis that can greatly benefit from the use of job arrays, since often we need to “blast” many sequences against the same database, and the results of each “blast” do not depend on each other.
 
@@ -314,6 +315,7 @@ The directory `/data/genomics/workshops/ahw/ja/ex02/` has a BLAST example we'll 
 
 ```
 cp -r /data/genomics/workshops/ahw/ja/ex02 /pool/genomics/$USER/ahw/ja/
+cd /pool/genomics/$USER/ahw/ja/ex02
 ```
 
 
@@ -424,6 +426,7 @@ Copy the `ex03` directory into `/pool/genomics/$USER/ahw/ja/`
 
 ```
 cp -r /data/genomics/workshops/ahw/ja/ex03 /pool/genomics/$USER/ahw/ja/
+cd /pool/genomics/$USER/ahw/ja/ex03
 ```
 
 1. `fastas/`: a directory of input fasta files that need to be aligned. Each file has sequences from a different UCE locus and needs to be aligned separately.
@@ -510,7 +513,8 @@ Change this line:
 ```
 mafft --quiet \
   --thread $NSLOTS \
-  --auto $INPUTDIR/uce-200-unaligned.fasta >$OUTPUTDIR/uce-200-aligned.fasta
+  --localpair \
+  $INPUTDIR/uce-200-unaligned.fasta >$OUTPUTDIR/uce-200-aligned.fasta
 ```
 
 
@@ -518,7 +522,8 @@ To:
 ```
 mafft --quiet \
   --thread $NSLOTS \
-  --auto $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
+  --localpair \
+  $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
 ```
 
 
@@ -530,8 +535,8 @@ This is a good idea not only to catch where there is a missing input file, but a
 
 Add:
 ```
-if [ ! -f $INPUTDIR/$UCE.fasta ]; then
-  echo "ERROR: input file is missing: $INPUTDIR/$UCE.fasta"
+if [ ! -f $INPUTDIR/$UCE-unaligned.fasta ]; then
+  echo "ERROR: input file is missing: $INPUTDIR/$UCE-unaligned.fasta"
   exit 1
 fi
 ```
@@ -576,7 +581,8 @@ fi
 
 mafft --quiet \
   --thread $NSLOTS \
-  --auto $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
+  --localpair \
+  $INPUTDIR/$UCE-unaligned.fasta >$OUTPUTDIR/$UCE-aligned.fasta
 
 #
 echo = `date` job $JOB_NAME done
@@ -588,6 +594,8 @@ Now, let's submit the job:
 $ qsub mafft-ja.job
 Your job-array 12603930.1-95:1 ("mafft") has been submitted
 ```
+
+> What happens if you submit a task greater than 95? Try it out.
 
 ---
 
