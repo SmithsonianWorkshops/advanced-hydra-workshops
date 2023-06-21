@@ -2,11 +2,11 @@
 
 ## In the intro portion of the workshop you will learn:
 
- * What are job arrays, when and why use them?
+ * What are job arrays, when, and why use them?
  * How to write job arrays scripts.
  * How to submit job arrays: 
-   * task range, increment and limit concurrent tasks.
- * Job arrays tips and tricks.
+   * task ranges, increments. and limiting concurrent tasks.
+ * Job array tips and tricks.
  * Parallel job arrays.
  * How to consolidate small tasks in job arrays.
  * How to manage job arrays:
@@ -51,7 +51,7 @@ echo = `date` $JOB_NAME for taskID=$SGE_TASK_ID done.
 
 ---
 
-# How to submit jobs arrays
+# How to submit job arrays
 
 ## That trivial example can be queued on 100 tasks with
 ```
@@ -82,12 +82,24 @@ in `test100.job` - hence one job file instead of 100.
 
 &nbsp;&nbsp;&nbsp; this assumes that you have 100 input files called
 `model.1.inp`, `model.2.inp`, ... , `model.100.inp`
-  
+
+---
+
+* Regular job: one job file, one job ID
+
+![A regular job](imgs/regular-job.jpg "regular job")
+
+---
+
+* Job array: one job file, one job ID, multiple tasks and task IDs
+
+![A job array](imgs/job-array.jpg "job array")
+
 ---
 
 # A more complete job array file
 
-## task range and limit concurrent tasks: `csh` syntax
+## task range and limiting concurrent tasks: `csh` syntax
 
 ```
 # /bin/csh
@@ -133,11 +145,11 @@ OUTPUT=model.$SGE_TASK_ID.out
 
 ---
 
-# Job arrays tips and tricks 
+# Job array tips and tricks 
 
 ## Various ways of using the task id `$SGE_TASK_ID`
 
-  1. formatting trick
+  1. formatting tricks
   2. using `awk`
   3. using `sed`
   4. using `bc`
@@ -195,7 +207,7 @@ model < model.$i.inp > model.$i.out
 
 ---
 
-## Using `bc` to run models on temperatures grid
+## Using `bc` to run models on a temperature grid
 
   * start at 23.72 and increase by 2.43 increments,
   * replace `TP` by the temperature and `NNN` by the task id
@@ -304,7 +316,7 @@ end
 
 ## Job arrays can run parallel tasks
 
-  * Each task request a parallel environment, as per the `-pe` specification:
+  * Each task requests a parallel environment, as per the `-pe` specification:
      * `-pe mthread N` for multi-threaded
      * `-pe mpich N` or `-pe orte N` for MPI
 
