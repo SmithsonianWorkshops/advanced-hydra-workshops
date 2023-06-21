@@ -246,7 +246,7 @@ model < model.inp > model.out
 ```
 @ i = $SGE_TASK_ID
 set tp = `echo "23.72 + $i*2.43" | bc`
-model <<EOF > model.$.out
+model <<EOF > model.$i.out
 temp=$tp
 EOF
 ```
@@ -376,8 +376,3 @@ end
 
  * goto [https://confluence.si.edu/display/HPC/Job+Arrays](https://confluence.si.edu/display/HPC/Job+Arrays)
 
----
-
-# Hands on portion
-
----

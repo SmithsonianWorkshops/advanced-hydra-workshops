@@ -254,7 +254,7 @@ model < model.inp > model.out
 ```
 let i=$SGE_TASK_ID
 tp=$(echo "23.72 + $i*2.43" | bc)
-model <<EOF > model.$.out
+model <<EOF > model.$i.out
 temp=$tp
 EOF
 ```
@@ -391,6 +391,5 @@ done
 # Hands on Part II
 
   * ![:tea:](imgs/tea-half.png "a tea cup") First pause here for 10m ![:coffee:](imgs/coffee-half.png "a coffee cup")
-  * [Hands on Part I markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/job_arrays/job_arrays_hands_on.md#hands-on-part-ii)
+  * [Hands on Part II markdown](https://github.com/SmithsonianWorkshops/advanced-hydra-workshops/blob/main/job_arrays/job_arrays_hands_on.md#hands-on-part-ii)
 
----
